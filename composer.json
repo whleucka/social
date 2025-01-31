@@ -1,0 +1,20 @@
+{
+    "name": "whleucka/echo",
+    "description": "The Echo Framework.",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App": "app/",
+            "Echo\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "William Hleucka",
+            "email": "william.hleucka@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
