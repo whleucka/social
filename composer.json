@@ -1,11 +1,14 @@
 {
     "name": "whleucka/echo",
-    "description": "The Echo Framework.",
+    "description": "Echo web application.",
     "type": "project",
     "license": "MIT",
     "autoload": {
+        "files": [
+            "app/Helpers/Functions.php"
+        ],
         "psr-4": {
-            "App": "app/",
+            "App\\": "app/",
             "Echo\\": "src/"
         }
     },
@@ -16,5 +19,7 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {}
+    "require": {
+        "php": "^8.2"
+    }
 }
