@@ -1,7 +1,7 @@
 <?php
 
-use Echo\Application\Http\Kernel as HttpKernel;
-use Echo\Application\Console\Kernel as ConsoleKernel;
+use Echo\System\Http\Kernel as HttpKernel;
+use Echo\System\Console\Kernel as ConsoleKernel;
 
 function app()
 {
