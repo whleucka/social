@@ -4,6 +4,6 @@ namespace Echo\Interface\Http;
 
 interface Kernel
 {
-    public function run(): void;
+    public function handle(Request $request): void;
 }
 

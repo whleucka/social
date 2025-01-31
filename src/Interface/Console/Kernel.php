@@ -4,5 +4,5 @@ namespace Echo\Interface\Console;
 
 interface Kernel
 {
-    public function run(): void;
+    public function handle(string $command): void;
 }
