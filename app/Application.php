@@ -26,7 +26,7 @@ class Application implements EchoApplication
     private function web()
     {
         // Handle a web request
-        $request = container()->make(Request::class, ['get' => $_GET, 'post' => $_POST, 'files' => $_FILES]);
+        $request = new Request($_GET, $_POST, $_FILES);
         $this->kernel->handle($request);
     }
 

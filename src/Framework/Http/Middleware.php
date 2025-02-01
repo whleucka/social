@@ -60,7 +60,7 @@ class Middleware
 
     private function createLayer($nextLayer, $layer): Closure
     {
-        $layer = container()->get($layer);
+        $layer = new $layer;
         return fn ($object) => $layer->handle($object, $nextLayer);
     }
 }

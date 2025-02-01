@@ -20,7 +20,7 @@ class Kernel implements HttpKernel
         $controllers = $this->getControllers($controller_path);
 
         // Register application routes
-        $collector = container()->get(Collector::class);
+        $collector = new Collector();
         foreach ($controllers as $controller) {
             $collector->register($controller);
         }
@@ -36,12 +36,12 @@ class Kernel implements HttpKernel
         }
 
         // Get controller payload
-        $middleware = container()->get(Middleware::class);
+        $middleware = new Middleware();
         $content = $middleware->layer($this->layers)
             ->handle($request, fn () => $this->resolve($route, $request));
 
         // Send the response
-        $response = container()->get(Response::class);
+        $response = new Response();
         $response->send($content);
     }
 
