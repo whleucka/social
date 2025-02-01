@@ -26,7 +26,7 @@ class Kernel implements HttpKernel
         }
 
         // Dispatch the router
-        $router = container()->make(Router::class, ["collector" => $collector]);
+        $router = new Router($collector);
         $route = $router->dispatch($request);
 
         // If there is no route, then 404
@@ -63,6 +63,7 @@ class Kernel implements HttpKernel
     private function resolve(array $route, Request $request)
     {
         // Resolve the controller endpoint
+        // Using the container will allow for DI
         $controller = container()->make($route['controller'], ['request' => $request]);
         $method = $route['method'];
         return $controller->$method();

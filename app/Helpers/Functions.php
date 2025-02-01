@@ -35,8 +35,8 @@ function dd(mixed $payload): void
  */
 function app(): Application
 {
-    $kernel = container()->get(HttpKernel::class);
-    return container()->make(Application::class, ['kernel' => $kernel]);
+    $kernel = new HttpKernel;
+    return new Application($kernel);
 }
 
 /**
@@ -44,8 +44,8 @@ function app(): Application
  */
 function console(): Application
 {
-    $kernel = container()->get(ConsoleKernel::class);
-    return container()->make(Application::class, ['kernel' => $kernel]);
+    $kernel = new ConsoleKernel;
+    return new Application($kernel);
 }
 
 /**
