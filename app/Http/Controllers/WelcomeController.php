@@ -10,6 +10,7 @@ class WelcomeController extends Controller
     #[Get("/", "welcome.index")] 
     public function index(): string
     {
+        dump($this->request);
         return "Hello, world!";
     }
 }

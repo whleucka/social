@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace Echo\Framework\Http\Middleware;
 
 use Echo\Interface\Http\{Request, Middleware};
 use Closure;
