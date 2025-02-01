@@ -3,10 +3,11 @@
 namespace Echo\Framework\Container;
 
 use DI\Container;
+use Echo\Traits\Creational\Singleton;
 
 class AppContainer
 {
-    private static ?Container $instance = null;
+    use Singleton;
 
     public static function getInstance(): Container {
         if (self::$instance === null) {
