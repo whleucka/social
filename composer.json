@@ -12,6 +12,11 @@
             "Echo\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "William Hleucka",
@@ -22,5 +27,8 @@
     "require": {
         "php": "^8.2",
         "php-di/php-di": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.0@dev"
     }
 }

@@ -3,7 +3,6 @@
 namespace Echo\Framework\Routing;
 
 use Echo\Framework\Routing\Collector;
-use Echo\Interface\Http\Request;
 use Echo\Interface\Routing\Router as RouterInterface;
 
 class Router implements RouterInterface
@@ -15,23 +14,27 @@ class Router implements RouterInterface
     /**
      * Dispatch a new route
      */
-    public function dispatch(Request $request): ?array
+    public function dispatch(string $uri, string $method): ?array
     {
-        $uri = $request->getUri();
-        $method = strtolower($request->getMethod());
+        $method = strtolower($method);
         $routes = $this->collector->getRoutes();
 
         // Check for an exact match first
         if (isset($routes[$uri][$method])) {
-            return ['handler' => $routes[$uri][$method], 'params' => []];
+            // There are no params
+            $routes[$uri][$method]['params'] = [];
+            return $routes[$uri][$method];
         }
 
         // Check for parameterized routes
         foreach ($routes as $route => $methods) {
             $pattern = preg_replace('/\{(\w+)\}/', '([^/]+)', $route);
             if (preg_match("#^$pattern$#", $uri, $matches)) {
-                array_shift($matches); // Remove full match
-                return ['handler' => $methods[$method] ?? null, 'params' => $matches];
+                // Remove the full match
+                array_shift($matches);
+                // Add available params
+                $methods[$method]['params'] = $matches;
+                return $methods[$method];
             }
         }
 

@@ -27,21 +27,18 @@ class Kernel implements HttpKernel
 
         // Dispatch the router
         $router = new Router($collector);
-        $dispatched = $router->dispatch($request);
+        $route = $router->dispatch($request->getUri(), $request->getMethod());
 
         // If there is no route, then 404
-        if (is_null($dispatched)) {
+        if (is_null($route)) {
             http_response_code(404);
             exit;
         }
 
-        $route = $dispatched['handler'];
-        $params = $dispatched['params'];
-
         // Get controller payload
         $middleware = container()->get(Middleware::class);
         $content = $middleware->layer($this->layers)
-            ->handle($request, fn () => $this->resolve($route, $request, $params));
+            ->handle($request, fn () => $this->resolve($route, $request));
 
         // Send the response
         $response = container()->get(Response::class);
@@ -63,12 +60,13 @@ class Kernel implements HttpKernel
         return array_diff($after, $before);
     }
 
-    private function resolve(array $route, Request $request, array $params = [])
+    private function resolve(array $route, Request $request)
     {
         // Resolve the controller endpoint
         // Using the container will allow for DI
         $controller = container()->make($route['controller'], ['request' => $request]);
         $method = $route['method'];
+        $params = $route['params'];
         return $controller->$method(...$params);
     }
 }
