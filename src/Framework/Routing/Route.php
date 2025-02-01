@@ -1,6 +1,6 @@
 <?php
 
-namespace Echo\Framework\Http;
+namespace Echo\Framework\Routing;
 
 use Attribute;
 

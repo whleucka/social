@@ -2,34 +2,50 @@
 
 use App\Application;
 use App\Http\Kernel as HttpKernel;
+use App\Console\Kernel as ConsoleKernel;
 
-function dump(mixed $payload)
+/**
+ * Dump
+ */
+function dump(mixed $payload): void
 {
     printf("<pre>%s</pre>", print_r($payload, true));
 }
 
-function dd(mixed $payload)
+/**
+ * Dump & die
+ */
+function dd(mixed $payload): void
 {
-    // Dump and die
     dump($payload);
     die;
 }
 
-function app()
+/**
+ * Web application
+ */
+function app(): Application
 {
     $kernel = new HttpKernel();
     return new Application($kernel);
 }
 
-function console()
+/**
+ * Console application
+ */
+function console(): Application
 {
-    dd("wip");
+    $kernel = new ConsoleKernel();
+    return new Application($kernel);
 }
 
+/**
+ * Get application config
+ */
 function config(string $name)
 {
     $name_split = explode(".", $name);
-    $config_target = __DIR__ . "/../Config/" . $name_split[0] . ".php";
+    $config_target = __DIR__ . "/../Config/" . strtolower($name_split[0]) . ".php";
 
     if (is_file($config_target)) {
         $config = require $config_target;
@@ -38,7 +54,7 @@ function config(string $name)
         $value = $config;
         for ($i = 1; $i < count($name_split); $i++) {
             if (!isset($value[$name_split[$i]])) {
-                return null; // Return null if key doesn't exist
+                return null; // Doesn't exist
             }
             $value = $value[$name_split[$i]];
         }
@@ -46,5 +62,5 @@ function config(string $name)
         return $value;
     }
 
-    return null; // Return null if file doesn't exist
+    return null; // Doesn't exist
 }

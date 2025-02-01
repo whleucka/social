@@ -4,9 +4,8 @@ namespace Echo\Framework\Http;
 
 use Closure;
 use Echo\Interface\Http\Request;
-use Echo\Interface\Http\Middleware as HttpMiddleware;
 
-class Middleware implements HttpMiddleware
+class Middleware
 {
     public function __construct(private array $layers = [])
     {

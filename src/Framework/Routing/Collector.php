@@ -1,8 +1,7 @@
 <?php
 
-namespace Echo\Framework\Http\Route;
+namespace Echo\Framework\Routing;
 
-use Echo\Framework\Http\Route;
 use ReflectionClass;
 
 class Collector

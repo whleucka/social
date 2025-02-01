@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Echo\Framework\Http\Controller;
-use Echo\Framework\Http\Route\Get;
+use Echo\Framework\Routing\Route\Get;
 
 class WelcomeController extends Controller
 {

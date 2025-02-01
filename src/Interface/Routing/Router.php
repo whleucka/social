@@ -1,6 +1,8 @@
 <?php
 
-namespace Echo\Interface\Http;
+namespace Echo\Interface\Routing;
+
+use Echo\Interface\Http\Request;
 
 interface Router
 {

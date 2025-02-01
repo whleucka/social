@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Middlewares;
+namespace App\Http\Middleware;
 
-use Echo\Interface\Http\{Request, Middlewares};
+use Echo\Interface\Http\{Request, Middleware};
 use Closure;
 
 /**
  * Adds an ID to request
  */
-class RequestID implements Middlewares
+class RequestID implements Middleware
 {
     public function handle(Request $request, Closure $next): mixed
     {

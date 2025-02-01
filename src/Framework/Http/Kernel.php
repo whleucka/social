@@ -2,7 +2,8 @@
 
 namespace Echo\Framework\Http;
 
-use Echo\Framework\Http\Route\Collector;
+use Echo\Framework\Routing\Collector;
+use Echo\Framework\Routing\Router;
 use Echo\Interface\Http\Kernel as HttpKernel;
 use Echo\Interface\Http\Request;
 use Echo\Framework\Http\Response;

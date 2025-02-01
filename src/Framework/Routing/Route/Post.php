@@ -1,8 +1,8 @@
 <?php
 
-namespace Echo\Framework\Http\Route;
+namespace Echo\Framework\Routing\Route;
 
-use Echo\Framework\Http\Route;
+use Echo\Framework\Routing\Route;
 
 use Attribute;
 

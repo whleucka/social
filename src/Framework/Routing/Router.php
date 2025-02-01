@@ -1,12 +1,12 @@
 <?php
 
-namespace Echo\Framework\Http;
+namespace Echo\Framework\Routing;
 
-use Echo\Framework\Http\Route\Collector;
+use Echo\Framework\Routing\Collector;
 use Echo\Interface\Http\Request;
-use Echo\Interface\Http\Router as HttpRouter;
+use Echo\Interface\Routing\Router as RouterInterface;
 
-class Router implements HttpRouter
+class Router implements RouterInterface
 {
     public function __construct(private Collector $collector)
     {
