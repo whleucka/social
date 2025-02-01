@@ -20,13 +20,13 @@ class Kernel implements HttpKernel
         $controllers = $this->getControllers($controller_path);
 
         // Register application routes
-        $collector = new Collector();
+        $collector = container()->get(Collector::class);
         foreach ($controllers as $controller) {
             $collector->register($controller);
         }
 
         // Dispatch the router
-        $router = new Router($collector);
+        $router = container()->make(Router::class, ["collector" => $collector]);
         $route = $router->dispatch($request);
 
         // If there is no route, then 404
@@ -36,12 +36,12 @@ class Kernel implements HttpKernel
         }
 
         // Get controller payload
-        $middleware = new Middleware();
+        $middleware = container()->get(Middleware::class);
         $content = $middleware->layer($this->layers)
             ->handle($request, fn () => $this->resolve($route, $request));
 
         // Send the response
-        $response = new Response();
+        $response = container()->get(Response::class);
         $response->send($content);
     }
 
@@ -63,7 +63,7 @@ class Kernel implements HttpKernel
     private function resolve(array $route, Request $request)
     {
         // Resolve the controller endpoint
-        $controller = new $route['controller']($request);
+        $controller = container()->make($route['controller'], ['request' => $request]);
         $method = $route['method'];
         return $controller->$method();
     }

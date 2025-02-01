@@ -4,6 +4,7 @@ namespace Echo\Framework\Http;
 
 use Closure;
 use Echo\Interface\Http\Request;
+use Echo\Interface\Http\Middleware as HttpMiddleware;
 
 class Middleware
 {
@@ -59,6 +60,7 @@ class Middleware
 
     private function createLayer($nextLayer, $layer): Closure
     {
-        return fn ($object) => (new $layer)->handle($object, $nextLayer);
+        $layer = container()->get($layer);
+        return fn ($object) => $layer->handle($object, $nextLayer);
     }
 }

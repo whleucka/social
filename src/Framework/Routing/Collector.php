@@ -2,6 +2,7 @@
 
 namespace Echo\Framework\Routing;
 
+use Echo\Framework\Routing\Route;
 use ReflectionClass;
 
 class Collector

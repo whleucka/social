@@ -2,9 +2,9 @@
 
 namespace Echo\Framework\Http;
 
-use Echo\Interface\Http\Response as InterfaceResponse;
+use Echo\Interface\Http\Response as HttpResponse;
 
-class Response implements InterfaceResponse
+class Response implements HttpResponse
 {
     public function send(string $content, int $code = 200): void
     {

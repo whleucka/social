@@ -3,6 +3,15 @@
 use App\Application;
 use App\Http\Kernel as HttpKernel;
 use App\Console\Kernel as ConsoleKernel;
+use Echo\Framework\Container\AppContainer;
+
+/**
+ * Get application container
+ */
+function container()
+{
+    return AppContainer::getInstance();
+}
 
 /**
  * Dump
@@ -26,8 +35,8 @@ function dd(mixed $payload): void
  */
 function app(): Application
 {
-    $kernel = new HttpKernel();
-    return new Application($kernel);
+    $kernel = container()->get(HttpKernel::class);
+    return container()->make(Application::class, ['kernel' => $kernel]);
 }
 
 /**
@@ -35,8 +44,8 @@ function app(): Application
  */
 function console(): Application
 {
-    $kernel = new ConsoleKernel();
-    return new Application($kernel);
+    $kernel = container()->get(ConsoleKernel::class);
+    return container()->make(Application::class, ['kernel' => $kernel]);
 }
 
 /**

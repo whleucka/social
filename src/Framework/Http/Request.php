@@ -19,9 +19,9 @@ class Request implements HttpRequest
         array $post = [],
         array $files = [],
     ) {
-        $this->get = new Get($get);
-        $this->post = new Post($post);
-        $this->files = new Files($files);
+        $this->get = container()->make(Get::class, ['data' => $get]);
+        $this->post = container()->make(Post::class, ['data' => $post]);
+        $this->files = container()->make(Files::class, ['data' => $files]);
     }
 
     public function getUri(): string
