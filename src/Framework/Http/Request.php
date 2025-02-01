@@ -2,9 +2,7 @@
 
 namespace Echo\Framework\Http;
 
-use Echo\Framework\Http\Request\Files;
-use Echo\Framework\Http\Request\Get;
-use Echo\Framework\Http\Request\Post;
+use Echo\Framework\Http\Request\{Get, Post, Files, Cookie};
 use Echo\Interface\Http\Request as HttpRequest;
 
 class Request implements HttpRequest
@@ -12,16 +10,20 @@ class Request implements HttpRequest
     public Get $get;
     public Post $post;
     public Files $files;
+    public Cookie $cookie;
+
     private array $attributes = [];
 
     public function __construct(
         array $get = [],
         array $post = [],
         array $files = [],
+        array $cookie = [],
     ) {
         $this->get = new Get($get);
         $this->post = new Post($post);
         $this->files = new Files($files);
+        $this->cookie = new Cookie($cookie);
     }
 
     public function getUri(): string
