@@ -11,7 +11,7 @@ use Echo\Framework\Http\Response;
 class Kernel implements HttpKernel
 {
     // Middleware layers
-    protected array $layers = [];
+    protected array $middleware_layers = [];
 
     public function handle(Request $request): void
     {
@@ -37,7 +37,7 @@ class Kernel implements HttpKernel
 
         // Get controller payload
         $middleware = new Middleware();
-        $content = $middleware->layer($this->layers)
+        $content = $middleware->layer($this->middleware_layers)
             ->handle($request, fn () => $this->resolve($route, $request));
 
         // Send the response
@@ -64,9 +64,14 @@ class Kernel implements HttpKernel
     {
         // Resolve the controller endpoint
         // Using the container will allow for DI
-        $controller = container()->make($route['controller'], ['request' => $request]);
+        $controller_class = $route['controller'];
         $method = $route['method'];
         $params = $route['params'];
+
+        // Set the controller request
+        $controller = container()->get($controller_class);
+        $controller->setRequest($request);
+
         return $controller->$method(...$params);
     }
 }
