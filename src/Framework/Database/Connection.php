@@ -2,14 +2,17 @@
 
 namespace Echo\Framework\Database;
 
+use Echo\Interface\Database\Connection as DatabaseConnection;
 use Echo\Interface\Database\Driver;
+use Echo\Traits\Creational\Singleton;
 use PDO;
 use PDOException;
 use RuntimeException;
 
-class Connection
+final class Connection implements DatabaseConnection
 {
-    private static ?Connection $instance = null;
+    use Singleton;
+
     private ?PDO $link = null;
     private Driver $driver;
 
@@ -41,6 +44,53 @@ class Connection
                 throw new RuntimeException('Database connection failed: ' . $e->getMessage());
             }
         }
+    }
+
+    public function query(string $sql, array $params = []): mixed
+    {
+        $this->connect();
+        $stmt = $this->link->prepare($sql);
+        $stmt->execute($params);
+        return $stmt;
+    }
+
+    public function execute(string $sql, array $params = []): bool
+    {
+        $this->connect();
+        $stmt = $this->link->prepare($sql);
+        return $stmt->execute($params);
+    }
+
+    public function fetch(string $sql, array $params = []): array
+    {
+        return $this->query($sql, $params)->fetch() ?: [];
+    }
+
+    public function fetchAll(string $sql, array $params = []): array
+    {
+        return $this->query($sql, $params)->fetchAll();
+    }
+
+    public function lastInsertId(): string
+    {
+        $this->connect();
+        return $this->link->lastInsertId();
+    }
+
+    public function beginTransaction(): bool
+    {
+        $this->connect();
+        return $this->link->beginTransaction();
+    }
+
+    public function commit(): bool
+    {
+        return $this->link->commit();
+    }
+
+    public function rollback(): bool
+    {
+        return $this->link->rollBack();
     }
 
     public function getLink(): PDO

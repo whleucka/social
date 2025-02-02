@@ -3,7 +3,7 @@
 use App\Application;
 use App\Http\Kernel as HttpKernel;
 use App\Console\Kernel as ConsoleKernel;
-use Echo\Framework\Container\AppContainer;
+use Echo\Framework\Container\Container;
 use Echo\Framework\Database\Connection;
 use Echo\Framework\Database\Drivers\MySQL;
 
@@ -12,7 +12,7 @@ use Echo\Framework\Database\Drivers\MySQL;
  */
 function container()
 {
-    return AppContainer::getInstance();
+    return Container::getInstance();
 }
 
 /**
