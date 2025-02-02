@@ -1,7 +1,8 @@
 <?php
 
-$app_root = __DIR__ . "/..";
+$root = __DIR__ . "/../../";
 
 return [
-    "controllers" => $app_root . "/Http/Controllers",
+    "root" => $root,
+    "controllers" => $root . "/app/Http/Controllers",
 ];

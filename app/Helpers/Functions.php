@@ -4,6 +4,8 @@ use App\Application;
 use App\Http\Kernel as HttpKernel;
 use App\Console\Kernel as ConsoleKernel;
 use Echo\Framework\Container\AppContainer;
+use Echo\Framework\Database\Connection;
+use Echo\Framework\Database\Drivers\MySQL;
 
 /**
  * Get application container
@@ -11,6 +13,23 @@ use Echo\Framework\Container\AppContainer;
 function container()
 {
     return AppContainer::getInstance();
+}
+
+/**
+ * Get PDO DB
+ */
+function db()
+{
+    $mysql = container()->get(MySQL::class);
+    return Connection::getInstance($mysql);
+}
+
+function env(string $name, mixed $default = null)
+{
+    if (!isset($_ENV[$name])) {
+        $_ENV[$name] = $default;
+    }
+    return $_ENV[$name];
 }
 
 /**

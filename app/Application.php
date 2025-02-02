@@ -6,11 +6,14 @@ use Echo\Framework\Http\Request;
 use Echo\Interface\Console\Kernel as ConsoleKernel;
 use Echo\Interface\Application as EchoApplication;
 use Echo\Interface\Http\Kernel as HttpKernel;
+use Dotenv;
 
 class Application implements EchoApplication
 {
     public function __construct(private ConsoleKernel|HttpKernel $kernel)
     {
+        $dotenv = Dotenv\Dotenv::createImmutable(config("paths.root"));
+        $dotenv->load();
     }
 
     public function run(): void
