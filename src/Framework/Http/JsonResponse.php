@@ -2,11 +2,11 @@
 
 namespace Echo\Framework\Http;
 
-use Echo\Interface\Http\Response as HttpResponse;
+use Echo\Interface\Http\Response;
 
-class Response implements HttpResponse
+class JsonResponse implements Response
 {
-    public function __construct(private string $content)
+    public function __construct(private array $content)
     {
     }
 
@@ -15,6 +15,6 @@ class Response implements HttpResponse
         ob_start();
         ob_clean();
         http_response_code($code);
-        echo $this->content;
+        echo json_encode($this->content, JSON_PRETTY_PRINT);
     }
 }

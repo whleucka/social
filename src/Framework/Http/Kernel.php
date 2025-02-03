@@ -7,6 +7,8 @@ use Echo\Framework\Routing\Router;
 use Echo\Interface\Http\Kernel as HttpKernel;
 use Echo\Interface\Http\Request;
 use Echo\Framework\Http\Response;
+use Error;
+use Exception;
 
 class Kernel implements HttpKernel
 {
@@ -37,12 +39,8 @@ class Kernel implements HttpKernel
 
         // Get controller payload
         $middleware = new Middleware();
-        $content = $middleware->layer($this->middleware_layers)
+        $middleware->layer($this->middleware_layers)
             ->handle($request, fn () => $this->resolve($route, $request));
-
-        // Send the response
-        $response = new Response();
-        $response->send($content);
     }
 
     private function getControllers(string $directory): array
@@ -60,18 +58,56 @@ class Kernel implements HttpKernel
         return array_diff($after, $before);
     }
 
-    private function resolve(array $route, Request $request)
+    private function resolve(array $route, Request $request): void
     {
         // Resolve the controller endpoint
-        // Using the container will allow for DI
         $controller_class = $route['controller'];
         $method = $route['method'];
         $params = $route['params'];
+        $middleware = $route['middleware'];
 
         // Set the controller request
-        $controller = container()->get($controller_class);
-        $controller->setRequest($request);
+        try {
+            // Using the container will allow for DI
+            $controller = container()->get($controller_class);
+            $controller->setRequest($request);
 
-        return $controller->$method(...$params);
+            $content = $controller->$method(...$params);
+        } catch (Exception $ex) {
+            http_response_code(500);
+
+            if (in_array("api", $middleware)) {
+                $content = null;
+            } else {
+                throw $ex;
+            }
+        } catch (Error $err) {
+            http_response_code(400);
+
+            if (in_array("api", $middleware)) {
+                $content = null;
+            } else {
+                throw $err;
+            }
+        }
+
+        $code = http_response_code();
+
+        // Create response (api or web)
+        if (in_array("api", $middleware)) {
+            // API response
+            $response = new JsonResponse([
+                "id" => $request->getAttribute("request_id"),
+                "success" => $code === 200,
+                "status" => $code,
+                "data" => $content,
+                "ts" => date(DATE_ATOM),
+            ]);
+        } else {
+            // Web response
+            $response = new Response($content);
+        }
+
+        $response->send($code);
     }
 }

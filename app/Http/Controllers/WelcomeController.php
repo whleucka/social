@@ -12,4 +12,10 @@ class WelcomeController extends Controller
     {
         return "Hello, world!";
     }
+
+    #[Get("/api/test", "welcome.api.test", ["api"])] 
+    public function test(): string
+    {
+        return "The Ultimate Answer to Life, The Universe and Everything is...42!";
+    }
 }
