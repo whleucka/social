@@ -70,7 +70,7 @@ function console(): Application
 /**
  * Get application config
  */
-function config(string $name)
+function config(string $name): mixed
 {
     $name_split = explode(".", $name);
     $config_target = __DIR__ . "/../Config/" . strtolower($name_split[0]) . ".php";
@@ -86,7 +86,8 @@ function config(string $name)
             }
             $value = $value[$name_split[$i]];
         }
-
+        if ($value === "true") return true;
+        if ($value === "false") return false;
         return $value;
     }
 

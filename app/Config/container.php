@@ -17,6 +17,7 @@ return [
     \Twig\Loader\FilesystemLoader::class => DI\create()->constructor(config("paths.templates")),
     \Twig\Environment::class => DI\create()->constructor(DI\Get(\Twig\Loader\FilesystemLoader::class), [
         "cache" => config("paths.template_cache"),
-        "debug" => config("app.debug")
+        "auto_reload" => config("app.debug"),
+        "debug" => config("app.debug"),
     ])
 ];
