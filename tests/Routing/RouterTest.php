@@ -43,6 +43,11 @@ class RouterTest extends TestCase
 
         $route = $this->dispatchRoute("/id/420", "GET");
         $this->assertSame("id", $route["method"]);
+        $this->assertSame(['420'], $route["params"]);
+
+        $route = $this->dispatchRoute("/user/67def236-954e-4d78-8af0-d9cca0bee9a0/9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08", "GET");
+        $this->assertSame("user", $route["method"]);
+        $this->assertSame(["67def236-954e-4d78-8af0-d9cca0bee9a0", "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"], $route["params"]);
 
         $route = $this->dispatchRoute("/id/testing", "GET");
         $this->assertSame("testing", $route["method"]);
@@ -91,6 +96,12 @@ class Routes extends Controller
     public function id(int $id)
     {
         return $id;
+    }
+
+    #[Get("/user/{uuid}/{token}", "routes.user")]
+    public function user(string $uuid, string $token)
+    {
+        return $uuid.$token;
     }
 
     #[Get("/id/testing", "routes.testing")]    
