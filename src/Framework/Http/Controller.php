@@ -18,4 +18,10 @@ class Controller implements HttpController
     {
         return $this->request;
     }
+
+    protected function render(string $template, array $data = []): string
+    {
+        $twig = container()->get(\Twig\Environment::class);
+        return $twig->render($template, $data);
+    }
 }

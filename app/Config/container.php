@@ -14,4 +14,9 @@ return [
         config("db.charset"),
         config("db.options"),
     ),
+    \Twig\Loader\FilesystemLoader::class => DI\create()->constructor(config("paths.templates")),
+    \Twig\Environment::class => DI\create()->constructor(DI\Get(\Twig\Loader\FilesystemLoader::class), [
+        "cache" => config("paths.template_cache"),
+        "debug" => config("app.debug")
+    ])
 ];
