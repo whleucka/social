@@ -10,7 +10,7 @@ class WelcomeController extends Controller
     #[Get("/", "welcome.index")] 
     public function index(): string
     {
-        return $this->render("welcome/index.html");
+        return $this->render("welcome/index.html.twig");
     }
 
     #[Get("/api/test", "welcome.api.test", ["api"])] 
