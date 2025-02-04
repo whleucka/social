@@ -3,6 +3,7 @@
 namespace Echo\Framework\Http;
 
 use Echo\Framework\Http\Request\{Get, Post, Files, Cookie};
+use Echo\Framework\Http\Request\Request as Req;
 use Echo\Interface\Http\Request as HttpRequest;
 
 class Request implements HttpRequest
@@ -10,6 +11,7 @@ class Request implements HttpRequest
     public Get $get;
     public Post $post;
     public Files $files;
+    public Req $request;
     public Cookie $cookie;
 
     private array $attributes = [];
@@ -17,11 +19,13 @@ class Request implements HttpRequest
     public function __construct(
         array $get = [],
         array $post = [],
+        array $request = [],
         array $files = [],
         array $cookie = [],
     ) {
         $this->get = new Get($get);
         $this->post = new Post($post);
+        $this->request = new Req($request);
         $this->files = new Files($files);
         $this->cookie = new Cookie($cookie);
     }

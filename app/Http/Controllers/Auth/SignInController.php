@@ -21,6 +21,17 @@ class SignInController extends Controller
     #[Post("/sign-in", "auth.sign-in.post")]
     public function post()
     {
-        die("wip");
+        $valid = $this->validate([
+            "email" => ["required", "email"],
+            "password" => ["required"],
+        ]);
+        if ($valid) {
+            dd($valid);
+            $success = $this->provider->signIn($valid->email, $valid->password);
+            if ($success) {
+                die("wip: sign in success");
+            }
+        }
+        return $this->index();
     }
 }
