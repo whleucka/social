@@ -20,21 +20,12 @@ class Application implements EchoApplication
     {
         // Run the application (web or cli)
         if ($this->kernel instanceof HttpKernel) {
-            $this->web();
+            // Handle a web request
+            $request = container()->get(Request::class);
+            $this->kernel->handle($request);
         } elseif ($this->kernel instanceof ConsoleKernel) {
-            $this->cli();
+            // Run a command in cli mode
+            die("wip");
         }
-    }
-
-    private function web()
-    {
-        // Handle a web request
-        $request = container()->get(Request::class);
-        $this->kernel->handle($request);
-    }
-
-    private function cli()
-    {
-        // Run a command in cli mode
     }
 }

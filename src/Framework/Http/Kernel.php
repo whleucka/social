@@ -9,6 +9,8 @@ use Echo\Interface\Http\Request;
 use Echo\Framework\Http\Response;
 use Error;
 use Exception;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 class Kernel implements HttpKernel
 {
@@ -48,9 +50,14 @@ class Kernel implements HttpKernel
         // Get existing classes before loading new ones
         $before = get_declared_classes();
 
-        foreach (glob($directory . '/*.php') as $file) {
-            require_once $file;
+        // Recursively find all PHP files
+        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
+        foreach ($files as $file) {
+            if ($file->isFile() && $file->getExtension() === 'php') {
+                require_once $file->getPathname();
+            }
         }
+
         // Get all declared classes after loading
         $after = get_declared_classes();
 
