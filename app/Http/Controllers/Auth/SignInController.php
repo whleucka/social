@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Providers\Auth\SignInServiceProvider;
+use App\Providers\Auth\SignInService;
 use Echo\Framework\Http\Controller;
 use Echo\Framework\Routing\Route\{Get, Post};
 
 class SignInController extends Controller
 {
-    public function __construct(private SignInServiceProvider $service)
+    public function __construct(private SignInService $provider)
     {
     }
 

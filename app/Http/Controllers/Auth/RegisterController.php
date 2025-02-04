@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Providers\Auth\RegisterServiceProvider;
+use App\Providers\Auth\RegisterService;
 use Echo\Framework\Http\Controller;
 use Echo\Framework\Routing\Route\{Get, Post};
 
 class RegisterController extends Controller
 {
-    public function __construct(private RegisterServiceProvider $service)
+    public function __construct(private RegisterService $provider)
     {
     }
 
