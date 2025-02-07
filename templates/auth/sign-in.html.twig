@@ -2,10 +2,9 @@
 
 {% block content %}
     <section id="sign-in" class="p-1">
-        <h1>Sign In</h1>
         <form method="POST" hx-post="/sign-in">
             <div class="form-floating mb-3">
-                <input type="input" class="form-control" id="email" name="email" placeholder="" autocomplete="username">
+                <input type="input" class="form-control" id="email" name="email" placeholder="" autocomplete="email">
                 <label for="email">Email address</label>
                  {% include 'components/validation.html.twig' with {'validate': 'email'} %}
             </div>
@@ -15,7 +14,7 @@
                  {% include 'components/validation.html.twig' with {'validate': 'password'} %}
             </div>
             <div class="mt-2">
-                <button type="submit" class="btn btn-success">Enter</button>
+                <button type="submit" class="btn btn-success">Log in</button>
             </div>
         </form>
     </section>

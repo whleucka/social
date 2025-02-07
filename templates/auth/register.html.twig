@@ -1,5 +1,37 @@
 {% extends "layout/base.html.twig" %}
 
 {% block content %}
-    <p>wip: register</p>
+    <section id="register" class="p-1">
+        <form method="POST" hx-post="/register">
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-floating mb-3">
+                        <input type="input" class="form-control" id="first-name" name="first_name" placeholder="" autocomplete="name">
+                        <label for="first-name">First name</label>
+                        {% include 'components/validation.html.twig' with {'validate': 'first_name'} %}
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-floating mb-3">
+                        <input type="input" class="form-control" id="surname" name="surname" placeholder="" autocomplete="name">
+                        <label for="first-name">Surname</label>
+                        {% include 'components/validation.html.twig' with {'validate': 'surname'} %}
+                    </div>
+                </div>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="input" class="form-control" id="email" name="email" placeholder="" autocomplete="email">
+                <label for="email">Email address</label>
+                 {% include 'components/validation.html.twig' with {'validate': 'email'} %}
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="password" name="password" placeholder="" autocomplete="current-password">
+                <label for="password">Password</label>
+                 {% include 'components/validation.html.twig' with {'validate': 'password'} %}
+            </div>
+            <div class="mt-2">
+                <button type="submit" class="btn btn-success">Sign up</button>
+            </div>
+        </form>
+    </section>
 {% endblock %}

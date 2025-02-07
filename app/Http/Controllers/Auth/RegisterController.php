@@ -22,12 +22,13 @@ class RegisterController extends Controller
     public function post()
     {
         $valid = $this->validate([
-            "name" => ["required"],
+            "first_name" => ["required"],
+            "surname" => ["required"],
             "email" => ["required", "email"],
             "password" => ["required"],
         ]);
         if ($valid) {
-            $success = $this->provider->register($valid->name, $valid->email, $valid->password);
+            $success = $this->provider->register($valid->first_name, $valid->surname, $valid->email, $valid->password);
             if ($success) {
                 die("wip: register success");
             }
