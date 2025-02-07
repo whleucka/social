@@ -21,6 +21,17 @@ class RegisterController extends Controller
     #[Post("/register", "auth.register.post")]
     public function post()
     {
-        die("wip");
+        $valid = $this->validate([
+            "name" => ["required"],
+            "email" => ["required", "email"],
+            "password" => ["required"],
+        ]);
+        if ($valid) {
+            $success = $this->provider->register($valid->name, $valid->email, $valid->password);
+            if ($success) {
+                die("wip: register success");
+            }
+        }
+        return $this->index();
     }
 }

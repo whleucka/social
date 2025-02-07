@@ -26,7 +26,6 @@ class SignInController extends Controller
             "password" => ["required"],
         ]);
         if ($valid) {
-            dd($valid);
             $success = $this->provider->signIn($valid->email, $valid->password);
             if ($success) {
                 die("wip: sign in success");
