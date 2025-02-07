@@ -38,7 +38,7 @@ class Controller implements HttpController
         return $this->request;
     }
 
-    protected function validate(array $ruleset): ?object
+    public function validate(array $ruleset): ?object
     {
         $valid = true;
         $request = $this->request->request->data();
