@@ -38,6 +38,11 @@ class Controller implements HttpController
         return $this->request;
     }
 
+    public function getValiationErrors()
+    {
+        return $this->validation_errors;
+    }
+
     public function validate(array $ruleset): ?object
     {
         $valid = true;

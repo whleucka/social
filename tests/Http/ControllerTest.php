@@ -13,13 +13,17 @@ class ControllerTest extends TestCase
         $c = new BasicController();
         $request = new Request(request: [
             "email" => "test@test.com",
-            "password" => "password1234"
+            "password" => "password1234",
+            "foo" => "bar",
+            "bar" => "baz"
         ]);
         $c->setRequest($request);
         $valid = $c->validate([
             "email" => ["required", "email"],
             "password" => ["required"],
+            "foo" => []
         ]);
+        $this->assertNotNull($valid);
         $this->assertEquals((object)[
             "email" => "test@test.com",
             "password" => "password1234"
