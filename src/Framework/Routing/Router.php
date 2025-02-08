@@ -28,8 +28,13 @@ class Router implements RouterInterface
 
         // Check for parameterized routes
         foreach ($routes as $route => $methods) {
-            $pattern = preg_replace('/\{(\w+)\}/', '([^/]+)', $route);
+            $pattern = preg_replace('/\{(\w+)\}/', '([A-Za-z0-9-]+)', $route);
             if (preg_match("#^$pattern$#", $uri, $matches)) {
+                // Ensure the requested method is valid for this route
+                if (!isset($methods[$method])) {
+                    return null;
+                }
+
                 // Remove the full match
                 array_shift($matches);
                 // Add available params

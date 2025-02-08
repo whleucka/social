@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Tests\Routing;
 
@@ -12,7 +14,7 @@ class RouterTest extends TestCase
 {
     private function dispatchRoute(string $uri, string $method)
     {
-        $collector = new Collector;
+        $collector = new Collector();
         $collector->register(Routes::class);
         $router = new Router($collector);
         return $router->dispatch($uri, $method);
@@ -63,36 +65,70 @@ class RouterTest extends TestCase
 
         $route = $this->dispatchRoute("/colour/purple", "GET");
         $this->assertSame(null, $route);
+
+        // Edge cases
+        // Case Sensitivity
+        $route = $this->dispatchRoute("/Colour/blue", "GET");
+        $this->assertSame(null, $route); // Expect null if case-sensitive
+
+        // Trailing Slash
+        $route = $this->dispatchRoute("/slug/this-is-a-slug/", "GET");
+        $this->assertSame(null, $route); // Depending on your router's behavior
+
+        // Empty URI
+        $route = $this->dispatchRoute("", "GET");
+        $this->assertSame(null, $route);
+
+        // Invalid HTTP Method
+        $route = $this->dispatchRoute("/numbers/1", "POST");
+        $this->assertSame(null, $route);
+
+        // Numeric Edge Cases
+        $route = $this->dispatchRoute("/numbers/0", "GET");
+        $this->assertSame("numbers", $route["method"]);
+
+        $route = $this->dispatchRoute("/numbers/9", "GET");
+        $this->assertSame("numbers", $route["method"]);
+
+        $route = $this->dispatchRoute("/numbers/10", "GET");
+        $this->assertSame(null, $route);
+
+        // Special Characters in Placeholders
+        $route = $this->dispatchRoute("/id/@#$%", "GET");
+        $this->assertSame(null, $route); // Should not match `{id}`
+
+        $route = $this->dispatchRoute("/user/abc*/def!", "GET");
+        $this->assertSame(null, $route); // Invalid UUID and token
     }
 }
 
 class Routes extends Controller
 {
-    #[Get("/", "routes.index", ["auth"])]    
+    #[Get("/", "routes.index", ["auth"])]
     public function index()
     {
         return "index";
     }
 
-    #[Get("/numbers/[0-9]", "routes.numbers")]    
+    #[Get("/numbers/[0-9]", "routes.numbers")]
     public function numbers()
     {
         return "numbers";
     }
 
-    #[Get("/colour/(blue|red)", "routes.blue_red")]    
+    #[Get("/colour/(blue|red)", "routes.blue_red")]
     public function blue_red()
     {
         return "blue_red";
     }
 
-    #[Get("/slug/this-is-a-slug", "routes.slug")]    
+    #[Get("/slug/this-is-a-slug", "routes.slug")]
     public function slug()
     {
         return 'slug';
     }
 
-    #[Get("/id/{id}", "routes.id")]    
+    #[Get("/id/{id}", "routes.id")]
     public function id(int $id)
     {
         return $id;
@@ -104,7 +140,7 @@ class Routes extends Controller
         return $uuid.$token;
     }
 
-    #[Get("/id/testing", "routes.testing")]    
+    #[Get("/id/testing", "routes.testing")]
     public function testing()
     {
         return 'testing';
