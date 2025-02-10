@@ -13,6 +13,8 @@ class Model implements DatabaseModel
     protected array $columns = ["*"];
     protected QueryBuilder $qb;
     private array $where = [];
+    private array $or_where = [];
+    private array $order_by = [];
     private array $params = [];
     private array $attributes = [];
     private array $valid_operators = [
@@ -108,7 +110,7 @@ class Model implements DatabaseModel
             $operator = "=";
         }
         // Add the where clause and params
-        $this->orWhere[] = "($field $operator ?)";
+        $this->or_where[] = "($field $operator ?)";
         $this->params[] = $value;
         return $this;
     }
@@ -128,7 +130,7 @@ class Model implements DatabaseModel
 
     public function orderBy(string $column, string $direction = "ASC"): Model
     {
-        $this->orderBy[] = "$column $direction";
+        $this->order_by[] = "$column $direction";
         return $this;
     }
 
@@ -146,13 +148,13 @@ class Model implements DatabaseModel
             ->select($this->columns)
             ->from($this->table_name)
             ->where($this->where)
-            ->orWhere($this->orWhere)
-            ->orderBy($this->orderBy)
+            ->orWhere($this->or_where)
+            ->orderBy($this->order_by)
             ->limit($limit)
             ->params($this->params)
             ->execute()
-            ->fetchAll();
-        $key = $this->primaryKey;
+            ->fetchAll(PDO::FETCH_OBJ);
+        $key = $this->primary_key;
         if ($results && $lazy && count($results) === 1) {
             $result = $results[0];
             return self::find($result->$key);
@@ -168,12 +170,12 @@ class Model implements DatabaseModel
             ->select($this->columns)
             ->from($this->table_name)
             ->where($this->where)
-            ->orWhere($this->orWhere)
-            ->orderBy($this->orderBy)
+            ->orWhere($this->or_where)
+            ->orderBy($this->order_by)
             ->params($this->params)
             ->execute()
-            ->fetchAll();
-        $key = $this->primaryKey;
+            ->fetchAll(PDO::FETCH_OBJ);
+        $key = $this->primary_key;
         if ($results) {
             $result = $results[0];
             return self::find($result->$key);
@@ -187,12 +189,12 @@ class Model implements DatabaseModel
             ->select($this->columns)
             ->from($this->table_name)
             ->where($this->where)
-            ->orWhere($this->orWhere)
-            ->orderBy($this->orderBy)
+            ->orWhere($this->or_where)
+            ->orderBy($this->order_by)
             ->params($this->params)
             ->execute()
-            ->fetchAll();
-        $key = $this->primaryKey;
+            ->fetchAll(PDO::FETCH_OBJ);
+        $key = $this->primary_key;
         if ($results) {
             $result = end($results);
             return self::find($result->$key);
@@ -206,8 +208,8 @@ class Model implements DatabaseModel
             ->select($this->columns)
             ->from($this->table_name)
             ->where($this->where)
-            ->orWhere($this->orWhere)
-            ->orderBy($this->orderBy)
+            ->orWhere($this->or_where)
+            ->orderBy($this->order_by)
             ->limit($limit)
             ->params($this->params);
         return ["sql" => $qb->getQuery(), "params" => $qb->getQueryParams()];
@@ -215,7 +217,7 @@ class Model implements DatabaseModel
 
     public function save(): Model
     {
-        $key = $this->primaryKey;
+        $key = $this->primary_key;
         $params = [...array_values($this->attributes), $this->id];
         $result = $this->qb
             ->update($this->attributes)
@@ -231,7 +233,7 @@ class Model implements DatabaseModel
 
     public function update(array $data): Model
     {
-        $key = $this->primaryKey;
+        $key = $this->primary_key;
         $params = [...array_values($data), $this->id];
         $result = $this->qb
             ->update($data)
@@ -247,7 +249,7 @@ class Model implements DatabaseModel
 
     public function delete(): bool
     {
-        $key = $this->primaryKey;
+        $key = $this->primary_key;
         $result = $this->qb
             ->delete()
             ->from($this->table_name)

@@ -17,7 +17,6 @@ class RegisterService
 
         if ($user) {
             # WIP: set user session
-
             return $user;
         }
 
