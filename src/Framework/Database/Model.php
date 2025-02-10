@@ -9,7 +9,7 @@ use PDO;
 class Model implements DatabaseModel
 {
     protected string $primary_key = "id";
-    protected bool $autoIncrement = true;
+    protected bool $auto_increment = true;
     protected array $columns = ["*"];
     protected QueryBuilder $qb;
     private array $where = [];
@@ -65,10 +65,10 @@ class Model implements DatabaseModel
             ->into($model->table_name)
             ->params(array_values($data))
             ->execute();
-        if ($result && $model->autoIncrement) {
+        if ($result && $model->auto_increment) {
             $id = db()->lastInsertId();
             return self::find($id);
-        } elseif ($result && !$model->autoIncrement) {
+        } elseif ($result && !$model->auto_increment) {
             return true;
         }
         return false;
@@ -81,7 +81,7 @@ class Model implements DatabaseModel
         try {
             $result = new $model($id);
             return $result;
-        } catch (Exception $ex) {
+        } catch (Exception) {
             return null;
         }
     }
@@ -210,9 +210,8 @@ class Model implements DatabaseModel
             ->where($this->where)
             ->orWhere($this->or_where)
             ->orderBy($this->order_by)
-            ->limit($limit)
             ->params($this->params);
-        return ["sql" => $qb->getQuery(), "params" => $qb->getQueryParams()];
+        return ["query" => $qb->getQuery(), "params" => $qb->getQueryParams()];
     }
 
     public function save(): Model
