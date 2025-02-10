@@ -6,6 +6,7 @@ use App\Console\Kernel as ConsoleKernel;
 use Echo\Framework\Container\Container;
 use Echo\Framework\Database\Connection;
 use Echo\Framework\Database\Drivers\MySQL;
+use Echo\Framework\Session\Session;
 
 /**
  * Get application container
@@ -22,6 +23,14 @@ function db()
 {
     $mysql = container()->get(MySQL::class);
     return Connection::getInstance($mysql);
+}
+
+/**
+ * Get app session
+ */
+function session()
+{
+    return Session::getInstance();
 }
 
 function env(string $name, mixed $default = null)

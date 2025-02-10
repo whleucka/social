@@ -2,6 +2,7 @@
 
 namespace Echo\Framework\Http;
 
+use Echo\Framework\Session\Flash;
 use Echo\Interface\Http\Controller as HttpController;
 use Echo\Interface\Http\Request;
 
@@ -96,6 +97,7 @@ class Controller implements HttpController
     {
         return [
             "app" => config("app"),
+            "flash" => Flash::get(),
             "validation_errors" => $this->validation_errors,
         ];
     }

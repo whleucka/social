@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Providers\Auth\SignInService;
 use Echo\Framework\Http\Controller;
 use Echo\Framework\Routing\Route\{Get, Post};
+use Echo\Framework\Session\Flash;
 
 class SignInController extends Controller
 {
@@ -29,6 +30,8 @@ class SignInController extends Controller
             $success = $this->provider->signIn($valid->email, $valid->password);
             if ($success) {
                 die("wip: sign in success");
+            } else {
+                Flash::add("warning", "Invalid email and/or password");
             }
         }
         return $this->index();
