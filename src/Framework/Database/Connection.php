@@ -46,7 +46,7 @@ final class Connection implements DatabaseConnection
         }
     }
 
-    public function query(string $sql, array $params = []): mixed
+    public function execute(string $sql, array $params = []): mixed
     {
         $this->connect();
         $stmt = $this->link->prepare($sql);
@@ -54,21 +54,14 @@ final class Connection implements DatabaseConnection
         return $stmt;
     }
 
-    public function execute(string $sql, array $params = []): bool
-    {
-        $this->connect();
-        $stmt = $this->link->prepare($sql);
-        return $stmt->execute($params);
-    }
-
     public function fetch(string $sql, array $params = []): array
     {
-        return $this->query($sql, $params)->fetch() ?: [];
+        return $this->execute($sql, $params)->fetch() ?: [];
     }
 
     public function fetchAll(string $sql, array $params = []): array
     {
-        return $this->query($sql, $params)->fetchAll();
+        return $this->execute($sql, $params)->fetchAll();
     }
 
     public function lastInsertId(): string

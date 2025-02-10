@@ -6,14 +6,14 @@
             <div class="row">
                 <div class="col-6">
                     <div class="form-floating mb-3">
-                        <input type="input" class="form-control" id="first-name" name="first_name" placeholder="" autocomplete="name">
+                        <input type="input" class="form-control" id="first-name" name="first_name" placeholder="" autocomplete="given-name">
                         <label for="first-name">First name</label>
                         {% include 'components/validation.html.twig' with {'validate': 'first_name'} %}
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-floating mb-3">
-                        <input type="input" class="form-control" id="surname" name="surname" placeholder="" autocomplete="name">
+                        <input type="input" class="form-control" id="surname" name="surname" placeholder="" autocomplete="family-name">
                         <label for="first-name">Surname</label>
                         {% include 'components/validation.html.twig' with {'validate': 'surname'} %}
                     </div>

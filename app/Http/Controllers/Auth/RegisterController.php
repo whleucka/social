@@ -28,8 +28,8 @@ class RegisterController extends Controller
             "password" => ["required"],
         ]);
         if ($valid) {
-            $success = $this->provider->register($valid->first_name, $valid->surname, $valid->email, $valid->password);
-            if ($success) {
+            $user = $this->provider->register($valid->first_name, $valid->surname, $valid->email, $valid->password);
+            if ($user) {
                 die("wip: register success");
             }
         }
