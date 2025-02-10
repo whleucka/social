@@ -73,7 +73,7 @@ function console(): Application
 function config(string $name): mixed
 {
     $name_split = explode(".", $name);
-    $config_target = __DIR__ . "/../Config/" . strtolower($name_split[0]) . ".php";
+    $config_target = __DIR__ . "/../../config/" . strtolower($name_split[0]) . ".php";
 
     if (is_file($config_target)) {
         $config = require $config_target;

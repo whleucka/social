@@ -1,6 +1,6 @@
 <?php
 
-$root = __DIR__ . "/../../";
+$root = __DIR__ . "/../";
 
 return [
     "root" => $root,
