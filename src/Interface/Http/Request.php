@@ -10,4 +10,6 @@ interface Request
     public function getAttribute(string $name): mixed;
     public function getAttributes(): array;
     public function getClientIp(): string;
+    public function getHeaders(): array;
+    public function getHeader(string $name): ?string;
 }

@@ -24,4 +24,9 @@ class Response implements HttpResponse
         http_response_code($this->code);
         echo $this->content;
     }
+
+    public function setHeader(string $name, string $value): void
+    {
+        header("$name: $value");
+    }
 }

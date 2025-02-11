@@ -63,4 +63,15 @@ class Request implements HttpRequest
                 ? $_SERVER['HTTP_X_FORWARDED_FOR']
                 : $_SERVER['REMOTE_ADDR']);
     }
+
+    public function getHeaders(): array
+    {
+        return getallheaders();
+    }
+
+    public function getHeader(string $name): ?string
+    {
+        $headers = $this->getHeaders();
+        return $headers[$name] ?? null;
+    }
 }

@@ -15,6 +15,7 @@ class JsonResponse implements Response
         } else {
             $this->code = $code;
         }
+        $this->setHeader("Content-type", "application/json; charset=utf-8");
     }
 
     public function send(): void
@@ -23,5 +24,10 @@ class JsonResponse implements Response
         ob_clean();
         http_response_code($this->code);
         echo json_encode($this->content, JSON_PRETTY_PRINT);
+    }
+
+    public function setHeader(string $name, string $value): void
+    {
+        header("$name: $value");
     }
 }
