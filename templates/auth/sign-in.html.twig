@@ -1,7 +1,7 @@
 {% extends "layout/base.html.twig" %}
 
 {% block content %}
-    <section id="sign-in" class="p-1">
+    <section id="sign-in" class="d-flex align-items-center justify-content-center h-100">
         {% include "components/flash.html.twig" %}
         <form method="POST" hx-post="/sign-in">
             <div class="form-floating mb-3">
@@ -14,8 +14,8 @@
                 <label for="password">Password</label>
                  {% include 'components/validation.html.twig' with {'validate': 'password'} %}
             </div>
-            <div class="mt-2">
-                <button type="submit" class="btn btn-success">Log in</button>
+            <div class="mt-2 d-grid gap-2">
+                <button type="submit" class="btn btn-primary">Log in</button>
             </div>
         </form>
     </section>

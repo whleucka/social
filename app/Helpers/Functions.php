@@ -91,7 +91,7 @@ function config(string $name): mixed
         $value = $config;
         for ($i = 1; $i < count($name_split); $i++) {
             if (!isset($value[$name_split[$i]])) {
-                return null; // Doesn't exist
+                return null;
             }
             $value = $value[$name_split[$i]];
         }
@@ -100,5 +100,5 @@ function config(string $name): mixed
         return $value;
     }
 
-    return null; // Doesn't exist
+    return null;
 }

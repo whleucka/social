@@ -27,6 +27,7 @@ class Controller implements HttpController
         "mac" => "Invalid MAC address",
         "domain" => "Invalid domain name",
         "uuid" => "Invalid UUID format",
+        "match" => "Does not match",
     ];
 
     public function setRequest(Request $request): void
@@ -52,8 +53,12 @@ class Controller implements HttpController
 
         foreach ($ruleset as $field => $set) {
             foreach ($set as $rule) {
+                $r = explode(":", $rule);
+                $rule = $r[0];
+                $rule_val = $r[1] ?? null;
                 $request_value = $request[$field] ?? null;
                 $result = match($rule) {
+                    'match' => $request_value == $request[$rule_val],
                     'required' => !is_null($request_value) && $request_value !== '',
                     'string' => is_string($request_value),
                     'array' => is_array($request_value),

@@ -1,3 +1,18 @@
+body, html, #content {
+    height: 100%;
+}
+
+#sign-in, #register {
+    background-color: #f1f2f6;
+}
+
+#sign-in form, #register form {
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
 /** Flash messages */
 .flash.alert {
     margin-bottom: 5px;

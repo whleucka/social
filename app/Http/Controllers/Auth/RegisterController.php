@@ -26,6 +26,7 @@ class RegisterController extends Controller
             "surname" => ["required"],
             "email" => ["required", "email"],
             "password" => ["required"],
+            "password_match" => ["required", "match:password"],
         ]);
         if ($valid) {
             $user = $this->provider->register($valid->first_name, $valid->surname, $valid->email, $valid->password);
