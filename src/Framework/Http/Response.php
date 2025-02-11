@@ -6,15 +6,22 @@ use Echo\Interface\Http\Response as HttpResponse;
 
 class Response implements HttpResponse
 {
-    public function __construct(private string $content)
+    private int $code;
+
+    public function __construct(private string $content, ?int $code = null)
     {
+        if (is_null($code)) {
+            $this->code = http_response_code();
+        } else {
+            $this->code = $code;
+        }
     }
 
-    public function send(int $code = 200): void
+    public function send(): void
     {
         ob_start();
         ob_clean();
-        http_response_code($code);
+        http_response_code($this->code);
         echo $this->content;
     }
 }

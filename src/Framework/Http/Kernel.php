@@ -6,7 +6,8 @@ use Echo\Framework\Routing\Collector;
 use Echo\Framework\Routing\Router;
 use Echo\Interface\Http\Kernel as HttpKernel;
 use Echo\Interface\Http\Request;
-use Echo\Framework\Http\Response;
+use Echo\Interface\Http\Response;
+use Echo\Framework\Http\Response as HttpResponse;
 use Error;
 use Exception;
 use RecursiveDirectoryIterator;
@@ -41,8 +42,10 @@ class Kernel implements HttpKernel
 
         // Get controller payload
         $middleware = new Middleware();
-        $middleware->layer($this->middleware_layers)
+        $response = $middleware->layer($this->middleware_layers)
             ->handle($request, fn () => $this->resolve($route, $request));
+
+        $response->send();
     }
 
     private function getControllers(string $directory): array
@@ -65,7 +68,7 @@ class Kernel implements HttpKernel
         return array_diff($after, $before);
     }
 
-    private function resolve(array $route, Request $request): void
+    private function resolve(array $route, Request $request): Response
     {
         // Resolve the controller endpoint
         $controller_class = $route['controller'];
@@ -103,7 +106,7 @@ class Kernel implements HttpKernel
         // Create response (api or web)
         if (in_array("api", $middleware)) {
             // API response
-            $response = new JsonResponse([
+            return new JsonResponse([
                 "id" => $request->getAttribute("request_id"),
                 "success" => $code === 200,
                 "status" => $code,
@@ -112,9 +115,7 @@ class Kernel implements HttpKernel
             ]);
         } else {
             // Web response
-            $response = new Response($content);
+            return new HttpResponse($content);
         }
-
-        $response->send($code);
     }
 }

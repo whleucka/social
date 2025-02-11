@@ -2,20 +2,18 @@
 
 namespace Echo\Framework\Http\Middleware;
 
-use Echo\Interface\Http\{Request, Middleware};
 use Closure;
+use Echo\Interface\Http\{Request, Middleware, Response};
 
 /**
  * Adds an ID to request
  */
 class RequestID implements Middleware
 {
-    public function handle(Request $request, Closure $next): mixed
+    public function handle(Request $request, Closure $next): Response
     {
         $request->setAttribute('request_id', uniqid(more_entropy: true));
 
-        $response = $next($request);
-
-        return $response;
+        return $next($request);
     }
 }

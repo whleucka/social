@@ -5,6 +5,7 @@ namespace Echo\Framework\Http;
 use Closure;
 use Echo\Interface\Http\Request;
 use Echo\Interface\Http\Middleware as HttpMiddleware;
+use Echo\Interface\Http\Response;
 
 class Middleware
 {
@@ -31,7 +32,7 @@ class Middleware
         return new static(array_merge($this->layers, $layers));
     }
 
-    public function handle(Request $request, Closure $core): mixed
+    public function handle(Request $request, Closure $core): Response
     {
         $coreFunction = $this->createCoreFunction($core);
 

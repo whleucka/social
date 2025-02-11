@@ -4,5 +4,5 @@ namespace Echo\Interface\Http;
 
 interface Response
 {
-    public function send(int $code = 200): void;
+    public function send(): void;
 }
