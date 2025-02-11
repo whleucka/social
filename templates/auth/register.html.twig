@@ -3,6 +3,7 @@
 {% block content %}
     <section id="register" class="d-flex align-items-center justify-content-center h-100">
         <form method="POST" hx-post="/register">
+            {{ csrf()|raw }}
             {% include "components/flash.html.twig" %}
             <div class="row">
                 <div class="col-6">

@@ -9,7 +9,7 @@ trait Container
     }
     public function __get(string $name): mixed
     {
-        return $this->data[$name];
+        return $this->data[$name] ?? null;
     }
     public function __set(string $name, mixed $value): void
     {

@@ -40,6 +40,9 @@ class Kernel implements HttpKernel
             exit;
         }
 
+        // Set the current route in the request
+        $request->setAttribute("route", $route);
+
         // Get controller payload
         $middleware = new Middleware();
         $response = $middleware->layer($this->middleware_layers)

@@ -3,6 +3,7 @@
 {% block content %}
     <section id="sign-in" class="d-flex align-items-center justify-content-center h-100">
         <form method="POST" hx-post="/sign-in">
+            {{ csrf()|raw }}
             {% include "components/flash.html.twig" %}
             <div class="form-floating mb-3">
                 <input type="input" class="form-control {% if validation_errors.email is defined %}is-invalid{% endif %}" id="email" name="email" placeholder="" autocomplete="email">
