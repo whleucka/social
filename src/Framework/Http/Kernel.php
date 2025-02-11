@@ -90,7 +90,9 @@ class Kernel implements HttpKernel
             http_response_code(500);
 
             if (in_array("api", $middleware)) {
-                $content = null;
+                if (config("app.debug")) {
+                    $content = $ex->getMessage();
+                }
             } else {
                 throw $ex;
             }
@@ -98,7 +100,9 @@ class Kernel implements HttpKernel
             http_response_code(400);
 
             if (in_array("api", $middleware)) {
-                $content = null;
+                if (config("app.debug")) {
+                    $content = $err->getMessage();
+                }
             } else {
                 throw $err;
             }
@@ -113,7 +117,7 @@ class Kernel implements HttpKernel
                 "id" => $request->getAttribute("request_id"),
                 "success" => $code === 200,
                 "status" => $code,
-                "data" => $content,
+                "data" => $content ?? null,
                 "ts" => date(DATE_ATOM),
             ]);
         } else {
