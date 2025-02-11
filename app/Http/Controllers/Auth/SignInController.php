@@ -19,7 +19,7 @@ class SignInController extends Controller
         return $this->render("auth/sign-in.html.twig");
     }
 
-    #[Post("/sign-in", "auth.sign-in.post")]
+    #[Post("/sign-in", "auth.sign-in.post", ["max_requests" => 10])]
     public function post()
     {
         $valid = $this->validate([

@@ -12,7 +12,7 @@ class RequestID implements Middleware
 {
     public function handle(Request $request, Closure $next): Response
     {
-        $request->setAttribute('request_id', uniqid(more_entropy: true));
+        $request->setAttribute('request_id', md5(random_bytes(32)));
 
         return $next($request);
     }
