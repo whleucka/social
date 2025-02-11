@@ -28,6 +28,9 @@ class Controller implements HttpController
         "domain" => "Invalid domain name",
         "uuid" => "Invalid UUID format",
         "match" => "Does not match",
+        "min_length" => "Input is too short",
+        "max_length" => "Input is too long",
+        "regex" => "Does not match pattern",
     ];
 
     public function setRequest(Request $request): void
@@ -59,6 +62,8 @@ class Controller implements HttpController
                 $request_value = $request[$field] ?? null;
                 $result = match($rule) {
                     'match' => $request_value == $request[$rule_val],
+                    'min_length' => strlen($request_value) >= $rule_val,
+                    'max_length' => strlen($request_value) <= $rule_val,
                     'required' => !is_null($request_value) && $request_value !== '',
                     'string' => is_string($request_value),
                     'array' => is_array($request_value),
@@ -75,12 +80,19 @@ class Controller implements HttpController
                     'mac' => filter_var($request_value, FILTER_VALIDATE_MAC) !== false,
                     'domain' => filter_var($request_value, FILTER_VALIDATE_DOMAIN) !== false,
                     'uuid' => preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $request_value),
+                    'regex' => preg_match("/$rule_val/", $request_value),
                     default => throw new \Error("undefined validation rule: $rule")
                 };
                 if ($result) {
                     $data[$field] = $request[$field];
                 } else {
-                    $this->addValidationError($field, $this->validation_messages[$rule] ?? "Invalid");
+                    if (isset($this->validation_messages[$field.'.'.$rule])) {
+                        $this->addValidationError($field, $this->validation_messages[$field.'.'.$rule]);
+                    } else if (isset($this->validation_messages[$rule])) {
+                        $this->addValidationError($field, $this->validation_messages[$rule]);
+                    } else {
+                        $this->addValidationError($field, "Invalid");
+                    }
                 }
                 $valid &= $result;
             }
