@@ -2,12 +2,12 @@
 
 namespace Echo\Framework\Http;
 
+use Echo\Framework\Http\Response as HttpResponse;
 use Echo\Framework\Routing\Collector;
 use Echo\Framework\Routing\Router;
 use Echo\Interface\Http\Kernel as HttpKernel;
 use Echo\Interface\Http\Request;
 use Echo\Interface\Http\Response;
-use Echo\Framework\Http\Response as HttpResponse;
 use Error;
 use Exception;
 use RecursiveDirectoryIterator;
@@ -46,9 +46,10 @@ class Kernel implements HttpKernel
         // Get controller payload
         $middleware = new Middleware();
         $response = $middleware->layer($this->middleware_layers)
-            ->handle($request, fn () => $this->resolve($route, $request));
+            ->handle($request, fn () => $this->response($route, $request));
 
         $response->send();
+        exit;
     }
 
     private function getControllers(string $directory): array
@@ -71,28 +72,29 @@ class Kernel implements HttpKernel
         return array_diff($after, $before);
     }
 
-    private function resolve(array $route, Request $request): Response
+    private function response(array $route, Request $request): Response
     {
-        // Resolve the controller endpoint
+        // Resolve the controller
         $controller_class = $route['controller'];
         $method = $route['method'];
         $params = $route['params'];
         $middleware = $route['middleware'];
+        $error = false;
 
         // Set the controller request
         try {
             // Using the container will allow for DI
+            // in the controller constructor
             $controller = container()->get($controller_class);
             $controller->setRequest($request);
 
+            // Set the content from the controller endpoint
             $content = $controller->$method(...$params);
         } catch (Exception $ex) {
             http_response_code(500);
 
             if (in_array("api", $middleware)) {
-                if (config("app.debug")) {
-                    $content = $ex->getMessage();
-                }
+                $error = $ex->getMessage();
             } else {
                 throw $ex;
             }
@@ -100,26 +102,28 @@ class Kernel implements HttpKernel
             http_response_code(400);
 
             if (in_array("api", $middleware)) {
-                if (config("app.debug")) {
-                    $content = $err->getMessage();
-                }
+                $error = $err->getMessage();
             } else {
                 throw $err;
             }
         }
 
-        $code = http_response_code();
-
         // Create response (api or web)
         if (in_array("api", $middleware)) {
-            // API response
-            return new JsonResponse([
+            $code = http_response_code();
+            $api_response = [
                 "id" => $request->getAttribute("request_id"),
                 "success" => $code === 200,
                 "status" => $code,
                 "data" => $content ?? null,
                 "ts" => date(DATE_ATOM),
-            ]);
+            ];
+            // Only show errors when debug is enabled
+            if ($error && config("app.debug")) {
+                $api_response["error"] = $error;
+            }
+            // API response
+            return new JsonResponse($api_response);
         } else {
             // Web response
             return new HttpResponse($content);

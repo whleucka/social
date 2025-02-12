@@ -16,7 +16,6 @@ class WelcomeController extends Controller
     #[Get("/api/test", "welcome.api.test", ["api"])] 
     public function test(): string
     {
-        throw new \Error("oops!");
         return "The Ultimate Answer to Life, The Universe and Everything is...42!";
     }
 }

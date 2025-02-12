@@ -19,7 +19,7 @@ class RegisterController extends Controller
         return $this->render("auth/register.html.twig");
     }
 
-    #[Post("/register", "auth.register.post")]
+    #[Post("/register", "auth.register.post", ["max_requests" => 20])]
     public function post()
     {
         $this->setValidationMessage("password.min_length", "Must be at least 10 characters");
@@ -37,7 +37,7 @@ class RegisterController extends Controller
             if ($user) {
                 die("wip: register success");
             } else {
-                Flash::add("warning", "Failed to register");
+                Flash::add("warning", "Failed to register new account");
             }
         }
         return $this->index();
