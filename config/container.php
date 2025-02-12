@@ -4,7 +4,7 @@ use Echo\Framework\Database\Drivers\MySQL;
 use Echo\Framework\Http\Request;
 
 return [
-    Request::class => DI\create()->constructor($_GET, $_POST, $_REQUEST, $_FILES, $_COOKIE),
+    Request::class => DI\create()->constructor($_GET, $_POST, $_REQUEST, $_FILES, $_COOKIE, function_exists("getallheaders") ? getallheaders() : []),
     MySQL::class => DI\create()->constructor(
         config("db.name"),
         config("db.username"),

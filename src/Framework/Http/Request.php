@@ -23,13 +23,14 @@ class Request implements HttpRequest
         array $request = [],
         array $files = [],
         array $cookie = [],
+        array $headers = [],
     ) {
         $this->get = new Get($get);
         $this->post = new Post($post);
         $this->request = new Req($request);
         $this->files = new Files($files);
         $this->cookie = new Cookie($cookie);
-        $this->headers = new Headers(getallheaders());
+        $this->headers = new Headers($headers);
     }
 
     public function getUri(): string
