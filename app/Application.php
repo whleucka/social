@@ -25,7 +25,7 @@ class Application implements EchoApplication
             $this->kernel->handle($request);
         } elseif ($this->kernel instanceof ConsoleKernel) {
             // Run a command in cli mode
-            die("wip");
+            $this->kernel->handle();
         }
     }
 }

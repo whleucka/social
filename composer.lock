@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b0b486659e8c687e106f297ae67a88de",
+    "content-hash": "88923ff1b0a8389e49cf3aac2fdd5424",
     "packages": [
         {
             "name": "graham-campbell/result-type",
@@ -130,6 +130,55 @@
                 "source": "https://github.com/laravel/serializable-closure"
             },
             "time": "2025-01-28T16:00:59+00:00"
+        },
+        {
+            "name": "maximebf/consolekit",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maximebf/ConsoleKit.git",
+                "reference": "a05c0c5a4c48882599d59323314ac963a836d58f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maximebf/ConsoleKit/zipball/a05c0c5a4c48882599d59323314ac963a836d58f",
+                "reference": "a05c0c5a4c48882599d59323314ac963a836d58f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ConsoleKit": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Maxime Bouroumeau-Fuseau",
+                    "email": "maxime.bouroumeau@gmail.com",
+                    "homepage": "http://maximebf.com"
+                }
+            ],
+            "description": "Library to create command line utilities",
+            "homepage": "https://github.com/maximebf/ConsoleKit",
+            "keywords": [
+                "cli",
+                "commands",
+                "console",
+                "shell"
+            ],
+            "support": {
+                "issues": "https://github.com/maximebf/ConsoleKit/issues",
+                "source": "https://github.com/maximebf/ConsoleKit/tree/master"
+            },
+            "time": "2014-11-05T18:46:02+00:00"
         },
         {
             "name": "php-di/invoker",

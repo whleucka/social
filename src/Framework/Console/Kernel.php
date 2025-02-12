@@ -6,8 +6,11 @@ use Echo\Interface\Console\Kernel as ConsoleKernel;
 
 class Kernel implements ConsoleKernel
 {
-    public function handle(string $command): void
+    protected array $commands = [];
+
+    public function handle(): void
     {
-        echo 'wip: hi from console kernel!';
-    }  
+        $console = new \ConsoleKit\Console($this->commands);
+        $console->run();
+    }
 }
