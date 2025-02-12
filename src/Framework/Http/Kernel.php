@@ -2,6 +2,7 @@
 
 namespace Echo\Framework\Http;
 
+use App\Models\User;
 use Echo\Framework\Http\Response as HttpResponse;
 use Echo\Framework\Routing\Collector;
 use Echo\Framework\Routing\Router;
@@ -87,6 +88,13 @@ class Kernel implements HttpKernel
             // in the controller constructor
             $controller = container()->get($controller_class);
             $controller->setRequest($request);
+
+            // Configure user
+            $uuid = session()->get("user_uuid");
+            if ($uuid) {
+                $user = User::where("uuid", $uuid)->get();
+                $controller->setUser($user);
+            }
 
             // Set the content from the controller endpoint
             $content = $controller->$method(...$params);

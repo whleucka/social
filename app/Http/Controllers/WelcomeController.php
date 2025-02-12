@@ -13,6 +13,14 @@ class WelcomeController extends Controller
         return $this->render("welcome/index.html.twig");
     }
 
+    #[Get("/dashboard", "welcome.dashboard", ["auth"])] 
+    public function dashboard(): string
+    {
+        return $this->render("welcome/dashboard.html.twig", [
+            "first_name" => $this->user->first_name
+        ]);
+    }
+
     #[Get("/api/test", "welcome.api.test", ["api"])] 
     public function test(): string
     {

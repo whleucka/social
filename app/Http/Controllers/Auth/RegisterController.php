@@ -35,7 +35,7 @@ class RegisterController extends Controller
         if ($valid) {
             $user = $this->provider->register($valid->first_name, $valid->surname, $valid->email, $valid->password);
             if ($user) {
-                die("wip: register success");
+                redirect("/dashboard");
             } else {
                 Flash::add("warning", "Failed to register new account");
             }

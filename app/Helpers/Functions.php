@@ -6,7 +6,28 @@ use App\Console\Kernel as ConsoleKernel;
 use Echo\Framework\Container\Container;
 use Echo\Framework\Database\Connection;
 use Echo\Framework\Database\Drivers\MySQL;
+use Echo\Framework\Http\Request;
 use Echo\Framework\Session\Session;
+
+function redirect(
+    string $path,
+): void {
+    if (request()->headers->has('Hx-Request')) {
+        $options["path"] = $path;
+        $header = sprintf("HX-Redirect:%s", $path);
+        header($header);
+        exit();
+    } else {
+        $header = sprintf("Location:%s", $path);
+        header($header);
+        exit();
+    }
+}
+
+function request()
+{
+    return container()->get(Request::class);
+}
 
 /**
  * Get application container
@@ -63,7 +84,7 @@ function dd(mixed $payload): void
  */
 function app(): Application
 {
-    $kernel = new HttpKernel;
+    $kernel = new HttpKernel();
     return new Application($kernel);
 }
 
@@ -72,7 +93,7 @@ function app(): Application
  */
 function console(): Application
 {
-    $kernel = new ConsoleKernel;
+    $kernel = new ConsoleKernel();
     return new Application($kernel);
 }
 
@@ -95,8 +116,12 @@ function config(string $name): mixed
             }
             $value = $value[$name_split[$i]];
         }
-        if ($value === "true") return true;
-        if ($value === "false") return false;
+        if ($value === "true") {
+            return true;
+        }
+        if ($value === "false") {
+            return false;
+        }
         return $value;
     }
 

@@ -2,7 +2,7 @@
 
 namespace Echo\Framework\Http;
 
-use Echo\Framework\Http\Request\{Get, Post, Files, Cookie};
+use Echo\Framework\Http\Request\{Get, Post, Files, Cookie, Headers};
 use Echo\Framework\Http\Request\Request as Req;
 use Echo\Interface\Http\Request as HttpRequest;
 
@@ -13,6 +13,7 @@ class Request implements HttpRequest
     public Files $files;
     public Req $request;
     public Cookie $cookie;
+    public Headers $headers;
 
     private array $attributes = [];
 
@@ -28,6 +29,7 @@ class Request implements HttpRequest
         $this->request = new Req($request);
         $this->files = new Files($files);
         $this->cookie = new Cookie($cookie);
+        $this->headers = new Headers(getallheaders());
     }
 
     public function getUri(): string
@@ -62,16 +64,5 @@ class Request implements HttpRequest
             : (isset($_SERVER['HTTP_X_FORWARDED_FOR'])
                 ? $_SERVER['HTTP_X_FORWARDED_FOR']
                 : $_SERVER['REMOTE_ADDR']);
-    }
-
-    public function getHeaders(): array
-    {
-        return getallheaders();
-    }
-
-    public function getHeader(string $name): ?string
-    {
-        $headers = $this->getHeaders();
-        return $headers[$name] ?? null;
     }
 }

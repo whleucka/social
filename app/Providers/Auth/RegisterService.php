@@ -16,7 +16,7 @@ class RegisterService
         ]);
 
         if ($user) {
-            # WIP: set user session
+            session()->set("user_uuid", $user->uuid);
             return $user;
         }
 

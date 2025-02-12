@@ -29,7 +29,7 @@ class SignInController extends Controller
         if ($valid) {
             $success = $this->provider->signIn($valid->email, $valid->password);
             if ($success) {
-                die("wip: sign in success");
+                redirect("/dashboard");
             } else {
                 Flash::add("warning", "Invalid email and/or password");
             }

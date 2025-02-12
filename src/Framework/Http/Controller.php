@@ -2,6 +2,7 @@
 
 namespace Echo\Framework\Http;
 
+use App\Models\User;
 use Echo\Framework\Session\Flash;
 use Echo\Framework\View\TwigExtension;
 use Echo\Interface\Http\Controller as HttpController;
@@ -9,6 +10,7 @@ use Echo\Interface\Http\Request;
 
 class Controller implements HttpController
 {
+    protected ?User $user = null;
     protected Request $request;
     private array $validation_errors = [];
     private array $validation_messages = [
@@ -33,6 +35,16 @@ class Controller implements HttpController
         "max_length" => "Input is too long",
         "regex" => "Does not match pattern",
     ];
+
+    public function setUser(?User $user)
+    {
+        $this->user = $user;
+    }
+
+    public function getUser()
+    {
+        return $this->user;
+    }
 
     public function setRequest(Request $request): void
     {

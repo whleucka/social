@@ -10,9 +10,9 @@ class SignInService
     {
         $user = User::where("email", $email_address)->get();
 
-        if ($user) {
-            # WIP: set user session
-            return password_verify($password, $user->password);
+        if ($user && password_verify($password, $user->password)) {
+            session()->set("user_uuid", $user->uuid);
+            return true;
         }
 
         return false;
