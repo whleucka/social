@@ -23,6 +23,9 @@
             "email": "william.hleucka@gmail.com"
         }
     ],
+    "scripts": {
+        "test": "phpunit tests"
+    },
     "minimum-stability": "dev",
     "require": {
         "php": "^8.2",
