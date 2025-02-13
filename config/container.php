@@ -6,13 +6,13 @@ use Echo\Framework\Http\Request;
 return [
     Request::class => DI\create()->constructor($_GET, $_POST, $_REQUEST, $_FILES, $_COOKIE, function_exists("getallheaders") ? getallheaders() : []),
     MySQL::class => DI\create()->constructor(
-        config("db.name"),
-        config("db.username"),
-        config("db.password"),
-        config("db.host"),
-        (int) config("db.port"),
-        config("db.charset"),
-        config("db.options"),
+        name: config("db.name"),
+        username: config("db.username"),
+        password: config("db.password"),
+        host: config("db.host"),
+        port: (int) config("db.port"),
+        charset: config("db.charset"),
+        options: config("db.options"),
     ),
     \Twig\Loader\FilesystemLoader::class => DI\create()->constructor(config("paths.templates")),
     \Twig\Environment::class => DI\create()->constructor(DI\Get(\Twig\Loader\FilesystemLoader::class), [

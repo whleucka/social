@@ -6,7 +6,7 @@ use Echo\Interface\Database\Driver;
 
 class MySQL implements Driver
 {
-    public function __construct(private string $name, private string $username, private string $password, private string $host = 'localhost', private int $port = 3306, private string $charset, private array $options = [])
+    public function __construct(private string $name, private string $username, private string $password, private string $host = 'localhost', private int $port = 3306, private string $charset = 'utf8mb4', private array $options = [])
     {
     }
 
