@@ -41,6 +41,13 @@ class Kernel implements HttpKernel
             exit;
         }
 
+        // Record the session
+        db()->execute("INSERT INTO sessions (uri, ip) 
+            VALUES (?,?)", [
+            $request->getUri(),
+            ip2long($request->getClientIp())
+        ]);
+
         // Set the current route in the request
         $request->setAttribute("route", $route);
 

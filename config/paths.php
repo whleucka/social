@@ -8,4 +8,6 @@ return [
     "templates" => $root . "templates/",
     "migrations" => $root . "migrations",
     "template_cache" => $root . "templates/.cache",
+    "jobs" => $root . "jobs",
+    "logs" => $root . "storage/logs/",
 ];

@@ -53,7 +53,8 @@ class Migrate extends \ConsoleKit\Command
      */
     private function deleteMigration(string $file_path)
     {
-        return db()->execute("DELETE FROM migrations WHERE hash = ?", [
+        return db()->execute("DELETE FROM migrations 
+            WHERE hash = ?", [
             md5($file_path),
         ]);
     }
@@ -158,9 +159,9 @@ class Migrate extends \ConsoleKit\Command
             $hash = md5($file_path);
             $migration = $this->migrationHashExists($hash);
             if ($migration) {
-                $this->writeln("✓ $basename @ {$migration['created_at']}" . PHP_EOL);
+                $this->writeln("✓ $basename @ {$migration['created_at']}");
             } else {
-                $this->writeln("✗ $basename" . PHP_EOL);
+                $this->writeln("✗ $basename");
             }
         }
     }
