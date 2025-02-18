@@ -3,7 +3,7 @@
 namespace Echo\Framework\Routing;
 
 use Echo\Framework\Routing\Route;
-use Error;
+use Exception;
 use ReflectionClass;
 
 class Collector
@@ -27,14 +27,14 @@ class Collector
                 foreach ($this->routes as $routesByMethod) {
                     foreach ($routesByMethod as $route) {
                         if ($route['name'] === $instance->name) {
-                            throw new Error("Duplicate route name detected: '{$instance->name}'");
+                            throw new Exception("Duplicate route name detected: '{$instance->name}'");
                         }
                     }
                 }
 
                 // Check for duplicate path & HTTP method
                 if (isset($this->routes[$instance->path][$http_method])) {
-                    throw new Error("Duplicate route detected: [$http_method] path: {$instance->path}");
+                    throw new Exception("Duplicate route detected: [$http_method] path: {$instance->path}");
                 }
 
                 // Register the route

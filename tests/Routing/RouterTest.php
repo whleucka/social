@@ -12,10 +12,12 @@ use PHPUnit\Framework\TestCase;
 
 class RouterTest extends TestCase
 {
-    private function dispatchRoute(string $uri, string $method)
+    private function dispatchRoute(string $uri, string $method, $classes = [Routes::class])
     {
         $collector = new Collector();
-        $collector->register(Routes::class);
+        foreach ($classes as $class) {
+            $collector->register($class);
+        }
         $router = new Router($collector);
         return $router->dispatch($uri, $method);
     }
@@ -100,6 +102,18 @@ class RouterTest extends TestCase
         $route = $this->dispatchRoute("/user/abc*/def!", "GET");
         $this->assertSame(null, $route); // Invalid UUID and token
     }
+
+    public function testDuplicateRoutePath()
+    {
+        $this->expectException(\Exception::class);
+        $this->dispatchRoute("/", "GET", [Routes::class, DuplicatePath::class]);
+    } 
+
+    public function testDuplicateRouteName()
+    {
+        $this->expectException(\Exception::class);
+        $this->dispatchRoute("/", "GET", [Routes::class, DuplicateName::class]);
+    }
 }
 
 class Routes extends Controller
@@ -146,4 +160,22 @@ class Routes extends Controller
         return 'testing';
     }
 
+}
+
+class DuplicatePath extends Controller
+{
+    #[Get("/", "duplicate-path.index")]
+    public function duplicate_path()
+    {
+        return 'index';
+    }
+}
+
+class DuplicateName extends Controller
+{
+    #[Get("/testing-duplicate-name", "routes.index")]
+    public function duplicat_name()
+    {
+        return 'index';
+    }
 }
