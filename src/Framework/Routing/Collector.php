@@ -17,19 +17,33 @@ class Collector
         foreach ($reflection->getMethods() as $method) {
             foreach ($method->getAttributes() as $attribute) {
                 $instance = $attribute->newInstance();
-                if (is_subclass_of($instance, Route::class)) {
-                    $http_method = strtolower((new ReflectionClass($instance))->getShortName());
-                    if (!isset($this->routes[$instance->path][$http_method])) {
-                        $this->routes[$instance->path][$http_method] = [
-                            'controller' => $controller,
-                            'method' => $method->getName(),
-                            'middleware' => $instance->middleware,
-                            'name' => $instance->name
-                        ];
-                    } else {
-                        throw new Error("duplicate route detected: [$http_method] path: $instance->path");
+                if (!is_subclass_of($instance, Route::class)) {
+                    continue;
+                }
+
+                $http_method = strtolower((new ReflectionClass($instance))->getShortName());
+
+                // Check for duplicate route name
+                foreach ($this->routes as $routesByMethod) {
+                    foreach ($routesByMethod as $route) {
+                        if ($route['name'] === $instance->name) {
+                            throw new Error("Duplicate route name detected: '{$instance->name}'");
+                        }
                     }
                 }
+
+                // Check for duplicate path & HTTP method
+                if (isset($this->routes[$instance->path][$http_method])) {
+                    throw new Error("Duplicate route detected: [$http_method] path: {$instance->path}");
+                }
+
+                // Register the route
+                $this->routes[$instance->path][$http_method] = [
+                    'controller' => $controller,
+                    'method' => $method->getName(),
+                    'middleware' => $instance->middleware,
+                    'name' => $instance->name
+                ];
             }
         }
     }
