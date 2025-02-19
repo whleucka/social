@@ -7,6 +7,8 @@ use Echo\Framework\Container\Container;
 use Echo\Framework\Database\Connection;
 use Echo\Framework\Database\Drivers\MySQL;
 use Echo\Framework\Http\Request;
+use Echo\Framework\Routing\Collector;
+use Echo\Framework\Routing\Router;
 use Echo\Framework\Session\Session;
 
 function redirect(
@@ -22,6 +24,47 @@ function redirect(
         header($header);
         exit();
     }
+}
+
+function route(string $name)
+{
+
+}
+
+function getControllers(string $directory): array
+    {
+        // Get existing classes before loading new ones
+        $before = get_declared_classes();
+
+        // Recursively find all PHP files
+        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
+        foreach ($files as $file) {
+            if ($file->isFile() && $file->getExtension() === 'php') {
+                require_once $file->getPathname();
+            }
+        }
+
+        // Get all declared classes after loading
+        $after = get_declared_classes();
+
+        // Return only the new classes
+        return array_diff($after, $before);
+    }
+
+
+function router(): Router
+{
+    // Get web controllers
+    $controller_path = config("paths.controllers");
+    $controllers = getControllers($controller_path);
+
+    // Register application routes
+    $collector = new Collector();
+    foreach ($controllers as $controller) {
+        $collector->register($controller);
+    }
+
+    return new Router($collector);
 }
 
 function request()
