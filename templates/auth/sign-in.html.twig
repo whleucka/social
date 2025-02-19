@@ -2,7 +2,7 @@
 
 {% block content %}
     <section id="sign-in" class="d-flex align-items-center justify-content-center h-100">
-        <form method="POST" hx-post="/sign-in" hx-swap="outerHTML" hx-target="#sign-in" hx-select="#sign-in">
+        <form method="POST" hx-post="{{ uri('auth.sign-in.post') }}" hx-swap="outerHTML" hx-target="#sign-in" hx-select="#sign-in">
             {{ csrf()|raw }}
             {% include "components/flash.html.twig" %}
             <div class="form-floating mb-3">

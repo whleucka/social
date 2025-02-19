@@ -2,9 +2,24 @@
 
 use Echo\Framework\Database\Drivers\MySQL;
 use Echo\Framework\Http\Request;
+use Echo\Framework\Routing\Collector;
+use Echo\Framework\Routing\Router;
 
 return [
     Request::class => DI\create()->constructor($_GET, $_POST, $_REQUEST, $_FILES, $_COOKIE, function_exists("getallheaders") ? getallheaders() : []),
+    Collector::class => function() {
+        // Get web controllers
+        $controller_path = config("paths.controllers");
+        $controllers = getClasses($controller_path);
+
+        // Register application routes
+        $collector = new Collector();
+        foreach ($controllers as $controller) {
+            $collector->register($controller);
+        }
+        return $collector;
+    },
+    Router::class => DI\create()->constructor(DI\Get(Collector::class)),
     MySQL::class => DI\create()->constructor(
         name: config("db.name"),
         username: config("db.username"),

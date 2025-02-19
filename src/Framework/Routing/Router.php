@@ -11,6 +11,19 @@ class Router implements RouterInterface
     {
     }
 
+    public function searchUri(string $name): ?string
+    {
+        $routes = $this->collector->getRoutes();
+        foreach ($routes as $uri => $route) {
+            foreach ($route as $method => $info) {
+                if ($info['name'] === $name) {
+                    return $uri;
+                }
+            }
+        }
+        return null;
+    }
+
     /**
      * Dispatch a new route
      */

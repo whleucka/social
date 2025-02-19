@@ -7,9 +7,10 @@ use Echo\Framework\Container\Container;
 use Echo\Framework\Database\Connection;
 use Echo\Framework\Database\Drivers\MySQL;
 use Echo\Framework\Http\Request;
-use Echo\Framework\Routing\Collector;
 use Echo\Framework\Routing\Router;
 use Echo\Framework\Session\Session;
+use Echo\Interface\Http\Request as HttpRequest;
+use Echo\Interface\Routing\Router as RoutingRouter;
 
 function redirect(
     string $path,
@@ -26,48 +27,37 @@ function redirect(
     }
 }
 
-function route(string $name)
+function uri(string $name): ?string
 {
-
+    return router()->searchUri($name);
 }
 
-function getControllers(string $directory): array
-    {
-        // Get existing classes before loading new ones
-        $before = get_declared_classes();
+function getClasses(string $directory): array
+{
+    // Get existing classes before loading new ones
+    $before = get_declared_classes();
 
-        // Recursively find all PHP files
-        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
-        foreach ($files as $file) {
-            if ($file->isFile() && $file->getExtension() === 'php') {
-                require_once $file->getPathname();
-            }
+    // Recursively find all PHP files
+    $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
+    foreach ($files as $file) {
+        if ($file->isFile() && $file->getExtension() === 'php') {
+            require_once $file->getPathname();
         }
-
-        // Get all declared classes after loading
-        $after = get_declared_classes();
-
-        // Return only the new classes
-        return array_diff($after, $before);
     }
 
+    // Get all declared classes after loading
+    $after = get_declared_classes();
 
-function router(): Router
-{
-    // Get web controllers
-    $controller_path = config("paths.controllers");
-    $controllers = getControllers($controller_path);
-
-    // Register application routes
-    $collector = new Collector();
-    foreach ($controllers as $controller) {
-        $collector->register($controller);
-    }
-
-    return new Router($collector);
+    // Return only the new classes
+    return array_diff($after, $before);
 }
 
-function request()
+function router(): RoutingRouter
+{
+    return container()->get(Router::class);
+}
+
+function request(): HttpRequest
 {
     return container()->get(Request::class);
 }

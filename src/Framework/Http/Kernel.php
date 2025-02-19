@@ -72,6 +72,7 @@ class Kernel implements HttpKernel
             // Set the content from the controller endpoint
             $content = $controller->$method(...$params);
         } catch (Exception $ex) {
+            // Handle exception
             http_response_code(500);
 
             if (in_array("api", $middleware)) {
@@ -80,6 +81,7 @@ class Kernel implements HttpKernel
                 throw $ex;
             }
         } catch (Error $err) {
+            // Handle error
             http_response_code(400);
 
             if (in_array("api", $middleware)) {
@@ -99,7 +101,7 @@ class Kernel implements HttpKernel
                 "data" => $content ?? null,
                 "ts" => date(DATE_ATOM),
             ];
-            // Only show errors when debug is enabled
+            // Only show api errors when debug is enabled
             if ($error && config("app.debug")) {
                 $api_response["error"] = $error;
             }
