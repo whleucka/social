@@ -27,9 +27,9 @@ function redirect(
     }
 }
 
-function uri(string $name): ?string
+function uri(string $name, ...$params): ?string
 {
-    return router()->searchUri($name);
+    return router()->searchUri($name, ...$params);
 }
 
 function getClasses(string $directory): array

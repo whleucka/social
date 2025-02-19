@@ -11,12 +11,16 @@ class Router implements RouterInterface
     {
     }
 
-    public function searchUri(string $name): ?string
+    public function searchUri(string $name, ...$params): ?string
     {
         $routes = $this->collector->getRoutes();
         foreach ($routes as $uri => $route) {
             foreach ($route as $method => $info) {
                 if ($info['name'] === $name) {
+                    // Replace placeholders with actual values
+                    $uri = preg_replace_callback('/\{(\w+)\}/', function ($matches) use (&$params) {
+                        return array_shift($params) ?? $matches[0]; // Replace or keep original
+                    }, $uri);
                     return $uri;
                 }
             }
