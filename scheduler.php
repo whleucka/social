@@ -10,8 +10,8 @@ $scheduler = new Scheduler();
 $jobs = config("paths.jobs");
 $logs = config("paths.logs");
 
-// Jobs
-$scheduler->php($jobs . "/ping.php")
+// Pinger
+$scheduler->php($jobs . "/pinger.php")
     ->everyMinute()
     ->output($logs . date("Y-m-d") . "_ping.log", true);
 
