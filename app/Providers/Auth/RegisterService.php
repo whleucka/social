@@ -6,7 +6,7 @@ use App\Models\User;
 
 class RegisterService
 {
-    public function register(string $first_name, string $surname, string $email, string $password): bool|User
+    public function register(string $first_name, string $surname, string $email, string $password): bool
     {
         $user = User::create([
             "first_name" => $first_name,
@@ -17,7 +17,7 @@ class RegisterService
 
         if ($user) {
             session()->set("user_uuid", $user->uuid);
-            return $user;
+            return true;
         }
 
         return false;

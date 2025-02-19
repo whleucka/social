@@ -33,8 +33,8 @@ class RegisterController extends Controller
             "password_match" => ["required", "match:password"],
         ]);
         if ($valid) {
-            $user = $this->provider->register($valid->first_name, $valid->surname, $valid->email, $valid->password);
-            if ($user) {
+            $success = $this->provider->register($valid->first_name, $valid->surname, $valid->email, $valid->password);
+            if ($success) {
                 redirect("/dashboard");
             } else {
                 Flash::add("warning", "Failed to register new account");
