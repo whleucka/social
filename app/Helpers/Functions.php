@@ -91,7 +91,7 @@ function env(string $name, mixed $default = null)
 {
     // Load environment
     $dotenv = Dotenv\Dotenv::createImmutable(config("paths.root"));
-    $dotenv->load();
+    $dotenv->safeLoad();
 
     if (!isset($_ENV[$name])) {
         $_ENV[$name] = $default;
