@@ -10,6 +10,7 @@ class Kernel implements ConsoleKernel
 
     public function handle(): void
     {
+        error_reporting(E_ERROR | E_WARNING | E_PARSE);
         $console = new \ConsoleKit\Console($this->commands);
         $console->run();
     }
