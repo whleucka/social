@@ -1,6 +1,4 @@
-<p align="center">
-  <img style="width: 100%" src='https://github.com/user-attachments/assets/cbfd11ae-bd2b-4608-8097-8037cad414eb' alt="logo"><br>
-</p>
+# ECHO 
 
 <a href='https://github.com/whleucka/echo/actions/workflows/php.yml'><img src='https://github.com/whleucka/echo/actions/workflows/php.yml/badge.svg' alt='github badge'></a>
 
