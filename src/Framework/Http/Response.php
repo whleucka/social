@@ -32,10 +32,13 @@ class Response implements HttpResponse
         $this->headers[$key] = $value;
     }
 
-    private function sendHeaders(): void
+    public function sendHeaders(): void
     {
         foreach ($this->headers as $key => $value) {
             header("$key: $value");
+            if (in_array($key, ['Location', 'HX-Location', 'HX-Redirect'])) {
+                exit;
+            }
         }
     }
 }

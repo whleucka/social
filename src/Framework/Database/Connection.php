@@ -7,12 +7,13 @@ use Echo\Interface\Database\Driver;
 use Echo\Traits\Creational\Singleton;
 use PDO;
 use PDOException;
-use RuntimeException;
+use Exception;
 
 final class Connection implements DatabaseConnection
 {
     use Singleton;
 
+    private bool $connected = false;
     private ?PDO $link = null;
     private Driver $driver;
 
@@ -30,10 +31,16 @@ final class Connection implements DatabaseConnection
         return self::$instance;
     }
 
+    public function isConnected(): bool
+    {
+        return $this->connected;
+    }
+
     private function connect(): void
     {
         if ($this->link === null) {
             try {
+                $this->connected = true;
                 $this->link = new PDO(
                     $this->driver->getDsn(),
                     $this->driver->getUsername(),
@@ -41,14 +48,21 @@ final class Connection implements DatabaseConnection
                     $this->driver->getOptions()
                 );
             } catch (PDOException $e) {
-                throw new RuntimeException('Database connection failed: ' . $e->getMessage());
+                $this->connected = false;
+                if (preg_match('/unknown database/i', $e->getMessage())) {
+                    error_log('Unknown database.');
+                    error_log("Please refer to setup guide: https://github.com/whleucka/echo");
+                    exit;
+                } else {
+                    throw new Exception("Database connection failed. " . $e->getMessage());
+                }
             }
         }
     }
 
     public function execute(string $sql, array $params = []): mixed
     {
-        $this->connect();
+        if (!$this->connected) return null;
         $stmt = $this->link->prepare($sql);
         $stmt->execute($params);
         return $stmt;
@@ -66,13 +80,11 @@ final class Connection implements DatabaseConnection
 
     public function lastInsertId(): string
     {
-        $this->connect();
         return $this->link->lastInsertId();
     }
 
     public function beginTransaction(): bool
     {
-        $this->connect();
         return $this->link->beginTransaction();
     }
 
@@ -88,7 +100,6 @@ final class Connection implements DatabaseConnection
 
     public function getLink(): PDO
     {
-        $this->connect();
         return $this->link;
     }
 }

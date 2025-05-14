@@ -29,7 +29,7 @@ class SignInController extends Controller
         if ($valid) {
             $success = $this->provider->signIn($valid->email, $valid->password);
             if ($success) {
-                redirect(config("security.authenticated_route"));
+                $this->redirect(config("security.authenticated_route"));
             } else {
                 Flash::add("warning", "Invalid email and/or password");
             }

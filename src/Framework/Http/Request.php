@@ -33,6 +33,11 @@ class Request implements HttpRequest
         $this->headers = new Headers($headers);
     }
 
+    public function isHTMX(): bool
+    {
+        return $this->headers->has('HX-Request');
+    }
+
     public function getUri(): string
     {
         return strtok($_SERVER["REQUEST_URI"], '?');

@@ -13,6 +13,6 @@ class SignOutController extends Controller
     {
         session()->destroy();
         Flash::add("success", "You are now signed out");
-        redirect("/sign-in");
+        $this->redirect(uri("auth.sign-in.index"));
     }
 }

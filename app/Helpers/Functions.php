@@ -31,53 +31,6 @@ function console(): Application
 }
 
 /**
- * Redirect
- */
-function redirect(string $path): void {
-    if (request()->headers->has('Hx-Request')) {
-        $header = sprintf("HX-Redirect:%s", $path);
-        header($header);
-        exit();
-    } else {
-        $header = sprintf("Location:%s", $path);
-        header($header);
-        exit();
-    }
-}
-
-/**
- * Redirect location
- */
-function location(
-    string $path, 
-    ?string $source = null, 
-    ?string $event = null, 
-    ?string $handler = null, 
-    ?string $target = null, 
-    ?string $swap = null,
-    ?string $values = null,
-    ?string $headers = null,
-    ?string $select = null
-) {
-    if (request()->headers->has('Hx-Request')) {
-        $options = [];
-        $options['path'] = $path;
-        foreach (compact('source', 'event', 'handler', 'target', 'swap', 'values', 'headers', 'select') as $key => $value) {
-            if ($value !== null) {
-                $options[$key] = $value;
-            }
-        }
-        $opts = json_encode($options);
-        header("HX-Location: $opts");
-        exit();
-    } else {
-        $header = sprintf("Location:%s", $path);
-        header($header);
-        exit();
-    }
-}
-
-/**
  * Get application container
  */
 function container()
@@ -90,17 +43,9 @@ function container()
  */
 function db()
 {
-    try {
-        $mysql = container()->get(MySQL::class);
-        $db = Connection::getInstance($mysql);
-        return $db;
-    } catch (RuntimeException $ex) {
-        if (preg_match('/Unknown database/', $ex->getMessage())) {
-            error_log("Database connection error. Are you sure the database exists?");
-            error_log("Please refer to setup guide: https://github.com/whleucka/echo");
-            exit;
-        }
-    }
+    $mysql = container()->get(MySQL::class);
+    $db = Connection::getInstance($mysql);
+    return $db;
 }
 
 /**

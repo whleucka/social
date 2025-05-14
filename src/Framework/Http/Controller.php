@@ -37,6 +37,16 @@ class Controller implements HttpController
         "regex" => "Does not match pattern",
     ];
 
+    public function __destruct()
+    {
+        // Record the session
+            db()->execute("INSERT INTO sessions (uri, ip) 
+                VALUES (?,?)", [
+                $this->request->getUri(),
+                ip2long($this->request->getClientIp())
+            ]);
+    }
+
     public function setHeader(string $key, string $value): void
     {
         $this->headers[$key] = $value;
@@ -72,12 +82,35 @@ class Controller implements HttpController
         return $this->validation_errors;
     }
 
-    public function htmxTrigger(array|string $opts): void
+    /**
+     * HTMX Trigger
+     */
+    public function hxTrigger(array|string $opts): void
     {
         if (is_array($opts)) {
             $opts = json_encode($opts);
         }
         $this->setHeader("HX-Trigger", $opts);
+    }
+
+    /**
+    * HTMX Redirect
+    */
+    function redirect(string $path): void {
+        $key = request()->isHTMX() ? "HX-Redirect" : "Location";
+        $this->setHeader($key, $path);
+    }
+
+    /**
+    * HTMX Location
+    */
+    function location(array|string $opts)
+    {
+        if (is_array($opts)) {
+            $opts = json_encode($opts);
+        }
+        $key = request()->isHTMX() ? "HX-Location" : "Location";
+        $this->setHeader($key, $opts);
     }
 
     public function validate(array $ruleset): ?object
