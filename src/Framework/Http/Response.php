@@ -32,7 +32,7 @@ class Response implements HttpResponse
         $this->headers[$key] = $value;
     }
 
-    public function sendHeaders(): void
+    private function sendHeaders(): void
     {
         foreach ($this->headers as $key => $value) {
             header("$key: $value");
