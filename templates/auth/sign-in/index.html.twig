@@ -1,5 +1,7 @@
 {% extends "layout/base.html.twig" %}
 
+{% block title %}{{ parent() }} - Sign In{% endblock %}
+
 {% block content %}
     <section id="sign-in" class="d-flex align-items-center justify-content-center h-100">
         <form method="POST" hx-post="{{ uri('auth.sign-in.post') }}" hx-swap="outerHTML" hx-target="#sign-in" hx-select="#sign-in">

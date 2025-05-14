@@ -1,5 +1,7 @@
 {% extends "layout/base.html.twig" %}
 
+{% block title %}{{ parent() }} - Register{% endblock %}
+
 {% block content %}
     <section id="register" class="d-flex align-items-center justify-content-center h-100">
         <form method="POST" hx-post="{{ uri('auth.register.post') }}" hx-swap="outerHTML" hx-target="#register" hx-select="#register">
