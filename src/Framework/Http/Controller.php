@@ -11,7 +11,7 @@ use Echo\Interface\Http\Request;
 class Controller implements HttpController
 {
     protected ?User $user = null;
-    protected Request $request;
+    protected ?Request $request = null;
     private array $headers = [];
     private array $validation_errors = [];
     private array $validation_messages = [
@@ -40,11 +40,13 @@ class Controller implements HttpController
     public function __destruct()
     {
         // Record the session
+        if ($this->request?->getClientIp()) {
             db()->execute("INSERT INTO sessions (uri, ip) 
                 VALUES (?,?)", [
                 $this->request->getUri(),
-                ip2long($this->request->getClientIp())
+                ip2long($this->request?->getClientIp())
             ]);
+        }
     }
 
     public function setHeader(string $key, string $value): void
