@@ -7,6 +7,9 @@ use Echo\Framework\Session\Flash;
 use Echo\Framework\View\TwigExtension;
 use Echo\Interface\Http\Controller as HttpController;
 use Echo\Interface\Http\Request;
+use Error;
+use PDOException;
+use PHPUnit\Framework\Exception;
 
 class Controller implements HttpController
 {
@@ -39,13 +42,14 @@ class Controller implements HttpController
 
     public function __destruct()
     {
-        // Record the session
-        if ($this->request?->getClientIp()) {
+        try {
             db()->execute("INSERT INTO sessions (uri, ip) 
                 VALUES (?,?)", [
                 $this->request->getUri(),
                 ip2long($this->request?->getClientIp())
             ]);
+        } catch (Exception|Error|PDOException $e) {
+            error_log("-- Skipping session insert --");
         }
     }
 

@@ -1,8 +1,8 @@
 <?php
 
 return [
-    "debug" => env("APP_DEBUG"),
-    "url" => env("APP_URL"),
+    "debug" => env("APP_DEBUG", true),
+    "url" => env("APP_URL", "http://0.0.0.0"),
     "name" => env("APP_NAME"),
     "version" => "0.0.1",
 ];

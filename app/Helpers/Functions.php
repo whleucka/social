@@ -43,9 +43,12 @@ function container()
  */
 function db()
 {
-    $mysql = container()->get(MySQL::class);
-    $db = Connection::getInstance($mysql);
-    return $db;
+    $name = config("db.name");
+    if ($name) {
+        $mysql = container()->get(MySQL::class);
+        $db = Connection::getInstance($mysql);
+        return $db;
+    }
 }
 
 /**
