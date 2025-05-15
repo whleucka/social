@@ -43,12 +43,14 @@ function container()
  */
 function db()
 {
-    $name = config("db.name");
-    if ($name) {
+    $root_dir = config("paths.root");
+    $exists = file_exists($root_dir . '.env');
+    if ($exists) {
         $mysql = container()->get(MySQL::class);
         $db = Connection::getInstance($mysql);
         return $db;
     }
+    return null;
 }
 
 /**

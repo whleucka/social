@@ -3,9 +3,12 @@
 {% block title %}{{ parent() }} - Register{% endblock %}
 
 {% block content %}
-    <section id="register" class="d-flex align-items-center justify-content-center h-100">
-        <form method="POST" hx-post="{{ uri('auth.register.post') }}" hx-swap="outerHTML" hx-target="#register" hx-select="#register">
+    <section id="register" class="container">
+        <form class="bg-light rounded shadow p-4" method="POST" hx-post="{{ uri('auth.register.post') }}" hx-swap="outerHTML" hx-target="#register" hx-select="#register">
             {{ csrf()|raw }}
+            <h1>Create your account</h1>
+            <p>Let’s get you set up—just a few quick steps!</p>
+            <hr>
             {% include "components/flash.html.twig" %}
             <div class="row">
                 <div class="col-6">
@@ -41,8 +44,8 @@
             <div class="mb-3">
                 <p><small class="text-muted">By clicking Sign Up, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</small></p>
             </div>
-            <div class="d-flex justify-content-center mb-3">
-                <button type="submit" class="btn btn-success">Sign Up</button>
+            <div class="d-flex mt-4 justify-content-center">
+                <button type="submit" class="btn btn-success">Sign up</button>
                 <a hx-boost="true" class="btn btn-secondary ms-2" href="/sign-in" hx-swap="outerHTML" hx-select="#sign-in" hx-target="#register">Cancel</a>
             </div>
         </form>

@@ -36,6 +36,12 @@ final class Connection implements DatabaseConnection
         return $this->connected;
     }
 
+    public function tryConnection(): bool
+    {
+        $this->connect();
+        return $this->connected;
+    }
+
     private function connect(): void
     {
         if ($this->link === null) {

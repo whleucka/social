@@ -1,20 +1,21 @@
 {% extends "layout/base.html.twig" %}
 
-{% block title %}Setup{% endblock %}
+{% block title %}{{ parent() }} - Setup{% endblock %}
 
 {% block content %}
-    <section id="setup" class="d-flex align-items-center justify-content-center h-100">
-        <form method="POST" hx-post="{{ uri('setup.post') }}" hx-swap="outerHTML" hx-target="#setup" hx-select="#setup">
+    <section id="setup" class="container">
+        <form class="bg-light rounded shadow p-4" method="POST" hx-swap="outerHTML" hx-target="#setup" hx-select="#setup">
             {{ csrf()|raw }}
             <h1>ECHO Setup</h1>
+            <p>Almost there—just a few settings to configure.</p>
             <div>
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="config-saved" {% if config_exists %}checked=""{% endif %} disabled readonly>
                     <label class="form-check-label" for="config-saved">Config saved</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="db-connected" {% if db_connected %}checked=""{% endif %} disabled readonly>
-                    <label class="form-check-label" for="db-connected">Database connected</label>
+                    <input class="form-check-input" type="checkbox" value="" id="db-exists" {% if db_exists %}checked=""{% endif %} disabled readonly>
+                    <label class="form-check-label" for="db-exists">Database exists</label>
                 </div>
             </div>
             <hr>
@@ -87,9 +88,8 @@
                     {% include 'components/validation.html.twig' with {'validate': 'db_charset'} %}
                 </div>
             </div>
-            <div class="d-flex mb-3 justify-content-center">
-                <button type="submit" class="btn btn-primary">Save config</button>
-                <button type="submit" class="btn btn-primary ms-2" {% if not config_exists %}disabled{% endif %}>Migrate database</button>
+            <div class="d-flex mt-4 justify-content-center">
+                <button type="button" hx-post="{{ uri('setup.config') }}"  name="save_config" class="btn btn-primary">Save config</button>
             </div>
         </form>
     </section>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Setup;
 use App\Providers\Setup\SetupService;
 use Echo\Framework\Http\Controller;
 use Echo\Framework\Routing\Route\{Get, Post};
+use Echo\Framework\Session\Flash;
 
 class SetupController extends Controller
 {
@@ -19,12 +20,12 @@ class SetupController extends Controller
             "app" => config('app'),
             "db" => config('db'),
             "config_exists" => $this->provider->configExists(),
-            "db_connected" => $this->provider->dbConnected(),
+            "db_exists" => $this->provider->dbExists(),
         ]);
     }
 
-    #[Post("/setup", "setup.post")] 
-    public function post(): string
+    #[Post("/setup", "setup.config")] 
+    public function config(): string
     {
         $valid = $this->validate([
             "app_name" => ["required"],
@@ -39,7 +40,9 @@ class SetupController extends Controller
         ]);
 
         if ($valid) {
-            $this->provider->writeConfig($valid);
+            if ($this->provider->writeConfig($valid)) {
+                Flash::add("success", "Success! Configuration saved.");
+            }
         }
 
         return $this->index();

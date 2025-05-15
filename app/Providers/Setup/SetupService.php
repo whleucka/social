@@ -4,7 +4,7 @@ namespace App\Providers\Setup;
 
 class SetupService
 {
-    public function writeConfig(object $config): void
+    public function writeConfig(object $config): int|false
     {
         $env =<<<CONFIG
 APP_NAME={$config->app_name}
@@ -21,7 +21,7 @@ DB_HOST={$config->db_host}
 DB_PORT={$config->db_port}
 DB_CHARSET={$config->db_charset}
 CONFIG;
-        file_put_contents($this->getEnvPath(), $env);
+        return file_put_contents($this->getEnvPath(), $env);
     }
 
     public function configExists(): bool
@@ -29,17 +29,24 @@ CONFIG;
         return file_exists($this->getEnvPath());
     }
 
+    public function dbExists(): bool
+    {
+        $db = config("db");
+        $cmd = sprintf("mysql -u %s -p%s -qfsBe \"SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME='%s'\"", $db['username'], $db['password'], $db['name']);
+        exec($cmd, $output, $result_code);
+        return !empty($output);
+    }
+
     public function dbConnected(): bool
     {
-        $this->createDatabase();
-        return $this->configExists() && db()?->isConnected();
+        return db()?->tryConnection() ?? false;
     }
 
     public function createDatabase(): void
     {
         $db = config("db");
-        exec("mysql -u {$db['username']} -p{$db['password']} -e 'CREATE DATABASE IF NOT EXISTS {$db['name']}'", $output, $result_code);
-        db()?->execute("USE {$db['name']}");
+        $cmd = sprintf("mysql -u %s -p%s -e 'CREATE DATABASE IF NOT EXISTS %s", $db['username'], $db['password'], $db['name']);
+        exec($cmd, $output, $result_code);
     }
 
     private function getEnvPath(): string
