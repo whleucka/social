@@ -103,8 +103,12 @@ class Controller implements HttpController
     * HTMX Redirect
     */
     function redirect(string $path): void {
-        $key = request()->isHTMX() ? "HX-Redirect" : "Location";
-        $this->setHeader($key, $path);
+        if (request()->isHTMX()) {
+            $this->setHeader("HX-Redirect", $path);
+        } else {
+            header("Location: " . $path);
+            exit;
+        }
     }
 
     /**
@@ -115,8 +119,12 @@ class Controller implements HttpController
         if (is_array($opts)) {
             $opts = json_encode($opts);
         }
-        $key = request()->isHTMX() ? "HX-Location" : "Location";
-        $this->setHeader($key, $opts);
+        if (request()->isHTMX()) {
+            $this->setHeader("HX-Location", $opts);
+        } else {
+            header("Location: " . $opts);
+            exit;
+        }
     }
 
     public function validate(array $ruleset): ?object

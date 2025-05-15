@@ -41,13 +41,18 @@ function container()
 /**
  * Get PDO DB
  */
-function db()
+function db(bool $cached = true)
 {
     $root_dir = config("paths.root");
     $exists = file_exists($root_dir . '.env');
     if ($exists) {
-        $mysql = container()->get(MySQL::class);
-        $db = Connection::getInstance($mysql);
+        if ($cached) {
+            $mysql = container()->get(MySQL::class);
+            $db = Connection::getInstance($mysql);
+        } else {
+            $mysql = container()->make(MySQL::class);
+            $db = Connection::newInstance($mysql);
+        }
         return $db;
     }
     return null;

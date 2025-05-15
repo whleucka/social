@@ -2,12 +2,12 @@
 
 namespace Echo\Framework\Database;
 
+use Echo\Framework\Session\Flash;
 use Echo\Interface\Database\Connection as DatabaseConnection;
 use Echo\Interface\Database\Driver;
 use Echo\Traits\Creational\Singleton;
 use PDO;
 use PDOException;
-use Exception;
 
 final class Connection implements DatabaseConnection
 {
@@ -17,7 +17,7 @@ final class Connection implements DatabaseConnection
     private ?PDO $link = null;
     private Driver $driver;
 
-    private function __construct(Driver $driver)
+    public function __construct(Driver $driver)
     {
         $this->driver = $driver;
         $this->connect();
@@ -28,6 +28,12 @@ final class Connection implements DatabaseConnection
         if (self::$instance === null) {
             self::$instance = new self($driver);
         }
+        return self::$instance;
+    }
+
+    public static function newInstance(Driver $driver): Connection
+    {
+        self::$instance = new self($driver);
         return self::$instance;
     }
 
@@ -54,13 +60,21 @@ final class Connection implements DatabaseConnection
                     $this->driver->getOptions()
                 );
             } catch (PDOException $e) {
+                error_log("Please refer to setup guide: https://github.com/whleucka/echo");
+
+                $debug = config("app.debug");
+                if ($debug) {
+                    Flash::add("danger", "Database connection failed.");
+                }
+
                 $this->connected = false;
+
                 if (preg_match('/unknown database/i', $e->getMessage())) {
-                    error_log('Unknown database.');
-                    error_log("Please refer to setup guide: https://github.com/whleucka/echo");
-                    exit;
+                    error_log('Unknown database. ' . $e->getMessage());
+                } else if (preg_match('/Name or service not known/', $e->getMessage())) {
+                    error_log('Unknown database host. ' . $e->getMessage());
                 } else {
-                    throw new Exception("Database connection failed. " . $e->getMessage());
+                    error_log('Unknown database error. ' . $e->getMessage());
                 }
             }
         }

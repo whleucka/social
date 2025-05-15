@@ -37,16 +37,40 @@ CONFIG;
         return !empty($output);
     }
 
-    public function dbConnected(): bool
-    {
-        return db()?->tryConnection() ?? false;
-    }
-
-    public function createDatabase(): void
+    public function tableExists(string $table): bool
     {
         $db = config("db");
-        $cmd = sprintf("mysql -u %s -p%s -e 'CREATE DATABASE IF NOT EXISTS %s", $db['username'], $db['password'], $db['name']);
+        $cmd = sprintf("mysql -u %s -p%s -qfsBe \"SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='%s' AND TABLE_NAME='%s' LIMIT 1\"", $db['username'], $db['password'], $db['name'], $table);
         exec($cmd, $output, $result_code);
+        return !empty($output);
+    }
+
+    public function dbConnected(): bool
+    {
+        return db(false)?->tryConnection() ?? false;
+    }
+
+    public function createDatabase(): bool
+    {
+        $db = config("db");
+        $cmd = sprintf("mysql -u %s -p%s -e 'CREATE DATABASE IF NOT EXISTS %s'", $db['username'], $db['password'], $db['name']);
+        exec($cmd, $output, $result_code);
+        return $this->dbExists();
+    }
+
+    public function dropDatabase(): bool
+    {
+        $db = config("db");
+        $cmd = sprintf("mysql -u %s -p%s -e 'DROP DATABASE IF EXISTS %s'", $db['username'], $db['password'], $db['name']);
+        exec($cmd, $output, $result_code);
+        return !$this->dbExists();
+    }
+
+    public function migrateDatabase(): bool
+    {
+        $cmd = "../bin/console migrate fresh";
+        exec($cmd, $output, $result_code);
+        return $this->tableExists('users');
     }
 
     private function getEnvPath(): string
