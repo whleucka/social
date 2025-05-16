@@ -13,6 +13,7 @@ class SetupController extends Controller
         "app_name" => ["required"],
         "app_url" => ["required"],
         "app_debug" => ["required"],
+        "db_driver" => ["required"],
         "db_name" => ["required"],
         "db_username" => ["required"],
         "db_password" => ["required"],

@@ -3,7 +3,7 @@
 {% block title %}{{ parent() }} - Sign In{% endblock %}
 
 {% block content %}
-    <section id="sign-in" class="container">
+    <section id="sign-in" class="container d-flex justify-content-center align-items-center h-100">
         <form class="bg-light rounded shadow p-4" method="POST" hx-post="{{ uri('auth.sign-in.post') }}" hx-swap="outerHTML" hx-target="#sign-in" hx-select="#sign-in">
             {{ csrf()|raw }}
             <h1>Sign In</h1>

@@ -3,7 +3,7 @@
 {% block title %}{{ parent() }} - Setup{% endblock %}
 
 {% block content %}
-    <section id="setup" class="container">
+    <section id="setup" class="container d-flex justify-content-center align-items-center mt-5">
         <form class="bg-light rounded shadow p-4" method="POST" hx-swap="outerHTML scroll:top" hx-target="#setup" hx-select="#setup">
             {{ csrf()|raw }}
             <h1>ECHO Setup</h1>
@@ -54,6 +54,16 @@
                 </div>
             </div>
             <h5 class="text-muted mb-3"><u>Database</u></h5>
+            <div class="row mb-3">
+                <label for="db-driver" class="col-sm-4 col-form-label">Driver</label>
+                <div class="col-sm-8">
+                    <select class="form-select" id="app-debug" name="db_driver">
+                        <option value="mysql"{% if db.driver == 'mysql' %}selected{% endif %}>MySQL</option>
+                        <option value="mariadb"{% if db.driver == 'mariadb' %}selected{% endif %}>MariaDB</option>
+                    </select>
+                    {% include 'components/validation.html.twig' with {'validate': 'db_driver'} %}
+                </div>
+            </div>
             <div class="row mb-3">
                 <label for="db-name" class="col-sm-4 col-form-label">Name</label>
                 <div class="col-sm-8">

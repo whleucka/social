@@ -1,6 +1,6 @@
 <?php
 
-use Echo\Framework\Database\Drivers\MySQL;
+use Echo\Framework\Database\Drivers\{ MariaDB, MySQL };
 use Echo\Framework\Http\Request;
 use Echo\Framework\Routing\Collector;
 use Echo\Framework\Routing\Router;
@@ -21,6 +21,15 @@ return [
     },
     Router::class => DI\create()->constructor(DI\Get(Collector::class)),
     MySQL::class => DI\create()->constructor(
+        name: config("db.name"),
+        username: config("db.username"),
+        password: config("db.password"),
+        host: config("db.host"),
+        port: (int) config("db.port"),
+        charset: config("db.charset"),
+        options: config("db.options"),
+    ),
+    MariaDB::class => DI\create()->constructor(
         name: config("db.name"),
         username: config("db.username"),
         password: config("db.password"),

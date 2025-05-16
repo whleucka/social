@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "driver" => env("DB_DRIVER", "mysql"),
     "name" => env("DB_NAME"),
     "username" => env("DB_USERNAME"),
     "password" => env("DB_PASSWORD"),

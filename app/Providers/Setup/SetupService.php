@@ -14,6 +14,7 @@ APP_DEBUG={$config->app_debug}
 DEV_SERVER=0.0.0.0
 DEV_PORT=8000
 
+DB_DRIVER={$config->db_driver}
 DB_NAME={$config->db_name}
 DB_USERNAME={$config->db_username}
 DB_PASSWORD={$config->db_password}
@@ -32,7 +33,7 @@ CONFIG;
     public function dbExists(): bool
     {
         $db = config("db");
-        $cmd = sprintf("mysql -u %s -p%s -qfsBe \"SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME='%s'\"", $db['username'], $db['password'], $db['name']);
+        $cmd = sprintf("%s -u %s -p%s -qfsBe \"SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME='%s'\"", $db['driver'], $db['username'], $db['password'], $db['name']);
         exec($cmd, $output, $result_code);
         return !empty($output);
     }
@@ -40,7 +41,7 @@ CONFIG;
     public function tableExists(string $table): bool
     {
         $db = config("db");
-        $cmd = sprintf("mysql -u %s -p%s -qfsBe \"SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='%s' AND TABLE_NAME='%s' LIMIT 1\"", $db['username'], $db['password'], $db['name'], $table);
+        $cmd = sprintf("%s -u %s -p%s -qfsBe \"SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='%s' AND TABLE_NAME='%s' LIMIT 1\"", $db['driver'], $db['username'], $db['password'], $db['name'], $table);
         exec($cmd, $output, $result_code);
         return !empty($output);
     }
@@ -53,7 +54,7 @@ CONFIG;
     public function createDatabase(): bool
     {
         $db = config("db");
-        $cmd = sprintf("mysql -u %s -p%s -e 'CREATE DATABASE IF NOT EXISTS %s'", $db['username'], $db['password'], $db['name']);
+        $cmd = sprintf("%s -u %s -p%s -e 'CREATE DATABASE IF NOT EXISTS %s'", $db['driver'], $db['username'], $db['password'], $db['name']);
         exec($cmd, $output, $result_code);
         return $this->dbExists();
     }
@@ -61,7 +62,7 @@ CONFIG;
     public function dropDatabase(): bool
     {
         $db = config("db");
-        $cmd = sprintf("mysql -u %s -p%s -e 'DROP DATABASE IF EXISTS %s'", $db['username'], $db['password'], $db['name']);
+        $cmd = sprintf("%s -u %s -p%s -e 'DROP DATABASE IF EXISTS %s'", $db['driver'], $db['username'], $db['password'], $db['name']);
         exec($cmd, $output, $result_code);
         return !$this->dbExists();
     }

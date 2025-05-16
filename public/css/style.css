@@ -10,6 +10,18 @@ body, html, #content {
     height: 100%;
 }
 
+#sign-in form {
+    max-width: 340px;
+}
+
+#register form {
+    max-width: 520px;
+}
+
+#setup form {
+    max-width: 400px;
+}
+
 /** Flash messages */
 .flash.alert {
     margin-bottom: 5px;

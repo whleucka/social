@@ -5,6 +5,7 @@ use App\Http\Kernel as HttpKernel;
 use App\Console\Kernel as ConsoleKernel;
 use Echo\Framework\Container\Container;
 use Echo\Framework\Database\Connection;
+use Echo\Framework\Database\Drivers\MariaDB;
 use Echo\Framework\Database\Drivers\MySQL;
 use Echo\Framework\Http\Request;
 use Echo\Framework\Routing\Router;
@@ -41,19 +42,23 @@ function container()
 /**
  * Get PDO DB
  */
-function db(bool $cached = true)
+function db(bool $make = true)
 {
     $root_dir = config("paths.root");
+    $driver = config("db.driver");
+    $driver_class = match($driver) {
+        'mysql' => MySQL::class,
+        'mariadb' => MariaDB::class,
+    };
     $exists = file_exists($root_dir . '.env');
     if ($exists) {
-        if ($cached) {
-            $mysql = container()->get(MySQL::class);
-            $db = Connection::getInstance($mysql);
+        if ($make) {
+            $db_driver = container()->make($driver_class);
+            return Connection::newInstance($db_driver);
         } else {
-            $mysql = container()->make(MySQL::class);
-            $db = Connection::newInstance($mysql);
+            $db_driver = container()->get($driver_class);
+            return Connection::getInstance($db_driver);
         }
-        return $db;
     }
     return null;
 }
