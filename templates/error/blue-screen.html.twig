@@ -1,0 +1,37 @@
+{% extends "layout/base.html.twig" %}
+
+{% block title %}Fatal Error{% endblock %}
+
+{% block content %}
+    <style>
+        body {
+            color: #fff;
+            background-color: #1073ac;
+        }
+        #blue-screen {
+            font-size: 0.8rem;
+            overflow: auto;
+        }
+
+        #blue-screen h1 {
+            font-size: 8rem;
+            font-weight: 400;
+        }
+        #blue-screen .qr {
+            height: 100px;
+            width: 100px;
+        }
+    </style>
+    <div id="blue-screen" class="p-4 container">
+        <h1>:(</h1>
+        <h3>{{ message }}</h3>
+        <p class="lead">We're just collecting some error info, and then you can refresh this page.<br>If you call tech support, they'll probably tell you to "try turning it off and on again."</p>
+        <p class="lead">🧠 Helpful tip: Try not to divide by zero next time.</p>
+        {% if debug %}
+        <h5>Error: {{ e.getMessage() }}</h5>
+        <p class="line"><strong>File:</strong> {{ e.getFile() }}: {{ e.getLine() }}</p>
+        <p class="trace"><strong>Trace:</strong> {{ e.getTraceAsString() }}</p>
+        {% endif %}
+        <img class="qr" src="{{ qr }}" alt="qr" />
+    </div>
+{% endblock %}
