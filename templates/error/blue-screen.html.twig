@@ -6,7 +6,7 @@
     <style>
         body {
             color: #fff;
-            background-color: #1073ac;
+            background-color: #0271a9;
         }
         #blue-screen {
             font-size: 0.8rem;
@@ -29,9 +29,9 @@
         <p class="lead">🧠 Helpful tip: Try not to divide by zero next time.</p>
         {% if debug %}
         <h5>Error: {{ e.getMessage() }}</h5>
-        <p class="line"><strong>File:</strong> {{ e.getFile() }}: {{ e.getLine() }}</p>
-        <p class="trace"><strong>Trace:</strong> {{ e.getTraceAsString() }}</p>
+        <p class="line">{{ e.getFile() }}: {{ e.getLine() }}</p>
+        <p class="trace"><pre>{{ e.getTraceAsString() }}</pre></p>
         {% endif %}
-        <img class="qr" src="{{ qr }}" alt="qr" />
+        <img class="qr rounded" src="{{ qr }}" alt="qr" />
     </div>
 {% endblock %}
