@@ -3,6 +3,7 @@
 namespace Echo\Framework\Http;
 
 use App\Models\User;
+use chillerlan\QRCode\QRCode;
 use Echo\Framework\Http\Response as HttpResponse;
 use Echo\Interface\Http\Kernel as HttpKernel;
 use Echo\Interface\Http\Request;
@@ -46,6 +47,7 @@ class Kernel implements HttpKernel
         $params = $route['params'];
         $middleware = $route['middleware'];
         $error = false;
+        $request_id = $request->getAttribute("request_id");
 
         try {
             // Using the container will allow for DI
@@ -74,8 +76,9 @@ class Kernel implements HttpKernel
                 $content = twig()->render("error/blue-screen.html.twig", [
                     "message" => "An uncaught exception occurred.",
                     "debug" => config("app.debug"),
-                    "request_id" => $request->getAttribute("request_id"),
+                    "request_id" => $request_id,
                     "e" => $ex,
+                    "qr" => (new QRCode)->render($request_id),
                 ]);
                 $response = new HttpResponse($content, 500);
                 return $response;
@@ -90,8 +93,9 @@ class Kernel implements HttpKernel
                 $content = twig()->render("error/blue-screen.html.twig", [
                     "message" => "A fatal error occurred.",
                     "debug" => config("app.debug"),
-                    "request_id" => $request->getAttribute("request_id"),
+                    "request_id" => $request_id,
                     "e" => $err,
+                    "qr" => (new QRCode)->render($request_id),
                 ]);
                 $response = new HttpResponse($content, 500);
                 return $response;
