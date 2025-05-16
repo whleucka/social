@@ -4,7 +4,6 @@ namespace Echo\Framework\Http;
 
 use App\Models\User;
 use Echo\Framework\Session\Flash;
-use Echo\Framework\View\TwigExtension;
 use Echo\Interface\Http\Controller as HttpController;
 use Echo\Interface\Http\Request;
 use Error;
@@ -200,9 +199,7 @@ class Controller implements HttpController
 
     protected function render(string $template, array $data = []): string
     {
-        $twig = container()->get(\Twig\Environment::class);
-        $twig->addExtension(new TwigExtension);
         $data = array_merge($data, $this->getDefaultTemplateData());
-        return $twig->render($template, $data);
+        return twig()->render($template, $data);
     }
 }

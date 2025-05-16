@@ -10,6 +10,7 @@ use Echo\Framework\Database\Drivers\MySQL;
 use Echo\Framework\Http\Request;
 use Echo\Framework\Routing\Router;
 use Echo\Framework\Session\Session;
+use Echo\Framework\View\TwigExtension;
 use Echo\Interface\Http\Request as HttpRequest;
 use Echo\Interface\Routing\Router as RoutingRouter;
 
@@ -37,6 +38,13 @@ function console(): Application
 function container()
 {
     return Container::getInstance();
+}
+
+function twig()
+{
+    $twig = container()->get(\Twig\Environment::class);
+    $twig->addExtension(new TwigExtension);
+    return $twig;
 }
 
 /**

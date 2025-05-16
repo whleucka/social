@@ -71,7 +71,14 @@ class Kernel implements HttpKernel
             if (in_array("api", $middleware)) {
                 $error = $ex->getMessage();
             } else {
-                throw $ex;
+                $content = twig()->render("error/blue-screen.html.twig", [
+                    "message" => "An uncaught exception occurred.",
+                    "debug" => config("app.debug"),
+                    "request_id" => $request->getAttribute("request_id"),
+                    "e" => $ex,
+                ]);
+                $response = new HttpResponse($content, 500);
+                return $response;
             }
         } catch (Error $err) {
             // Handle error
@@ -80,7 +87,14 @@ class Kernel implements HttpKernel
             if (in_array("api", $middleware)) {
                 $error = $err->getMessage();
             } else {
-                throw $err;
+                $content = twig()->render("error/blue-screen.html.twig", [
+                    "message" => "A fatal error occurred.",
+                    "debug" => config("app.debug"),
+                    "request_id" => $request->getAttribute("request_id"),
+                    "e" => $err,
+                ]);
+                $response = new HttpResponse($content, 500);
+                return $response;
             }
         }
 
