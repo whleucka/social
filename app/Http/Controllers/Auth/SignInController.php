@@ -11,6 +11,7 @@ class SignInController extends Controller
 {
     public function __construct(private SignInService $provider)
     {
+        throw new \Error("hell ya, brother");
     }
 
     #[Get("/sign-in", "auth.sign-in.index")]

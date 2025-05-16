@@ -23,7 +23,9 @@ class Kernel implements HttpKernel
 
         // If there is no route, then 404
         if (is_null($route)) {
-            http_response_code(404);
+            $content = twig()->render("error/404.html.twig");
+            $response = new HttpResponse($content, 404);
+            $response->send();
             exit;
         }
 
@@ -68,8 +70,6 @@ class Kernel implements HttpKernel
             $content = $controller->$method(...$params);
         } catch (Exception $ex) {
             // Handle exception
-            http_response_code(500);
-
             if (in_array("api", $middleware)) {
                 $error = $ex->getMessage();
             } else {
@@ -85,8 +85,6 @@ class Kernel implements HttpKernel
             }
         } catch (Error $err) {
             // Handle error
-            http_response_code(400);
-
             if (in_array("api", $middleware)) {
                 $error = $err->getMessage();
             } else {

@@ -25,12 +25,11 @@
     <div id="blue-screen" class="p-4 container">
         <h1>:(</h1>
         <h3>{{ message }}</h3>
-        <p class="lead">We're just collecting some error info, and then you can refresh this page.<br>If you call tech support, they'll probably tell you to "try turning it off and on again."</p>
-        <p class="lead">🧠 Helpful tip: Try not to divide by zero next time.</p>
+        <p class="lead">We're just collecting some error info, and then you can refresh this page.</p>
+        <p class="lead">If you call tech support, they'll probably tell you to "try turning it off and on again."</p>
         {% if debug %}
-        <h5>Error: {{ e.getMessage() }}</h5>
-        <p class="line">{{ e.getFile() }}: {{ e.getLine() }}</p>
-        <p class="trace"><pre>{{ e.getTraceAsString() }}</pre></p>
+            <h5>Error: {{ e.getMessage() }}</h5>
+            <p class="trace"><pre><strong>File:</strong> {{ e.getFile() }}:{{ e.getLine() }}<br>{{ e.getTraceAsString() }}</pre></p>
         {% endif %}
         <img class="qr rounded" src="{{ qr }}" alt="qr" />
     </div>
