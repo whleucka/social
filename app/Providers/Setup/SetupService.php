@@ -11,9 +11,6 @@ APP_NAME={$config->app_name}
 APP_URL={$config->app_url}
 APP_DEBUG={$config->app_debug}
 
-DEV_SERVER=0.0.0.0
-DEV_PORT=8000
-
 DB_DRIVER={$config->db_driver}
 DB_NAME={$config->db_name}
 DB_USERNAME={$config->db_username}
