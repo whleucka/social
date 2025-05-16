@@ -25,10 +25,7 @@
     ],
     "scripts": {
         "test": "phpunit tests",
-        "clear-cache": "rm -rf templates/.cache/*",
-        "post-install-cmd": [
-            "php -r \"copy('.env.example', '.env');\""
-        ]
+        "clear-cache": "rm -rf templates/.cache/*"
     },
     "minimum-stability": "dev",
     "require": {
