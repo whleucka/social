@@ -22,6 +22,11 @@ CONFIG;
         return file_put_contents($this->getEnvPath(), $env);
     }
 
+    public function isComplete(): bool
+    {
+        return $this->dbExists() && $this->dbConnected() && $this->tableExists('users');
+    }
+
     public function configExists(): bool
     {
         return file_exists($this->getEnvPath());
@@ -66,7 +71,8 @@ CONFIG;
 
     public function migrateDatabase(): bool
     {
-        $cmd = "../bin/console migrate fresh";
+        $root_dir = config("paths.root");
+        $cmd = "$root_dir/bin/console migrate run";
         exec($cmd, $output, $result_code);
         return $this->tableExists('users');
     }

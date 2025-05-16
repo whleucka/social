@@ -24,20 +24,9 @@ class SetupController extends Controller
 
     public function __construct(private SetupService $provider)
     {
-        $this->isComplete();
     }
 
-    private function isComplete(): void
-    {
-        // We should bail if setup is complete
-        $is_complete = $this->provider->dbExists() && $this->provider->dbConnected() && $this->provider->tableExists('users');
-        if ($is_complete) {
-            Flash::add("warning", "Setup complete. For security purposes, the setup page has been disabled.");
-            $this->redirect(uri("auth.sign-in.index"));
-        }
-    }
-
-    #[Get("/setup", "setup.index")] 
+    #[Get("/setup", "setup.index", ["setup"])] 
     public function index(): string
     {
         return $this->render("setup/index.html.twig", [
@@ -50,7 +39,7 @@ class SetupController extends Controller
         ]);
     }
 
-    #[Post("/setup/config", "setup.config")] 
+    #[Post("/setup/config", "setup.config", ["setup"])] 
     public function config(): string
     {
         $valid = $this->validate($this->setup_rules);
@@ -66,7 +55,7 @@ class SetupController extends Controller
         return $this->index();
     }
 
-    #[Post("/setup/database/create", "setup.create-db")] 
+    #[Post("/setup/database/create", "setup.create-db", ["setup"])] 
     public function create_db(): string
     {
         $valid = $this->validate($this->setup_rules);
@@ -83,7 +72,7 @@ class SetupController extends Controller
         return $this->index();
     }
 
-    #[Post("/setup/database/drop", "setup.drop-db")] 
+    #[Post("/setup/database/drop", "setup.drop-db", ["setup"])] 
     public function drop_db(): string
     {
         $valid = $this->validate($this->setup_rules);
@@ -99,7 +88,7 @@ class SetupController extends Controller
         return $this->index();
     }
 
-    #[Post("/setup/database/migrate", "setup.migrate-db")] 
+    #[Post("/setup/database/migrate", "setup.migrate-db", ["setup"])] 
     public function migrate_db(): string
     {
         $valid = $this->validate($this->setup_rules);
