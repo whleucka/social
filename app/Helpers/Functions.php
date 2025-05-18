@@ -48,7 +48,7 @@ function twig()
 /**
  * Get PDO DB
  */
-function db(bool $make = true)
+function db()
 {
     $root_dir = config("paths.root");
     $driver = config("db.driver");
@@ -58,13 +58,8 @@ function db(bool $make = true)
     };
     $exists = file_exists($root_dir . '.env');
     if ($exists) {
-        if ($make) {
-            $db_driver = container()->make($driver_class);
-            return Connection::newInstance($db_driver);
-        } else {
-            $db_driver = container()->get($driver_class);
-            return Connection::getInstance($db_driver);
-        }
+        $db_driver = container()->get($driver_class);
+        return Connection::getInstance($db_driver);
     }
     return null;
 }
