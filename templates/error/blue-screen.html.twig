@@ -12,10 +12,9 @@
             font-size: 0.8rem;
             overflow: auto;
         }
-
         #blue-screen h1 {
-            font-size: 8rem;
-            font-weight: 400;
+            font-size: 8.5rem;
+            font-weight: 300;
         }
         #blue-screen .qr {
             height: 100px;
@@ -26,11 +25,15 @@
         <h1>:(</h1>
         <h3>{{ message }}</h3>
         <p class="lead">We're just collecting some error info, and then you can refresh this page.</p>
-        <p class="lead">If you call tech support, they'll probably tell you to "try turning it off and on again."</p>
         {% if debug %}
             <h5>Error: {{ e.getMessage() }}</h5>
             <p class="trace"><pre><strong>File:</strong> {{ e.getFile() }}:{{ e.getLine() }}<br>{{ e.getTraceAsString() }}</pre></p>
         {% endif %}
-        <img class="qr rounded" src="{{ qr }}" alt="qr" />
+        <div class="mt-2">
+            <img class="qr rounded float-start me-3" src="{{ qr }}" alt="qr" />
+            <p>Request: {{ request_id }}</p>
+            <button class="btn btn-primary" onClick="location.reload()">Refresh</button>
+            <button class="btn btn-primary" onClick="history.back()">Go back</button>
+        </div>
     </div>
 {% endblock %}

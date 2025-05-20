@@ -6,9 +6,8 @@ use App\Models\User;
 use Echo\Framework\Session\Flash;
 use Echo\Interface\Http\Controller as HttpController;
 use Echo\Interface\Http\Request;
+use Echo\Framework\View\TwigExtension;
 use Error;
-use PDOException;
-use PHPUnit\Framework\Exception;
 
 class Controller implements HttpController
 {
@@ -38,19 +37,6 @@ class Controller implements HttpController
         "max_length" => "Input is too long",
         "regex" => "Does not match pattern",
     ];
-
-    public function __destruct()
-    {
-        try {
-            db()->execute("INSERT INTO sessions (uri, ip) 
-                VALUES (?,?)", [
-                $this->request->getUri(),
-                ip2long($this->request?->getClientIp())
-            ]);
-        } catch (Exception|Error|PDOException $e) {
-            error_log("-- Skipping session insert --");
-        }
-    }
 
     public function setHeader(string $key, string $value): void
     {
@@ -199,7 +185,9 @@ class Controller implements HttpController
 
     protected function render(string $template, array $data = []): string
     {
+        $twig = twig();
         $data = array_merge($data, $this->getDefaultTemplateData());
-        return twig()->render($template, $data);
+        $twig->addExtension(new TwigExtension);
+        return $twig->render($template, $data);
     }
 }

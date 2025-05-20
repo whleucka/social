@@ -50,7 +50,7 @@ CONFIG;
 
     public function dbConnected(): bool
     {
-        return db(false)?->tryConnection() ?? false;
+        return db()?->tryConnection() ?? false;
     }
 
     public function createDatabase(): bool

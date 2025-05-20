@@ -10,7 +10,6 @@ use Echo\Framework\Database\Drivers\MySQL;
 use Echo\Framework\Http\Request;
 use Echo\Framework\Routing\Router;
 use Echo\Framework\Session\Session;
-use Echo\Framework\View\TwigExtension;
 use Echo\Interface\Http\Request as HttpRequest;
 use Echo\Interface\Routing\Router as RoutingRouter;
 
@@ -43,14 +42,13 @@ function container()
 function twig()
 {
     $twig = container()->get(\Twig\Environment::class);
-    $twig->addExtension(new TwigExtension);
     return $twig;
 }
 
 /**
  * Get PDO DB
  */
-function db(bool $make = true)
+function db()
 {
     $root_dir = config("paths.root");
     $driver = config("db.driver");
@@ -60,13 +58,8 @@ function db(bool $make = true)
     };
     $exists = file_exists($root_dir . '.env');
     if ($exists) {
-        if ($make) {
-            $db_driver = container()->make($driver_class);
-            return Connection::newInstance($db_driver);
-        } else {
-            $db_driver = container()->get($driver_class);
-            return Connection::getInstance($db_driver);
-        }
+        $db_driver = container()->get($driver_class);
+        return Connection::getInstance($db_driver);
     }
     return null;
 }
