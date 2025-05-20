@@ -48,7 +48,7 @@ class Kernel implements HttpKernel
         $method = $route['method'];
         $params = $route['params'];
         $middleware = $route['middleware'];
-        $error = false;
+        $api_error = false;
         $request_id = $request->getAttribute("request_id");
 
         try {
@@ -71,7 +71,7 @@ class Kernel implements HttpKernel
         } catch (Exception $ex) {
             // Handle exception
             if (in_array("api", $middleware)) {
-                $error = $ex->getMessage();
+                $api_error = $ex->getMessage();
             } else {
                 $content = twig()->render("error/blue-screen.html.twig", [
                     "message" => "An uncaught exception occurred.",
@@ -86,7 +86,7 @@ class Kernel implements HttpKernel
         } catch (Error $err) {
             // Handle error
             if (in_array("api", $middleware)) {
-                $error = $err->getMessage();
+                $api_error = $err->getMessage();
             } else {
                 $content = twig()->render("error/blue-screen.html.twig", [
                     "message" => "A fatal error occurred.",
@@ -111,8 +111,8 @@ class Kernel implements HttpKernel
                 "ts" => date(DATE_ATOM),
             ];
             // Only show api errors when debug is enabled
-            if ($error && config("app.debug")) {
-                $api_response["error"] = $error;
+            if ($api_error && config("app.debug")) {
+                $api_response["error"] = $api_error;
             }
             // API response
             $response = new JsonResponse($api_response);
