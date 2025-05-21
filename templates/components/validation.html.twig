@@ -1,0 +1,9 @@
+{% for field,messages in validation_errors %}
+    {% if field == validate %}
+        <div class="d-flex flex-column px-1 my-1">
+            {% for message in messages %}
+                <small class="text-danger d-flex align-items-center"><span class="pe-1" style="font-size: 10px;">&#9888;</span> {{ message }}</small>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endfor %}

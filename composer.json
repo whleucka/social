@@ -1,0 +1,43 @@
+{
+    "name": "whleucka/echo",
+    "description": "Echo web application.",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "files": [
+            "app/Helpers/Functions.php"
+        ],
+        "psr-4": {
+            "App\\": "app/",
+            "Echo\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "William Hleucka",
+            "email": "william.hleucka@gmail.com"
+        }
+    ],
+    "scripts": {
+        "test": "phpunit tests",
+        "clear-cache": "rm -rf templates/.cache/*"
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^8.2",
+        "php-di/php-di": "dev-master",
+        "vlucas/phpdotenv": "^5.6@dev",
+        "twig/twig": "^3.0",
+        "maximebf/consolekit": "dev-master",
+        "peppeocchi/php-cron-scheduler": "dev-master",
+        "chillerlan/php-qrcode": "dev-main"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.0@dev"
+    }
+}
