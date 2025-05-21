@@ -1,0 +1,33 @@
+<div id="comment-modal" class="modal-dialog modal-dialog-centered">
+    <form class="w-100">
+        {{ csrf()|raw }}
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn btn-sm" data-bs-dismiss="modal">Cancel</button>
+                <button 
+                    type="button" 
+                    hx-post="/post/comment"
+                    hx-trigger="click"
+                    class="btn btn-sm btn-primary ms-auto" 
+                    data-bs-dismiss="modal">Post</button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex">
+                    <img id="avatar" class="me-3" src="{{ user.gravatar }}" alt="avatar" />
+                    <div class="form-floating w-100">
+                        <textarea class="form-control" placeholder="" name="comment" id="comment"></textarea>
+                        <label for="comment">What's up?</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="w-100 d-flex justify-content-start">
+                    <i class="bi bi-image-fill me-3"></i>
+                    <i class="bi bi-film me-3"></i>
+                    <i class="bi bi-filetype-gif me-3"></i>
+                    <i class="bi bi-emoji-smile"></i>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

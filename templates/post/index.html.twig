@@ -1,0 +1,19 @@
+<div class="p-2 post-cont">
+    <div class="post d-flex">
+        <img class="avatar" src="{{ post.gravatar }}" alt="avatar" />
+        <div class="d-flex flex-column flex-grow-1 px-2">
+            <div class="top">
+                <span class="user">{{ post.user }}</span>
+                <span class="px-1">·</span>
+                <span class="ago text-muted">{{ post.ago }}</span>
+            </div>
+            <p class="comment p-2">{{ post.comment }}</p>
+            <div class="bottom w-100 d-flex justify-content-around">
+                <i class="bi bi-chat-left"></i>
+                <i class="bi bi-heart"></i>
+                <i class="bi bi-chat-left"></i> 
+                <i class="bi bi-three-dots"></i>
+            </div>
+        </div>
+    </div>
+</div>

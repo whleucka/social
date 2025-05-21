@@ -1,0 +1,65 @@
+{% extends "layout/base.html.twig" %}
+
+{% block content %}
+    <section id="app" class="h-100 d-flex container">
+        <section id="left" class="col-3 p-2 mt-3 d-none d-md-block">
+        {% block left_content %}
+            <nav class="d-flex justify-content-end">
+                <div>
+                    <img id="avatar" src="{{ user.gravatar }}" alt="logo" />
+                    <ul class="navbar-nav mt-3">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="bi bi-house me-2"></i> Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="bi bi-person-circle me-2"></i> Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="bi bi-gear me-2"></i> Settings</a>
+                        </li>
+                    </ul>
+                    <button 
+                        hx-get="/post/control"
+                        hx-target="#new-post"
+                        hx-trigger="click"
+                        data-bs-toggle="modal"
+                        data-bs-target="#new-post"
+                        class="btn btn-sm btn-primary mt-3">
+                        <i class="bi bi-pencil-square me-2"></i> New Post
+                    </button>
+                </div>
+            </nav>
+        {% endblock %}
+        </section>
+        <section id="center" class="col-7">
+            <div class="d-flex justify-content-center w-100 p-2">
+                <h4>Social</h4>
+            </div>
+            {% block center_content %}{% endblock %}
+            <div id="new-post"
+                class="modal modal-blur fade"
+                style="display: none"
+                aria-hidden="false"
+                tabindex="-1">
+                <div id="comment-modal" class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        </div>
+                        <div class="modal-body d-flex align-items-center justify-content-center" style="height: 100px;">
+                            <img class="loader" src="/img/loading.gif" alt="loading" />
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="right" class="col-3 p-2 mt-3 d-none d-md-block">
+        {% block right_content %}
+            <nav class="d-flex justify-content-start">
+                <input id="search" class="form-control" type="search" name="search" value="" placeholder="Search" />
+            </nav>
+        {% endblock %}
+        </section>
+    </section>
+{% endblock %}

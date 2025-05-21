@@ -10,4 +10,11 @@ class User extends Model
     {
         parent::__construct('users', $id);
     }
+
+    public function gravatarUrl($size = 40, $default = 'mp', $rating = 'g'): string
+    {
+        $email = strtolower(trim($this->email));
+        $hash = md5($email);
+        return "https://www.gravatar.com/avatar/$hash?s=$size&d=$default&r=$rating";
+    }
 }
