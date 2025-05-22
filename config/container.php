@@ -5,6 +5,35 @@ use Echo\Framework\Http\Request;
 use Echo\Framework\Routing\Collector;
 use Echo\Framework\Routing\Router;
 
+/**
+ * Helpers
+ */
+function recursiveFiles(string $directory)
+{
+
+    return new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
+}
+
+function getClasses(string $directory): array
+{
+    // Get existing classes before loading new ones
+    $before = get_declared_classes();
+
+    // Recursively find all PHP files
+    $files = recursiveFiles($directory);
+    foreach ($files as $file) {
+        if ($file->isFile() && $file->getExtension() === 'php') {
+            require_once $file->getPathname();
+        }
+    }
+
+    // Get all declared classes after loading
+    $after = get_declared_classes();
+
+    // Return only the new classes
+    return array_diff($after, $before);
+}
+
 return [
     Request::class => DI\create()->constructor($_GET, $_POST, $_REQUEST, $_FILES, $_COOKIE, function_exists("getallheaders") ? getallheaders() : []),
     Collector::class => function() {
