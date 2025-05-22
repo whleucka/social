@@ -14,8 +14,6 @@ class Post extends Model
 
     public function ago()
     {
-        // What should we do about this?
-        date_default_timezone_set('America/Edmonton');
         return Carbon::parse($this->created_at)->diffForHumans();
     }
 
