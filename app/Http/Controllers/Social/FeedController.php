@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Social;
 
 use App\Providers\Social\PostService;
 use Echo\Framework\Http\Controller;
-use Echo\Framework\Routing\Route\Get;
+use Echo\Framework\Routing\Route\{Get, Post};
 
 class FeedController extends Controller
 {
@@ -25,4 +25,22 @@ class FeedController extends Controller
             "posts" => $this->post_provider->getPosts($this->user->id),
         ]);
     }
+
+    #[Post("/feed/search", "feed.search", ["auth"])]
+    public function search()
+    {
+        $valid = $this->validate([
+            "term" => ["required"],
+        ]);
+
+        if ($valid) {
+            return $this->render("feed/load.html.twig", [
+                "posts" => $this->post_provider->searchPosts($valid->term),
+                "term" => $valid->term,
+            ]);
+        }
+
+        return $this->load();
+    }
+
 }

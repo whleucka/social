@@ -114,6 +114,9 @@ body {
     font-size: 0.7rem;
     padding: 0 5px;
 }
+#app #feed .post .bottom .action {
+    cursor: pointer;
+}
 #app #feed .post .like.disabled {
     opacity: 0.3;
 }

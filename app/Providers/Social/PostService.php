@@ -63,6 +63,15 @@ class PostService
             ORDER BY created_at DESC");
     }
 
+    public function searchPosts(string $term)
+    {
+        return db()->fetchAll("SELECT posts.uuid 
+            FROM posts 
+            INNER JOIN users ON users.id = user_id
+            WHERE (username LIKE ? OR comment LIKE ?)
+            ORDER BY posts.created_at DESC", ["%$term%", "%$term%"]);
+    }
+
     public function isLiked(int $user_id, string $uuid)
     {
         $post = Post::where("uuid", $uuid)->get();

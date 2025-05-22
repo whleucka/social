@@ -1,6 +1,8 @@
 {% for post in posts %}
     {% include 'post/index.html.twig' %}
 {% endfor %}
-{% if not posts %}
-<p class="text-muted"><em>There are no posts yet.</em></p>
+{% if not posts and not term %}
+    <p class="text-muted p-2"><em>There are no posts yet</em></p>
+{% elseif not posts and term %}
+    <p class="text-muted p-2"><em>There are no posts that matched '{{ term }}'</em></p>
 {% endif %}
