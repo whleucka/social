@@ -2,7 +2,7 @@
 
 {% block content %}
     <section id="app" class="h-100 d-flex container">
-        <section id="left" class="col-3 p-3 mt-3 d-none d-md-block">
+        <section id="left" class="col-3 pe-3 mt-3 d-none d-md-block">
         {% block left_content %}
             <nav class="d-flex justify-content-end sticky-top pt-2">
                 <div>
@@ -63,11 +63,11 @@
                 hx-trigger="click"
                 data-bs-toggle="modal"
                 data-bs-target="#new-post"
-                class="btn btn-sm btn-primary d-block d-sm-none">
+                class="btn btn-sm btn-primary d-block d-md-none">
                 <i class="bi bi-pencil-square"></i>
             </button>
         </section>
-        <section id="right" class="col-3 p-3 mt-3 d-none d-md-block">
+        <section id="right" class="col-3 ps-3 mt-3 d-none d-md-block">
         {% block right_content %}
             <nav class="d-flex flex-column justify-content-start sticky-top pt-2">
                 <input id="search" class="form-control" type="search" name="search" value="" placeholder="Search" />
