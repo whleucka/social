@@ -50,20 +50,13 @@ class PostController extends Controller
         return null;
     }
 
-    #[Get("/post/{uuid}/liked", "post.liked", ["auth"])]
-    public function liked(string $uuid): string
-    {
-        return $this->render("post/like.html.twig", [
-            "liked" => $this->post_provider->isLiked($this->user->id, $uuid),
-            "uuid" => $uuid,
-        ]);
-
-    }
-
     #[Get("/post/{uuid}/like", "post.like", ["auth"])]
     public function like(string $uuid): string
     {
         $this->post_provider->likePost($this->user->id, $uuid);
-        return $this->liked($uuid);
+        return $this->render("post/like.html.twig", [
+            "liked" => $this->post_provider->isLiked($this->user->id, $uuid),
+            "uuid" => $uuid,
+        ]);
     }
 }

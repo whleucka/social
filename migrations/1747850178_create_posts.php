@@ -14,6 +14,8 @@ return new class implements Migration
             $table->unsignedBigInteger("user_id");
             $table->uuid("uuid")->default("(UUID())");
             $table->text("comment");
+            $table->text("url")->nullable();
+            $table->text("image")->nullable();
             $table->timestamps();
             $table->primaryKey("id");
             $table->foreignKey("user_id")->references("users", "id")->onDelete("CASCADE");

@@ -7,10 +7,17 @@
             <span class="px-1">·</span>
             <span class="ago text-muted" hx-get="/post/{{ post.uuid }}/ping" hx-trigger="click" hx-swap="textContent">{{ post.ago }}</span>
         </div>
-        <p class="comment p-2">{{ post.comment }}</p>
+        {% if post.image %}
+        <div class="mt-3">
+        {% if post.url %}<a href="{{ post.url }}" target="_blank" title="View article">{% endif %}
+            <img class="image" src="{{ post.image }}" alt="article" />
+        {% if post.url %}</a>{% endif %}
+        </div>
+        {% endif %}
+        <p class="comment p-2">{{ post.comment|raw }}</p>
         <div class="bottom w-100 d-flex justify-content-around">
             <i class="bi bi-chat-left"></i>
-            <i class="like bi bi-heart disabled" hx-get="/post/{{ post.uuid }}/liked" hx-trigger="intersect once"  hx-swap="outerHTML"></i>
+            <i class="like bi bi-heart{% if post.liked %}-fill{% endif %} {% if post.liked %}active{% endif %}" hx-get="/post/{{ post.uuid }}/like" hx-trigger="click" hx-swap="outerHTML"></i>
             <i class="bi bi-three-dots"></i>
         </div>
     </div>
