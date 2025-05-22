@@ -3,6 +3,14 @@
 {% block title %}{{ parent() }} - Sign In{% endblock %}
 
 {% block content %}
+    <style>
+    html, body {
+        height: 100%;
+    }
+    #sign-in form {
+        max-width: 360px;
+    }
+    </style>
     <section id="sign-in" class="container d-flex justify-content-center align-items-center h-100">
         <form class="bg-light rounded shadow p-4" method="POST" hx-post="{{ uri('auth.sign-in.post') }}" hx-swap="outerHTML" hx-target="#sign-in" hx-select="#sign-in">
             {{ csrf()|raw }}

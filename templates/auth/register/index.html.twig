@@ -3,6 +3,14 @@
 {% block title %}{{ parent() }} - Register{% endblock %}
 
 {% block content %}
+    <style>
+    html, body {
+        height: 100%;
+    }
+    #register form {
+        max-width: 520px;
+    }
+    </style>
     <section id="register" class="container d-flex justify-content-center align-items-center h-100">
         <form class="bg-light rounded shadow p-4" method="POST" hx-post="{{ uri('auth.register.post') }}" hx-swap="outerHTML" hx-target="#register" hx-select="#register">
             {{ csrf()|raw }}

@@ -3,6 +3,14 @@
 {% block title %}{{ parent() }} - Setup{% endblock %}
 
 {% block content %}
+    <style>
+    html, body {
+        height: 100%;
+    }
+    #setup form {
+        max-width: 400px;
+    }
+    </style>
     <section id="setup" class="container d-flex justify-content-center align-items-center mt-5">
         <form class="bg-light rounded shadow p-4" method="POST" hx-swap="outerHTML scroll:top" hx-target="#setup" hx-select="#setup">
             {{ csrf()|raw }}

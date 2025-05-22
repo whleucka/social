@@ -7,20 +7,9 @@ body {
     font-style: normal;
     background-color: #f1f2f6;
 }
-body, html, #content {
+
+#content {
     height: 100%;
-}
-
-#sign-in form {
-    max-width: 360px;
-}
-
-#register form {
-    max-width: 520px;
-}
-
-#setup form {
-    max-width: 400px;
 }
 
 /** Flash messages */
