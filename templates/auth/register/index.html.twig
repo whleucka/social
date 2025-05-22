@@ -27,6 +27,11 @@
                 </div>
             </div>
             <div class="form-floating mb-3">
+                <input type="input" value="{{ old('username') }}" class="form-control {% if validation_errors.username is defined %}is-invalid{% endif %}" id="username" name="username" placeholder="" autocomplete="username">
+                <label for="email">Username</label>
+                 {% include 'components/validation.html.twig' with {'validate': 'username'} %}
+            </div>
+            <div class="form-floating mb-3">
                 <input type="input" value="{{ old('email') }}" class="form-control {% if validation_errors.email is defined %}is-invalid{% endif %}" id="email" name="email" placeholder="" autocomplete="email">
                 <label for="email">Email address</label>
                  {% include 'components/validation.html.twig' with {'validate': 'email'} %}

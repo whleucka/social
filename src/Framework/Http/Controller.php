@@ -188,12 +188,15 @@ class Controller implements HttpController
         $twig = twig();
         $data = array_merge($data, $this->getDefaultTemplateData());
         $twig->addExtension(new TwigExtension);
-        $data['user'] = [
-            "email" => $this->user->email,
-            "first_name" => $this->user->first_name,
-            "surname" => $this->user->surname,
-            "gravatar" => $this->user->gravatarUrl(),
-        ];
+        if ($this->user) {
+            $data['user'] = [
+                "email" => $this->user->email,
+                "first_name" => $this->user->first_name,
+                "surname" => $this->user->surname,
+                "username" => $this->user->username,
+                "gravatar" => $this->user->gravatarUrl(),
+            ];
+        }
         return $twig->render($template, $data);
     }
 }

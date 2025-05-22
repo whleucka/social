@@ -30,7 +30,8 @@ class PostService
 
         foreach ($posts as &$post) {
             $post['gravatar'] = $user->gravatarUrl();
-            $post['user'] = $user->first_name . ' ' . $user->surname;
+            $post['name'] = $user->first_name . ' ' . $user->surname;
+            $post['username'] = $user->username;
             $post['ago'] =  Carbon::parse($post['created_at'])->diffForHumans();
         }
 

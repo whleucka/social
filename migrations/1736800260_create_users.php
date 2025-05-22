@@ -14,6 +14,7 @@ return new class implements Migration
             $table->uuid("uuid")->default("(UUID())");
             $table->varchar("first_name");
             $table->varchar("surname");
+            $table->varchar("username");
             $table->varchar("email");
             $table->binary("password", 96);
             $table->timestamps();

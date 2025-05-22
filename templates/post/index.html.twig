@@ -1,9 +1,10 @@
-<div class="p-2 post-cont">
+<div class="p-2 post-cont bg-light">
     <div class="post d-flex">
         <img class="avatar" src="{{ post.gravatar }}" alt="avatar" />
         <div class="d-flex flex-column flex-grow-1 px-2">
             <div class="top">
-                <span class="user">{{ post.user }}</span>
+                <span class="name">{{ post.name }}</span>
+                <span class="username text-muted">@{{ post.username }}</span>
                 <span class="px-1">·</span>
                 <span class="ago text-muted">{{ post.ago }}</span>
             </div>

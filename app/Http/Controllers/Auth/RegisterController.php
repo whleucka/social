@@ -28,12 +28,13 @@ class RegisterController extends Controller
         $valid = $this->validate([
             "first_name" => ["required"],
             "surname" => ["required"],
+            "username" => ["required"],
             "email" => ["required", "email"],
-            "password" => ["required", "min_length:10", "regex:^(?=.*[A-Z])(?=.*\W)(?=.*\d).+$"],
+            "password" => ["required", "min_length:8", "regex:^(?=.*[A-Z])(?=.*\W)(?=.*\d).+$"],
             "password_match" => ["required", "match:password"],
         ]);
         if ($valid) {
-            $success = $this->provider->register($valid->first_name, $valid->surname, $valid->email, $valid->password);
+            $success = $this->provider->register($valid->first_name, $valid->surname, $valid->username, $valid->email, $valid->password);
             if ($success) {
                 $this->redirect(config("security.authenticated_route"));
             } else {
