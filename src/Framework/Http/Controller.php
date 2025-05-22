@@ -84,34 +84,6 @@ class Controller implements HttpController
         $this->setHeader("HX-Trigger", $opts);
     }
 
-    /**
-    * HTMX Redirect
-    */
-    function redirect(string $path): void {
-        if (request()->isHTMX()) {
-            $this->setHeader("HX-Redirect", $path);
-        } else {
-            header("Location: " . $path);
-            exit;
-        }
-    }
-
-    /**
-    * HTMX Location
-    */
-    function location(array|string $opts)
-    {
-        if (is_array($opts)) {
-            $opts = json_encode($opts);
-        }
-        if (request()->isHTMX()) {
-            $this->setHeader("HX-Location", $opts);
-        } else {
-            header("Location: " . $opts);
-            exit;
-        }
-    }
-
     public function validate(array $ruleset): ?object
     {
         $valid = true;

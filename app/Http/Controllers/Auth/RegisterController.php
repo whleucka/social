@@ -36,7 +36,8 @@ class RegisterController extends Controller
         if ($valid) {
             $success = $this->provider->register($valid->first_name, $valid->surname, $valid->username, $valid->email, $valid->password);
             if ($success) {
-                $this->redirect(config("security.authenticated_route"));
+                $path = config("security.authenticated_route");
+                header("HX-Redirect: $path");
             } else {
                 Flash::add("warning", "Failed to register new account");
             }
