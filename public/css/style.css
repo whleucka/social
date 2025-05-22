@@ -98,6 +98,7 @@ body {
     resize: none;
 }
 #app #feed .post-cont {
+    min-height: 117px;
     border: 1px solid #ccc; 
     margin-bottom: 10px;
     border-radius: 6px;

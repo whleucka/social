@@ -55,7 +55,7 @@ class PostService
     {
         return db()->fetchAll("SELECT uuid 
             FROM posts 
-            WHERE user_id = ? 
+            WHERE user_id = ? AND created_at > NOW() - INTERVAL 30 DAY
             ORDER BY created_at DESC", [$user_id]);
     }
 
