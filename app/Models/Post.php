@@ -23,6 +23,12 @@ class Post extends Model
             ->andWhere("post_id", $this->id)->get();
     }
 
+    public function likeCount(): int
+    {
+         $likes = PostLike::where("post_id", $this->id)->get(lazy: false) ?? [];
+         return count($likes);
+    }
+
     public function user()
     {
         return User::find($this->user_id);

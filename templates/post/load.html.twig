@@ -16,9 +16,11 @@
         {% endif %}
         <p class="comment p-2">{{ post.comment }}</p>
         <div class="bottom w-100 d-flex justify-content-around">
-            <i class="bi bi-chat-left"></i>
-            <i class="like bi bi-heart{% if post.liked %}-fill{% endif %} {% if post.liked %}active{% endif %}" hx-get="/post/{{ post.uuid }}/like" hx-trigger="click" hx-swap="outerHTML"></i>
-            <i class="bi bi-three-dots"></i>
+            <div><i class="bi bi-chat-left"></i></div>
+            <div class="d-flex align-items-center" hx-get="/post/{{ post.uuid }}/like" hx-trigger="click" hx-swap="outerHTML">
+                <i class="like bi bi-heart{% if post.liked %}-fill{% endif %} {% if post.liked %}active{% endif %}"></i> <small class="like-count ps-1">{{ post.like_count }}</small>
+            </div>
+            <div><i class="bi bi-three-dots"></i></div>
         </div>
     </div>
 </div>

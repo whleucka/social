@@ -1,5 +1,6 @@
-<i 
-    class="like bi bi-heart{% if liked %}-fill{% endif %} {% if liked %}active{% endif %}"
+<div class="d-flex align-items-center"
     hx-get="/post/{{ uuid }}/like" 
     hx-trigger="click" 
-    hx-swap="outerHTML"></i>
+    hx-swap="outerHTML">
+    <i class="like bi bi-heart{% if liked %}-fill{% endif %} {% if liked %}active{% endif %}"></i> <small class="like-count ps-1">{{ count }}</small>
+</div>
