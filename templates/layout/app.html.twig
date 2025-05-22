@@ -4,7 +4,7 @@
     <section id="app" class="h-100 d-flex container">
         <section id="left" class="col-3 pe-3 mt-3 d-none d-md-block">
         {% block left_content %}
-            <nav class="d-flex justify-content-end sticky-top pt-2">
+            <nav class="d-flex justify-content-end pt-2 sticky-top">
                 <div>
                     <img id="avatar" src="{{ user.gravatar }}" alt="logo" />
                     <ul class="navbar-nav mt-3">
@@ -69,7 +69,7 @@
         </section>
         <section id="right" class="col-3 ps-3 mt-3 d-none d-md-block">
         {% block right_content %}
-            <nav class="d-flex flex-column justify-content-start sticky-top pt-2">
+            <nav class="d-flex flex-column justify-content-start pt-2 sticky-top">
                 <input id="search" class="form-control" type="search" name="search" value="" placeholder="Search" />
                 <div class="mt-3">
                      <ul class="navbar-nav">

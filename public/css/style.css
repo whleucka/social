@@ -57,6 +57,9 @@ body, html, #content {
 /**
  * App
  */
+#app {
+    width: 100%;
+}
 #app #center #post-button {
     text-align: center;
     font-size: 1.3rem;
