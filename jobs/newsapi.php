@@ -7,13 +7,16 @@ use App\Models\User;
 use PHPUnit\Framework\Exception;
 use jcobhams\NewsApi\NewsApi;
 
-$config = config("news");
+getHeadlines();
 
-if ($config['api_key']) {
-    $newsapi = new NewsApi($config["api_key"]);
-    $bot = getBot();
+function getHeadlines(int $page = 1)
+{
+    $config = config("news");
 
-    foreach (range(1, 10) as $page) {
+    if ($config['api_key']) {
+        $newsapi = new NewsApi($config["api_key"]);
+        $bot = getBot();
+
         try {
             $top_headlines = $newsapi->getTopHeadlines(country: $config['country'], page_size: $config['page_size'], page: $page);
 
@@ -32,7 +35,7 @@ if ($config['api_key']) {
                     ]);
                 }
             }
-        } catch (Exception $ex) {
+        } catch (Exception|Error $ex) {
             error_log("Failed to fetch newsapi");
         }
     }
