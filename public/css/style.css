@@ -60,6 +60,11 @@ body, html, #content {
 #app {
     width: 100%;
 }
+#app #center {
+    height: 100%;
+    margin: 0 auto;
+    max-width: 580px;
+}
 #app #center #post-button {
     text-align: center;
     font-size: 1.3rem;
@@ -74,15 +79,14 @@ body, html, #content {
 #app #left ul li {
     font-size: 1.0rem;
 }
-#app #center {
-    height: 100%;
-    margin: 0 auto;
-    max-width: 580px;
-}
 #app #left #avatar {
     width: 40px;
     height: 40px;
     border-radius: 50%;
+}
+#app #left nav, #app #right nav {
+    position: sticky;
+    top: 0;
 }
 #app #right ul li {
     font-size: 0.9rem;
