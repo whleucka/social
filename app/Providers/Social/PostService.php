@@ -8,7 +8,7 @@ use App\Models\PostLike;
 
 class PostService
 {
-    public function getPost(string $uuid)
+    public function getPost(int $user_id, string $uuid)
     {
         $post = Post::where("uuid", $uuid)->get();
         if ($post) {
@@ -21,7 +21,7 @@ class PostService
                 "username" => $user->username,
                 "ago" => $post->ago(),
                 "ping" => $this->shouldPing($post->created_at),
-                "liked" => $post->isLiked($user->id),
+                "liked" => $post->isLiked($user_id),
                 "like_count" => $post->likeCount(),
                 "image" => $post->image,
                 "url" => $post->url,
@@ -55,7 +55,7 @@ class PostService
         ]);
     }
 
-    public function getPosts(int $user_id): ?array
+    public function getPosts(): ?array
     {
         return db()->fetchAll("SELECT uuid 
             FROM posts 
