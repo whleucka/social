@@ -16,7 +16,7 @@ class PostController extends Controller
     public function load(string $uuid): string
     {
         return $this->render("post/load.html.twig", [
-            "post" => $this->post_provider->getPost($uuid)
+            "post" => $this->post_provider->getPost($this->user->id, $uuid)
         ]);
     }
 
