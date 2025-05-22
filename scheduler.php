@@ -15,5 +15,9 @@ $scheduler->php($jobs . "/pinger.php")
     ->everyMinute()
     ->output($logs . date("Y-m-d") . "_ping.log", true);
 
+// News bot
+$scheduler->php($jobs . "/newsapi.php")
+    ->at("00 */6 * * *");
+
 // Let the scheduler execute jobs which are due.
 $scheduler->run();
