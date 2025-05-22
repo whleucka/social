@@ -1,5 +1,7 @@
 {% extends "layout/app.html.twig" %}
 
+{% block title %}{{ parent() }} - Home{% endblock %}
+
 {% block center_content %}
     <section id="feed" class="w-100" hx-get="/feed/load" hx-trigger="load, load-posts from:body" hx-swap="innerHTML">
     </section>
