@@ -1,6 +1,7 @@
 # Social
 
-WIP: a social media network
+![image](https://github.com/user-attachments/assets/05eacf0e-5592-4d1e-89c8-d4d70acc9368)
+WIP: a social media project
 
 
 ### License
