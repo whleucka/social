@@ -22,6 +22,7 @@ class PostService
                 "ago" => $post->ago(),
                 "ping" => $this->shouldPing($post->created_at),
                 "liked" => $post->isLiked($user->id),
+                "like_count" => $post->likeCount(),
                 "image" => $post->image,
                 "url" => $post->url,
             ];
@@ -68,6 +69,16 @@ class PostService
 
         if ($post) {
             return $post->isLiked($user_id);
+        }
+        return null;
+    }
+
+    public function getLikeCount(string $uuid)
+    {
+        $post = Post::where("uuid", $uuid)->get();
+
+        if ($post) {
+            return $post->likeCount();
         }
         return null;
     }

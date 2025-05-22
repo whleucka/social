@@ -56,6 +56,7 @@ class PostController extends Controller
         $this->post_provider->likePost($this->user->id, $uuid);
         return $this->render("post/like.html.twig", [
             "liked" => $this->post_provider->isLiked($this->user->id, $uuid),
+            "count" => $this->post_provider->getLikeCount($uuid),
             "uuid" => $uuid,
         ]);
     }
