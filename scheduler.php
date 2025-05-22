@@ -17,7 +17,7 @@ $scheduler->php($jobs . "/pinger.php")
 
 // News bot
 $scheduler->php($jobs . "/newsapi.php")
-    ->at("00 */6 * * *");
+    ->at("00 */4 * * *");
 
 // Let the scheduler execute jobs which are due.
 $scheduler->run();
