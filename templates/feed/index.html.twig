@@ -2,8 +2,5 @@
 
 {% block center_content %}
     <section id="feed" class="w-100" hx-get="/feed/load" hx-trigger="load, load-posts from:body" hx-swap="innerHTML">
-        <div class="p-2 w-100 d-flex justify-content-center mt-5">
-            <img class="loader" src="/img/loading.gif" alt="loading" />
-        </div>
     </section>
 {% endblock %}

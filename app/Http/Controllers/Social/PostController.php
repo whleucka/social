@@ -12,6 +12,20 @@ class PostController extends Controller
     {
     }
 
+    #[Get("/post/{uuid}/load", "post.load", ["auth"])]
+    public function load(string $uuid): string
+    {
+        return $this->render("post/load.html.twig", [
+            "post" => $this->post_provider->getPost($uuid)
+        ]);
+    }
+
+    #[Get("/post/{uuid}/ping", "post.ping", ["auth"])]
+    public function ping(string $uuid)
+    {
+        return $this->post_provider->getPostAgo($uuid);
+    }
+
     #[Get("/post/control", "post.control", ["auth"])]
     public function control(): string
     {
@@ -19,15 +33,37 @@ class PostController extends Controller
     }
 
     #[Post("/post/comment", "post.comment", ["auth"])]
-    public function comment()
+    public function comment(): ?string
     {
         $valid = $this->validate([
             "comment" => ["required"],
         ]);
 
         if ($valid) {
-            $this->post_provider->createPost($this->user->id, $valid->comment);
-            $this->hxTrigger("load-posts");
+            $post = $this->post_provider->createPost($this->user->id, $valid->comment);
+            if ($post) {
+                return $this->render("post/index.html.twig", [
+                    "post" => ["uuid" => $post->uuid],
+                ]);
+            }
         }
+        return null;
+    }
+
+    #[Get("/post/{uuid}/liked", "post.liked", ["auth"])]
+    public function liked(string $uuid): string
+    {
+        return $this->render("post/like.html.twig", [
+            "liked" => $this->post_provider->isLiked($this->user->id, $uuid),
+            "uuid" => $uuid,
+        ]);
+
+    }
+
+    #[Get("/post/{uuid}/like", "post.like", ["auth"])]
+    public function like(string $uuid): string
+    {
+        $this->post_provider->likePost($this->user->id, $uuid);
+        return $this->liked($uuid);
     }
 }

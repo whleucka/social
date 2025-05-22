@@ -1,20 +1,5 @@
-<div class="p-2 post-cont bg-light">
-    <div class="post d-flex">
-        <img class="avatar" src="{{ post.gravatar }}" alt="avatar" />
-        <div class="d-flex flex-column flex-grow-1 px-2">
-            <div class="top">
-                <span class="name">{{ post.name }}</span>
-                <span class="username text-muted ms-1">@{{ post.username }}</span>
-                <span class="px-1">·</span>
-                <span class="ago text-muted">{{ post.ago }}</span>
-            </div>
-            <p class="comment p-2">{{ post.comment }}</p>
-            <div class="bottom w-100 d-flex justify-content-around">
-                <i class="bi bi-chat-left"></i>
-                <i class="bi bi-heart"></i>
-                <i class="bi bi-chat-left"></i> 
-                <i class="bi bi-three-dots"></i>
-            </div>
-        </div>
+<div class="p-2 post-cont bg-light" hx-get="/post/{{ post.uuid }}/load" hx-trigger="intersect once">
+    <div class="p-2 w-100 d-flex justify-content-center p-4">
+        <img class="loader" src="/img/loading.gif" alt="loading" />
     </div>
 </div>

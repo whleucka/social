@@ -2,12 +2,47 @@
 
 namespace App\Providers\Social;
 
+use DateTime;
 use App\Models\Post;
-use App\Models\User;
-use Carbon\Carbon;
+use App\Models\PostLike;
 
 class PostService
 {
+    public function getPost(string $uuid)
+    {
+        $post = Post::where("uuid", $uuid)->get();
+        if ($post) {
+            $user = $post->user();
+            return [
+                "uuid" => $post->uuid,
+                "comment" => $post->comment,
+                "gravatar" => $user->gravatarUrl(),
+                "name" => $user->first_name . ' ' . $user->surname,
+                "username" => $user->username,
+                "ago" => $post->ago(),
+                "ping" => $this->shouldPing($post->created_at)
+            ];
+        }
+        return null;
+    }
+
+    private function shouldPing(string $datetime)
+    {
+        $input_time = new DateTime($datetime);
+        $now = new DateTime();
+        $diff = abs($now->getTimestamp() - $input_time->getTimestamp());
+        return $diff <= 60;
+    }
+
+    public function getPostAgo(string $uuid)
+    {
+        $post = Post::where("uuid", $uuid)->get();
+        if ($post) {
+            return $post->ago();
+        }
+        return null;
+    }
+
     public function createPost(int $user_id, string $comment): Post|bool
     {
         return Post::create([
@@ -18,23 +53,39 @@ class PostService
 
     public function getPosts(int $user_id): ?array
     {
-        $user = User::find($user_id);
-
-        $posts = db()->fetchAll("SELECT * 
+        return db()->fetchAll("SELECT uuid 
             FROM posts 
             WHERE user_id = ? 
             ORDER BY created_at DESC", [$user_id]);
+    }
 
-        // What should we do about this?
-        date_default_timezone_set('America/Edmonton');
+    public function isLiked(int $user_id, string $uuid)
+    {
+        $post = Post::where("uuid", $uuid)->get();
 
-        foreach ($posts as &$post) {
-            $post['gravatar'] = $user->gravatarUrl();
-            $post['name'] = $user->first_name . ' ' . $user->surname;
-            $post['username'] = $user->username;
-            $post['ago'] =  Carbon::parse($post['created_at'])->diffForHumans();
+        if ($post) {
+            return $post->isLiked($user_id);
         }
+        return null;
+    }
 
-        return $posts;
+    public function likePost(int $user_id, string $uuid)
+    {
+        $post = Post::where("uuid", $uuid)->get();
+
+        if ($post) {
+            if ($post->isLiked($user_id)) {
+                $like = PostLike::where("user_id", $user_id)
+                    ->andWhere("post_id", $post->id)->get();
+                $like->delete();
+            } else {
+                PostLike::create([
+                    "user_id" => $user_id,
+                    "post_id" => $post->id,
+                ]);
+            }
+            return true;
+        }
+        return null;
     }
 }

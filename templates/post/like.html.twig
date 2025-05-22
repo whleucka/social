@@ -1,0 +1,5 @@
+<i 
+    class="like bi bi-heart{% if liked %}-fill{% endif %} {% if liked %}active{% endif %}"
+    hx-get="/post/{{ uuid }}/like" 
+    hx-trigger="click" 
+    hx-swap="outerHTML"></i>
