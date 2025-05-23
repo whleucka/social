@@ -28,7 +28,7 @@ class RegisterController extends Controller
         $valid = $this->validate([
             "first_name" => ["required"],
             "surname" => ["required"],
-            "email" => ["required", "email"],
+            "email" => ["required", "email", "unique:users"],
             "password" => ["required", "min_length:10", "regex:^(?=.*[A-Z])(?=.*\W)(?=.*\d).+$"],
             "password_match" => ["required", "match:password"],
         ]);
