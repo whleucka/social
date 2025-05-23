@@ -1,8 +1,14 @@
 {% extends "layout/base.html.twig" %}
 
 {% block content %}
-    <nav id="top-nav" class="navbar navbar-light bg-light d-flex justify-content-center">
-        <span class="navbar-brand m-0 p-0 fw-bold">SOCIAL</span>
+    <nav class="navbar fixed-bottom navbar-light bg-light d-md-none">
+        <div class="navbar-nav w-100" hx-boost="true" hx-target="#view" hx-select="#view" hx-swap="outerHTML">
+            <div class="d-flex justify-content-around w-100">
+                <a class="nav-link" href="/"><i class="bi bi-house me-2"></i> Home</a>
+                <a class="nav-link" href="/profile"><i class="bi bi-person-circle me-2"></i> Profile</a>
+                <a class="nav-link" href="/settings"><i class="bi bi-gear me-2"></i> Settings</a>
+            </div>
+        </div>
     </nav>
     <section id="app" class="h-100 d-flex container">
         <section id="left" class="pe-3 d-none d-md-block">
@@ -19,9 +25,6 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/settings"><i class="bi bi-gear me-2"></i> Settings</a>
-                        </li>
-                        <li class="nav-item">
-                            <a hx-boost="false" class="nav-link" href="/sign-out"><i class="bi bi-door-closed me-2"></i> Sign out</a>
                         </li>
                     </ul>
                     <button 

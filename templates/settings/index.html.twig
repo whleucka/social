@@ -1,7 +1,23 @@
 {% extends "layout/app.html.twig" %}
 
 {% block center_content %}
-    <section id="view">
-        <p>wip: settings</p>
+    <section id="view" class="settings">
+        <div class="card">
+            <div class="card-body">
+                <div class="user mt-3 d-flex flex-column justify-content-center align-items-center">
+                    <img id="pic" src="{{ user.gravatar }}" alt="profile-pic" />
+                    <h4 class="m-0">{{ user.first_name }} {{ user.surname }}</h4>
+                    <span class="text-muted">@{{ user.username }}</span>
+                </div>
+                <nav class="nav flex-column">
+                    <a class="nav-link disabled" href="#">Account</a>
+                    <a class="nav-link disabled" href="#">Language</a>
+                    <a class="nav-link disabled" href="#">Help</a>
+                    <a class="nav-link disabled" href="#">Appearance</a>
+                    <a class="nav-link disabled" href="#">About</a>
+                    <a class="nav-link" href="/sign-out">Sign out</a>
+                </nav>
+            </div>
+        </div>
     </section>
 {% endblock %}

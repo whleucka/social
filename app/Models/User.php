@@ -11,7 +11,7 @@ class User extends Model
         parent::__construct('users', $id);
     }
 
-    public function gravatarUrl($size = 40, $default = 'mp', $rating = 'g'): string
+    public function gravatarUrl($size = 120, $default = 'mp', $rating = 'g'): string
     {
         $email = strtolower(trim($this->email));
         $hash = md5($email);

@@ -72,10 +72,14 @@ body {
     position: fixed;
     border-radius: 50%;
     z-index: 1000;
-    bottom: 10px;
+    opacity: 0.7;
+    bottom: 70px;
     right: 15px;
     width: 60px;
     height: 60px;
+}
+#app #center #post-button:hover {
+    opacity: 1;
 }
 #app #left, #app #right {
     max-width: 132px;
@@ -162,6 +166,31 @@ body {
     font-size: 0.9rem;
 }
 
+#app .profile #banner {
+    height: 150px;
+    background-color: #ddd;
+}
+
+#app .profile #pic {
+    position: relative;
+    left: 10px;
+    top: -40px;
+    border-radius: 50%;
+    height: 80px;
+    width: 80px;
+}
+
+#app .profile #info {
+    position: relative;
+    top: -40px;
+}
+
+#app .settings .user #pic {
+    border-radius: 50%;
+    height: 80px;
+    width: 80px;
+}
+
 @media (max-width: 575.98px) {
 }
 
@@ -174,7 +203,9 @@ body {
 }
 
 @media (max-width: 991.98px) {
-
+    #app {
+        padding-bottom: 45px;
+    }
 }
 
 @media (max-width: 1199.98px) {

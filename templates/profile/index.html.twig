@@ -1,7 +1,30 @@
 {% extends "layout/app.html.twig" %}
 
 {% block center_content %}
-    <section id="view">
-        <p>wip: profile</p>
+    <section id="view" class="profile">
+        <div class="card">
+            <div id="banner">
+            </div>
+            <img id="pic" src="{{ user.gravatar }}" alt="profile-pic" />
+            <div class="p-3" id="info">
+                <h4 class="m-0">{{ user.first_name }} {{ user.surname }}</h4>
+                <span class="text-muted"><small>@{{ user.username }}</small></span>
+                <div class="d-flex stats mt-2">
+                    <span><strong>0</strong> followers</span>
+                    <span class="ps-1"><strong>0</strong> following</span>
+                    <span class="ps-1"><strong>0</strong> posts</span>
+                </div>
+                <div class="description mt-2">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer aliquam diam eros, et ultrices orci posuere in. Sed gravida vulputate arcu, vel iaculis velit auctor sit amet. Nulla posuere nibh eget elit suscipit aliquet.</p>
+                </div>
+            </div>
+            <nav class="nav nav-pills nav-fill sticky-top">
+                <a class="nav-link disabled" href="#">Posts</a>
+                <a class="nav-link disabled" href="#">Replies</a>
+                <a class="nav-link disabled" href="#">Likes</a>
+            </nav>
+        </div>
+        <div id="profile-feed">
+        </div>
     </section>
 {% endblock %}
