@@ -104,53 +104,53 @@ body {
     height: 120px;
     resize: none;
 }
-#app #feed .post-cont {
+#app .post-cont {
     min-height: 117px;
     border: 1px solid #ccc; 
     margin-bottom: 10px;
     border-radius: 6px;
 }
-#app #feed .post .top {
+#app .post .top {
     font-size: 0.7rem;
     padding: 0 5px;
 }
-#app #feed .post .bottom .action {
+#app .post .bottom .action {
     cursor: pointer;
 }
-#app #feed .post .like.disabled {
+#app .post .like.disabled {
     opacity: 0.3;
 }
-#app #feed .post .like.active {
+#app .post .like.active {
     color: #CB0404;
 }
-#app #feed .post .name {
+#app .post .name {
     font-size: 0.9rem;
     font-weight: 700;
 }
-#app #feed .post .username {
+#app .post .username {
 }
-#app #feed .post .avatar {
+#app .post .avatar {
     width: 30px;
     height: 30px;
     border-radius: 50%;
 }
-#app #feed .post .comment {
+#app .post .comment {
     font-size: 0.9rem;
 }
-#app #feed .post .ago {
+#app .post .ago {
 }
-#app #feed .image {
+#app .image {
     width: 100%;
     border-radius: 6px;
     border: 1px solid #ccc;
 }
-#app #feed .news .title {
+#app .news .title {
     font-size: 1.0rem;
 }
-#app #feed .news .source, #app #feed .news .author {
+#app .news .source, #app .news .author {
     font-size: 0.8rem;
 }
-#app #feed .news .content {
+#app .news .content {
     margin-top: 10px;
     font-size: 0.9rem;
 }

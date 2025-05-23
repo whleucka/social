@@ -34,6 +34,7 @@ class FeedController extends Controller
         ]);
 
         if ($valid) {
+            $this->setHeader("HX-Push-Url", "/");
             return $this->render("feed/load.html.twig", [
                 "posts" => $this->post_provider->searchPosts($valid->term),
                 "term" => $valid->term,
