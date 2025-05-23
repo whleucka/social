@@ -42,9 +42,11 @@ class PostController extends Controller
         if ($valid) {
             $post = $this->post_provider->createPost($this->user->id, $valid->content);
             if ($post) {
-                // return $this->render("post/index.html.twig", [
-                //     "post" => ["uuid" => $post->uuid],
-                // ]);
+                if ($_SERVER['HTTP_REFERER'] === $_SERVER['HTTP_ORIGIN'].'/') {
+                    return $this->render("post/index.html.twig", [
+                        "post" => ["uuid" => $post->uuid],
+                    ]);
+                }
                 header("HX-Redirect: /");
                 exit;
             }
