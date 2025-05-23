@@ -14,7 +14,7 @@
         {% if post.url %}</a>{% endif %}
         </div>
         {% endif %}
-        <p class="comment p-2">{{ post.comment }}</p>
+        <p class="content p-2">{{ post.content }}</p>
         <div class="bottom w-100 d-flex justify-content-around">
             <div class="action"><i class="bi bi-chat-left"></i></div>
             <div class="action d-flex align-items-center" hx-get="/post/{{ post.uuid }}/like" hx-trigger="click" hx-swap="outerHTML">

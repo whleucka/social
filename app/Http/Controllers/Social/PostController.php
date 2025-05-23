@@ -32,19 +32,21 @@ class PostController extends Controller
         return $this->render("post/control.html.twig", []);
     }
 
-    #[Post("/post/comment", "post.comment", ["auth"])]
-    public function comment(): ?string
+    #[Post("/post/create", "post.create", ["auth"])]
+    public function create(): ?string
     {
         $valid = $this->validate([
-            "comment" => ["required"],
+            "content" => ["required"],
         ]);
 
         if ($valid) {
-            $post = $this->post_provider->createPost($this->user->id, $valid->comment);
+            $post = $this->post_provider->createPost($this->user->id, $valid->content);
             if ($post) {
-                return $this->render("post/index.html.twig", [
-                    "post" => ["uuid" => $post->uuid],
-                ]);
+                // return $this->render("post/index.html.twig", [
+                //     "post" => ["uuid" => $post->uuid],
+                // ]);
+                header("HX-Redirect: /");
+                exit;
             }
         }
         return null;

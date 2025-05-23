@@ -15,7 +15,7 @@ class PostService
             $user = $post->user();
             return [
                 "uuid" => $post->uuid,
-                "comment" => $post->comment,
+                "content" => $post->content,
                 "gravatar" => $user->gravatarUrl(),
                 "name" => $user->first_name . ' ' . $user->surname,
                 "username" => $user->username,
@@ -47,11 +47,11 @@ class PostService
         return null;
     }
 
-    public function createPost(int $user_id, string $comment): Post|bool
+    public function createPost(int $user_id, string $content): Post|bool
     {
         return Post::create([
             "user_id" => $user_id,
-            "comment" => $comment,
+            "content" => $content,
         ]);
     }
 
@@ -68,7 +68,7 @@ class PostService
         return db()->fetchAll("SELECT posts.uuid 
             FROM posts 
             INNER JOIN users ON users.id = user_id
-            WHERE (username LIKE ? OR comment LIKE ?)
+            WHERE (username LIKE ? OR content LIKE ?)
             ORDER BY posts.created_at DESC", ["%$term%", "%$term%"]);
     }
 

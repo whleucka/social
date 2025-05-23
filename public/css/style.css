@@ -95,12 +95,12 @@ body {
     background-repeat: no-repeat;
     background-position: 10px center;
 }
-#app #comment-modal #avatar {
+#app #content-modal #avatar {
     width: 40px;
     height: 40px;
     border-radius: 50%;
 }
-#app #comment-modal #comment {
+#app #content-modal #content {
     height: 120px;
     resize: none;
 }
@@ -134,7 +134,7 @@ body {
     height: 30px;
     border-radius: 50%;
 }
-#app .post .comment {
+#app .post .content {
     font-size: 0.9rem;
 }
 #app .post .ago {

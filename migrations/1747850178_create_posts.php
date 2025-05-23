@@ -13,7 +13,7 @@ return new class implements Migration
             $table->id();
             $table->unsignedBigInteger("user_id");
             $table->uuid("uuid")->default("(UUID())");
-            $table->text("comment");
+            $table->text("content");
             $table->text("url")->nullable();
             $table->text("image")->nullable();
             $table->timestamps();

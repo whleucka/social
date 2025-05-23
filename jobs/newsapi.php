@@ -26,7 +26,7 @@ function getHeadlines(int $page = 1)
                 if (!$post && strlen($article->content) > 0) {
                     Post::create([
                         "user_id" => $bot->id,
-                        "comment" => $article->content,
+                        "content" => $article->content,
                         "url" => $article->url,
                         "image" => $article->urlToImage,
                         "created_at" => $created->format("Y-m-d H:i:s"),
