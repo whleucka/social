@@ -17,6 +17,7 @@ class Controller implements HttpController
     private array $validation_errors = [];
     private array $validation_messages = [
         "required" => "Required field",
+        "unique" => "Must be unique",
         "string" => "Must be a string",
         "array" => "Must be an array",
         "date" => "Invalid date format",
@@ -98,6 +99,7 @@ class Controller implements HttpController
                 $request_value = $request[$field] ?? null;
                 $result = match($rule) {
                     'match' => $request_value == $request[$rule_val],
+                    'unique' => count(db()->fetch("SELECT 1 FROM $rule_val WHERE $field = ?", [$request_value])) === 0,
                     'min_length' => strlen($request_value) >= $rule_val,
                     'max_length' => strlen($request_value) <= $rule_val,
                     'required' => !is_null($request_value) && $request_value !== '',
