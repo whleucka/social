@@ -50,8 +50,9 @@ body {
     border-bottom: 1px solid #ccc;
 }
 .navbar-brand {
+    cursor: pointer;
     font-family: "Monomaniac One", sans-serif;
-    color: #444;
+    color: #222;
     letter-spacing: 2px;
     font-style: normal;
 }
