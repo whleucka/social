@@ -1,9 +1,9 @@
 <div class="post d-flex">
     <img class="avatar" src="{{ post.gravatar }}" alt="avatar" />
     <div class="d-flex flex-column flex-grow-1 px-2">
-        <div class="top">
-            <span class="name">{{ post.name }}</span>
-            <span class="username text-muted ms-1">@{{ post.username }}</span>
+        <div class="top" hx-boost="true" hx-target="#view" hx-select="#view" hx-swap="outerHTML" >
+            <span class="name"><a href="/profile/{{ post.username }}" title="View profile">{{ post.name }}</a></span>
+            <span class="username ms-1"><a class="text-muted" href="/profile/{{ post.username }}" title="View profile">@{{ post.username }}</a></span>
             <span class="px-1">·</span>
             <span class="ago text-muted" hx-get="/post/{{ post.uuid }}/ping" hx-trigger="click" hx-swap="textContent">{{ post.ago }}</span>
         </div>

@@ -118,6 +118,7 @@ body {
     height: 120px;
     resize: none;
 }
+
 #app .post-cont {
     min-height: 117px;
     border: 1px solid #ccc; 
@@ -153,11 +154,17 @@ body {
 }
 #app .post .ago {
 }
-#app .image {
+#app .post .image {
     width: 100%;
     border-radius: 6px;
     border: 1px solid #ccc;
 }
+#app .post .top a {
+    text-decoration: none;
+    color: #222;
+}
+
+
 #app .news .title {
     font-size: 1.0rem;
 }
@@ -169,11 +176,11 @@ body {
     font-size: 0.9rem;
 }
 
+
 #app .profile #banner {
     height: 150px;
     background-color: #ddd;
 }
-
 #app .profile #pic {
     position: relative;
     left: 10px;
@@ -182,7 +189,6 @@ body {
     height: 80px;
     width: 80px;
 }
-
 #app .profile #info {
     position: relative;
     top: -40px;
@@ -194,11 +200,13 @@ body {
     font-size: 0.8rem;
 }
 
+
 #app .settings #user #pic {
     border-radius: 50%;
     height: 80px;
     width: 80px;
 }
+
 
 @media (max-width: 575.98px) {
 }
