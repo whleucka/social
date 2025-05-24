@@ -157,6 +157,14 @@ class Controller implements HttpController
         ];
     }
 
+    public function pageNotFound()
+    {
+            $content = twig()->render("error/404.html.twig");
+            $response = new Response($content, 404);
+            $response->send();
+            exit;
+    }
+
     protected function render(string $template, array $data = []): string
     {
         $twig = twig();
