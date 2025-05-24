@@ -2,14 +2,23 @@
 
 namespace App\Http\Controllers\Social;
 
+use App\Providers\Social\ProfileService;
 use Echo\Framework\Http\Controller;
 use Echo\Framework\Routing\Route\Get;
 
 class ProfileController extends Controller
 {
-    #[Get("/profile", "profile.index", ["auth"])]
-    public function index(): string
+    public function __construct(private ProfileService $profile_provider)
     {
-        return $this->render("profile/index.html.twig", []);
+    }
+
+    #[Get("/profile/{username}", "profile.index", ["auth"])]
+    public function index(string $username): string
+    {
+        $user = $this->profile_provider->getUserByUsername($username);
+
+        return $this->render("profile/index.html.twig", [
+            "profile" => $user,
+        ]);
     }
 }

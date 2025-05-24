@@ -184,8 +184,14 @@ body {
     position: relative;
     top: -40px;
 }
+#app .profile #description {
+    font-size: 0.9rem;
+}
+#app .profile #stats {
+    font-size: 0.8rem;
+}
 
-#app .settings .user #pic {
+#app .settings #user #pic {
     border-radius: 50%;
     height: 80px;
     width: 80px;
