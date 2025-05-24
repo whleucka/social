@@ -49,6 +49,9 @@ body {
 #top-nav {
     border-bottom: 1px solid #ccc;
 }
+#bottom-nav {
+    border-top: 1px solid #ccc;
+}
 .navbar-brand {
     cursor: pointer;
     font-family: "Monomaniac One", sans-serif;
