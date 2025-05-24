@@ -5,7 +5,7 @@
             <span class="name"><a href="/profile/{{ post.username }}" title="View profile">{{ post.name }}</a></span>
             <span class="username ms-1"><a class="text-muted" href="/profile/{{ post.username }}" title="View profile">@{{ post.username }}</a></span>
             <span class="px-1">·</span>
-            <span class="ago text-muted" hx-get="/post/{{ post.uuid }}/ping" hx-trigger="click" hx-swap="textContent">{{ post.ago }}</span>
+            <span class="ago text-muted">{{ post.ago }}</span>
         </div>
         {% if post.image %}
         <div class="mt-3">
