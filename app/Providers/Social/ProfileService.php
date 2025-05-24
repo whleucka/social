@@ -16,6 +16,6 @@ class ProfileService
                 "username" => $user->username,
             ];
         }
-        header("Location: /page-not-found");
+        return null;
     }
 }

@@ -17,8 +17,12 @@ class ProfileController extends Controller
     {
         $user = $this->profile_provider->getUserByUsername($username);
 
-        return $this->render("profile/index.html.twig", [
-            "profile" => $user,
-        ]);
+        if ($user) {
+            return $this->render("profile/index.html.twig", [
+                "profile" => $user,
+            ]);
+        }
+
+        $this->pageNotFound();
     }
 }
