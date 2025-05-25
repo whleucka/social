@@ -79,6 +79,7 @@ class Kernel implements HttpKernel
                     "request_id" => $request_id,
                     "e" => $ex,
                     "qr" => (new QRCode)->render($request_id),
+                    "is_logged" => session()->get("user_uuid"),
                 ]);
                 $response = new HttpResponse($content, 500);
                 return $response;
@@ -94,6 +95,7 @@ class Kernel implements HttpKernel
                     "request_id" => $request_id,
                     "e" => $err,
                     "qr" => (new QRCode)->render($request_id),
+                    "is_logged" => session()->get("user_uuid"),
                 ]);
                 $response = new HttpResponse($content, 500);
                 return $response;

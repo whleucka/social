@@ -170,7 +170,6 @@ class Controller implements HttpController
         $twig = twig();
         $data = array_merge($data, $this->getDefaultTemplateData());
         $twig->addExtension(new TwigExtension);
-        $data['is_logged'] = !is_null($this->user);
         return $twig->render($template, $data);
     }
 }
