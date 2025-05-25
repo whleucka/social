@@ -23,14 +23,14 @@ class RegisterController extends Controller
     public function post(): string
     {
         $this->setValidationMessage("username.regex", "Username can only contain letters, numbers, and underscore characters");
-        $this->setValidationMessage("username.max_length", "Max length is 12 characters");
+        $this->setValidationMessage("username.max_length", "Max length is 20 characters");
         $this->setValidationMessage("password.min_length", "Must be at least 8 characters");
         $this->setValidationMessage("password.regex", "Must contain 1 upper case, 1 digit, 1 symbol");
         $this->setValidationMessage("password_match.match", "Password does not match");
         $valid = $this->validate([
             "first_name" => ["required"],
             "surname" => ["required"],
-            "username" => ["required", "max_length:12", "regex:^[a-zA-Z0-9_]+$", "unique:users"],
+            "username" => ["required", "max_length:20", "regex:^[a-zA-Z0-9]+$", "unique:users"],
             "email" => ["required", "email", "unique:users"],
             "password" => ["required", "min_length:8", "regex:^(?=.*[A-Z])(?=.*\W)(?=.*\d).+$"],
             "password_match" => ["required", "match:password"],
