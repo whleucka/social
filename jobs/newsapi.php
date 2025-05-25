@@ -42,7 +42,7 @@ function getHeadlines(int $page = 1)
 function getBot()
 {
     // Fetch news bot
-    $bot = User::where("username", "news_bot")
+    $bot = User::where("username", "newsbot")
         ->andWhere("bot", 1)->get();
 
     if (!$bot) {
@@ -51,8 +51,8 @@ function getBot()
             "bot" => 1,
             "first_name" => "News",
             "surname" => "Bot",
-            "username" => "news_bot",
-            "email" => "news_bot@echo",
+            "username" => "newsbot",
+            "email" => "newsbot@echo",
             "password" => password_hash(time(), PASSWORD_ARGON2I),
         ]);
     }
