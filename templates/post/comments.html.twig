@@ -1,0 +1,6 @@
+{% for post in posts %}
+    {% include 'post/index.html.twig' %}
+{% endfor %}
+{% if not posts %}
+    <p class="text-muted p-2"><em>There are no comments yet</em></p>
+{% endif %}
