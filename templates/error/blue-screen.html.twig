@@ -33,7 +33,7 @@
             <img class="qr rounded float-start me-3" src="{{ qr }}" alt="qr" />
             <p>Request: {{ request_id }}</p>
             <button class="btn btn-primary" onClick="location.reload()">Refresh</button>
-            {% if user.uuid %}
+            {% if is_logged %}
             <button class="btn btn-primary" onClick="history.back()">Sign out</button>
             {% endif %}
         </div>
