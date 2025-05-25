@@ -179,6 +179,7 @@ class Controller implements HttpController
                 "gravatar" => $this->user->gravatarUrl(),
             ];
         }
+        $data['is_logged'] = !is_null($this->user);
         return $twig->render($template, $data);
     }
 }
