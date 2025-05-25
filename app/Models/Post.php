@@ -12,6 +12,11 @@ class Post extends Model
         parent::__construct('posts', $id);
     }
 
+    public function getParent()
+    {
+        return $this->parent_id ? Post::find($this->parent_id) : null;
+    }
+
     public function ago()
     {
         return Carbon::parse($this->created_at)->diffForHumans();
@@ -27,6 +32,12 @@ class Post extends Model
     {
          $likes = PostLike::where("post_id", $this->id)->get(lazy: false) ?? [];
          return count($likes);
+    }
+
+    public function commentCount(): int
+    {
+         $comments = Post::where("parent_id", $this->id)->get(lazy: false) ?? [];
+         return count($comments);
     }
 
     public function user()

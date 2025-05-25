@@ -12,11 +12,28 @@ class PostController extends Controller
     {
     }
 
+    #[Get("/post/{uuid}")]
+    public function show(string $uuid)
+    {
+        $this->setHeader("HX-Push-Url", "/post/$uuid");
+        return $this->render("post/show.html.twig", [
+            "post" => $this->post_provider->getPost($this->user->id, $uuid)
+        ]);
+    }
+
     #[Get("/post/{uuid}/load", "post.load", ["auth"])]
     public function load(string $uuid): string
     {
         return $this->render("post/load.html.twig", [
             "post" => $this->post_provider->getPost($this->user->id, $uuid)
+        ]);
+    }
+
+    #[Get("/post/{uuid}/comments", "post.comments", ["auth"])]
+    public function comments(string $uuid)
+    {
+        return $this->render("post/comments.html.twig", [
+            "posts" => $this->post_provider->getComments($uuid),
         ]);
     }
 
@@ -30,6 +47,14 @@ class PostController extends Controller
     public function control(): string
     {
         return $this->render("post/control.html.twig", []);
+    }
+
+    #[Get("/post/control/{uuid}", "post.control-reply", ["auth"])]
+    public function control_reply(string $uuid): string
+    {
+        return $this->render("post/control.html.twig", [
+            "post" => $this->post_provider->getPost($this->user->id, $uuid),
+        ]);
     }
 
     #[Post("/post/create", "post.create", ["auth"])]
@@ -48,6 +73,23 @@ class PostController extends Controller
                     ]);
                 }
                 header("HX-Redirect: /");
+                exit;
+            }
+        }
+        return null;
+    }
+
+    #[Post("/post/{uuid}/reply", "post.reply", ["auth"])]
+    public function reply(string $uuid)
+    {
+        $valid = $this->validate([
+            "content" => ["required"],
+        ]);
+
+        if ($valid) {
+            $post = $this->post_provider->replyPost($this->user->id, $valid->content, $uuid);
+            if ($post) {
+                header("HX-Redirect: /post/$uuid");
                 exit;
             }
         }

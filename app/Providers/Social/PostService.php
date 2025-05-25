@@ -15,6 +15,7 @@ class PostService
             $user = $post->user();
             return [
                 "uuid" => $post->uuid,
+                "parent_uuid" => $post->getParent()?->uuid,
                 "content" => $post->content,
                 "gravatar" => $user->gravatarUrl(),
                 "name" => $user->first_name . ' ' . $user->surname,
@@ -23,6 +24,7 @@ class PostService
                 "ping" => $this->shouldPing($post->created_at),
                 "liked" => $post->isLiked($user_id),
                 "like_count" => $post->likeCount(),
+                "comment_count" => $post->commentCount(),
                 "image" => $post->image,
                 "url" => $post->url,
             ];
@@ -55,12 +57,39 @@ class PostService
         ]);
     }
 
+    public function replyPost(int $user_id, string $content, string $uuid): Post|bool
+    {
+        $post = Post::where("uuid", $uuid)->get();
+
+        if ($post) {
+            return Post::create([
+                "user_id" => $user_id,
+                "parent_id" => $post->id,
+                "content" => $content,
+            ]);
+        }
+        return false;
+    }
+
     public function getPosts(): ?array
     {
         return db()->fetchAll("SELECT uuid 
             FROM posts 
-            WHERE created_at > NOW() - INTERVAL 30 DAY
+            WHERE created_at > NOW() - INTERVAL 30 DAY AND parent_id IS NULL
             ORDER BY created_at DESC");
+    }
+
+    public function getComments(string $uuid): ?array
+    {
+        $post = Post::where("uuid", $uuid)->get();
+
+        if ($post) {
+            return db()->fetchAll("SELECT uuid 
+                FROM posts 
+                WHERE parent_id = ?
+                ORDER BY created_at DESC", [$post->id]);
+        }
+        return null;
     }
 
     public function searchPosts(string $term)

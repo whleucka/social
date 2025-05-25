@@ -18,8 +18,12 @@ return new class implements Migration
             $table->varchar("username");
             $table->varchar("email");
             $table->binary("password", 96);
+            $table->char("lang", 2);
+            $table->varchar("avatar")->nullable();
+            $table->varchar("banner")->nullable();
+            $table->varchar("description")->nullable();
             $table->timestamps();
-            $table->unique("email");           
+            $table->unique("email");
             $table->unique("username");
             $table->primaryKey("id");
         });

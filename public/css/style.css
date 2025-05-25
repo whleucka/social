@@ -130,6 +130,7 @@ body {
     padding: 0 5px;
 }
 #app .post .bottom .action {
+    font-size: 0.9rem;
     cursor: pointer;
 }
 #app .post .like.disabled {
@@ -207,6 +208,11 @@ body {
     width: 80px;
 }
 
+#app .show-post .reply .avatar {
+    border-radius: 50%;
+    height: 24px;
+    width: 24px;
+}
 
 @media (max-width: 575.98px) {
 }

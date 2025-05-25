@@ -6,7 +6,7 @@
                 <button type="button" class="btn btn-sm" data-bs-dismiss="modal">Cancel</button>
                 <button 
                     type="button" 
-                    hx-post="/post/create"
+                    hx-post="{% if post %}/post/{{ post.uuid }}/reply{% else %}/post/create{% endif %}"
                     hx-trigger="click"
                     hx-swap="afterbegin"
                     hx-target="#view"
@@ -14,6 +14,27 @@
                     data-bs-dismiss="modal">Post</button>
             </div>
             <div class="modal-body">
+                {% if post %}
+                    <div class="post d-flex quote-reply p-2">
+                        <img class="avatar" src="{{ post.gravatar }}" alt="avatar" />
+                        <div class="d-flex flex-column flex-grow-1 px-2">
+                            <div class="top" hx-boost="true" hx-target="#view" hx-select="#view" hx-swap="outerHTML" >
+                                <span class="name"><a href="/profile/{{ post.username }}" title="View profile">{{ post.name }}</a></span>
+                                <span class="username ms-1"><a class="text-muted" href="/profile/{{ post.username }}" title="View profile">@{{ post.username }}</a></span>
+                                <span class="px-1">·</span>
+                                <span class="ago text-muted">{{ post.ago }}</span>
+                            </div>
+                            {% if post.image %}
+                            <div class="mt-3">
+                            {% if post.url %}<a href="{{ post.url }}" target="_blank" title="View article">{% endif %}
+                                <img loading="lazy" class="image" src="{{ post.image }}" alt="article" />
+                            {% if post.url %}</a>{% endif %}
+                            </div>
+                            {% endif %}
+                            <p class="content p-2">{{ post.content }}</p>
+                        </div>
+                    </div>
+                {% endif %}
                 <div class="d-flex">
                     <img id="avatar" class="me-3" src="{{ user.gravatar }}" alt="avatar" />
                     <textarea class="form-control" placeholder="What's up?" name="content" id="content"></textarea>
