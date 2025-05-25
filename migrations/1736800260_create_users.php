@@ -18,7 +18,7 @@ return new class implements Migration
             $table->varchar("username");
             $table->varchar("email");
             $table->binary("password", 96);
-            $table->char("lang", 2)->default("en");
+            $table->char("lang", 2)->default("'en'");
             $table->varchar("avatar")->nullable();
             $table->varchar("banner")->nullable();
             $table->varchar("description")->nullable();
