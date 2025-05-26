@@ -53,6 +53,7 @@ class PostService
     {
         $data = [
             "user_id" => $user_id,
+            "ip" => ip2long(request()->getClientIp()),
             "content" => $content,
         ];
         $media = $this->extractMedia($content);
@@ -72,6 +73,7 @@ class PostService
         if ($post) {
             $data = [
                 "user_id" => $user_id,
+                "ip" => ip2long(request()->getClientIp()),
                 "parent_id" => $post->id,
                 "content" => $content,
             ];

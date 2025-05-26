@@ -12,7 +12,7 @@ return new class implements Migration
          return Schema::create($this->table, function (Blueprint $table) {
             $table->id();
             $table->varchar("uri");
-            $table->unsignedBigInteger("ip");
+            $table->unsignedBigInteger("ip")->nullable();
             $table->timestamp("created_at")->default("CURRENT_TIMESTAMP");
             $table->primaryKey("id");
         });
