@@ -204,6 +204,7 @@ body {
     border-radius: 50%;
     height: 80px;
     width: 80px;
+    border: 1px solid #ccc;
 }
 #app .profile #info {
     position: relative;
@@ -221,6 +222,7 @@ body {
     border-radius: 50%;
     height: 80px;
     width: 80px;
+    border: 1px solid #ccc;
 }
 
 #app .show-post .reply .avatar {
