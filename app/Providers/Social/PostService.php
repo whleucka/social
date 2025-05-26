@@ -51,10 +51,18 @@ class PostService
 
     public function createPost(int $user_id, string $content): Post|bool
     {
-        return Post::create([
+        $data = [
             "user_id" => $user_id,
             "content" => $content,
-        ]);
+        ];
+        $media = $this->extractMedia($content);
+        if (isset($media["image"]) && $media["image"]) {
+            $data["image"] = $media["image"];
+        }
+        if (isset($media['url']) && $media['url']) {
+            $data["url"] = $media["url"];
+        }
+        return Post::create($data);
     }
 
     public function replyPost(int $user_id, string $content, string $uuid): Post|bool
@@ -62,13 +70,46 @@ class PostService
         $post = Post::where("uuid", $uuid)->get();
 
         if ($post) {
-            return Post::create([
+            $data = [
                 "user_id" => $user_id,
                 "parent_id" => $post->id,
                 "content" => $content,
-            ]);
+            ];
+            return Post::create($data);
         }
         return false;
+    }
+
+    private function extractMedia(string $content)
+    {
+        $url = $this->extractLink($content);
+        $image = $url ? $this->extractOgImage($url) : null;
+        return [
+            "url" => $url,
+            "image" => $image,
+        ];
+    }
+
+    private function extractOgImage($url): ?string
+    {
+        $html = @file_get_contents($url);
+        if (!$html) return null;
+
+        if (preg_match('/<meta property=["\']og:image["\'] content=["\']([^"\']+)["\']/', $html, $matches)) {
+            return $matches[1];
+        }
+        return null;
+    }
+
+    private function extractLink(string $text): ?string 
+    {
+        preg_match_all(
+            '/\bhttps?:\/\/[^\s<>()]+(?:\([\w\d]+\)|([^[:punct:]\s]|\/))/',
+            $text,
+            $matches
+        );
+        $url = $matches[0][0] ?? null;
+        return filter_var($url, FILTER_VALIDATE_URL) ? $url : null;
     }
 
     public function getPosts(): ?array

@@ -24,7 +24,14 @@
                             {% if post.url %}</a>{% endif %}
                     </div>
                     {% endif %}
-                    <p class="content p-2">{{ post.content }}</p>
+                    {% if post.url %}
+                    <div class="m-1">
+                        <a href="{{ post.url }}" target="_blank" title="View link">
+                            <small>View link</small>
+                        </a>
+                    </div>
+                    {% endif %}
+                    <p class="content word-break p-2">{{ post.content|e|nl2br }}</p>
                     <div class="bottom w-100 d-flex justify-content-around">
                     <div class="action"
                         title="Reply"
