@@ -59,22 +59,6 @@
                     </div>
                 </div>
             </div>
-            <button 
-                id="scroll-top"
-                onClick="scrollToTop()"
-                class="btn btn-sm btn-light">
-                <i class="bi bi-caret-up-fill"></i>
-            </button>
-            <button 
-                id="post-button"
-                hx-get="/post/control"
-                hx-target="#new-post"
-                hx-trigger="click"
-                data-bs-toggle="modal"
-                data-bs-target="#new-post"
-                class="btn btn-sm btn-primary d-block d-md-none">
-                <i class="bi bi-pencil-square"></i>
-            </button>
         </section>
         <section id="right" class="ps-3 d-none d-md-block">
         {% block right_content %}
@@ -95,19 +79,24 @@
             </nav>
         {% endblock %}
         </section>
+        <button 
+            id="scroll-top"
+            onClick="scrollToTop()"
+            class="btn btn-sm btn-light d-block d-md-none">
+            <i class="bi bi-caret-up-fill"></i>
+        </button>
+        <button 
+            id="post-button"
+            hx-get="/post/control"
+            hx-target="#new-post"
+            hx-trigger="click"
+            data-bs-toggle="modal"
+            data-bs-target="#new-post"
+            class="btn btn-sm btn-primary d-block d-md-none">
+            <i class="bi bi-pencil-square"></i>
+        </button>
     </section>
     <script>
-    const btn = document.getElementById("scroll-top");
-    window.addEventListener("scroll", () => {
-        if (window.scrollY > Math.floor(screen.height * 0.8)) {
-            btn.classList.add("active");
-            btn.classList.remove("hidden");
-        } else {
-            btn.classList.remove("active");
-            btn.classList.add("hidden");
-        }
-    });
-
     function scrollToTop() {
         window.scrollTo({
         top: 0,

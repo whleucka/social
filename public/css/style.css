@@ -81,7 +81,7 @@ body {
     margin: 0 auto;
     max-width: 500px;
 }
-#app #center #post-button {
+#app #post-button {
     text-align: center;
     font-size: 1.3rem;
     position: fixed;
@@ -92,9 +92,9 @@ body {
     right: 10px;
     width: 60px;
     height: 60px;
+    border: 1px solid #ccc; 
 }
-#app #center #scroll-top {
-    display: none;
+#app #scroll-top {
     text-align: center;
     font-size: 1.3rem;
     position: fixed;
@@ -105,12 +105,7 @@ body {
     left: 10px;
     width: 60px;
     height: 60px;
-}
-#app #center #scroll-top.active {
-    display: block;
-}
-#app #center #scroll-top.hidden {
-    display: none;
+    border: 1px solid #ccc; 
 }
 #app #center #post-button:hover {
     opacity: 1;
