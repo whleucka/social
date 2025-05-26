@@ -1,5 +1,7 @@
 {% extends "layout/app.html.twig" %}
 
+{% block title %}{{ parent() }} - {{ profile.name }} (@{{ profile.username}}){% endblock %}
+
 {% block center_content %}
     <section id="view" class="profile">
         <div class="card bg-light">
