@@ -9,7 +9,10 @@
         </div>
         <div class="mt-3 p-2 post-cont bg-light w-100">
             <div class="post d-flex">
-                <img class="avatar" src="{{ post.gravatar }}" alt="avatar" />
+                <img class="avatar" 
+                    src="{{ post.gravatar }}" 
+                    alt="avatar" 
+                    onerror = "this.src = 'https://www.gravatar.com/avatar/3415a74a3d7f4f866f546863ec1bb00e?s=120&d=mp&r=g';" />
                 <div class="d-flex flex-column flex-grow-1 px-2">
                     <div class="top" hx-boost="true" hx-target="#view" hx-select="#view" hx-swap="outerHTML" >
                         <span class="name"><a href="/profile/{{ post.username }}" title="View profile">{{ post.name }}</a></span>
