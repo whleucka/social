@@ -25,9 +25,12 @@ function getHeadlines(int $page = 1)
                 $post = Post::where("url", $article->url)->get();
                 if (!$post && strlen($article->content) > 0) {
                     Post::create([
-                        "ip" => "0.0.0.0",
                         "user_id" => $bot->id,
-                        "content" => $article->description,
+                        "content" => twig()->render("bot/news.html.twig", [
+                            "source" => $article->source->name,
+                            "author" => $article->author,
+                            "body" => $article->description,
+                        ]),
                         "url" => $article->url,
                         "image" => $article->urlToImage,
                         "created_at" => $created->format("Y-m-d H:i:s"),
