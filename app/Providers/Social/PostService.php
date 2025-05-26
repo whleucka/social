@@ -14,9 +14,10 @@ class PostService
         if ($post) {
             $user = $post->user();
             return [
+                "is_bot" => $user->bot == 1,
                 "uuid" => $post->uuid,
                 "parent_uuid" => $post->getParent()?->uuid,
-                "content" => $post->content,
+                "content" => html_entity_decode($post->content),
                 "gravatar" => $user->gravatarUrl(),
                 "name" => $user->first_name . ' ' . $user->surname,
                 "username" => $user->username,
