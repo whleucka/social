@@ -31,7 +31,7 @@
                                 {% if post.url %}</a>{% endif %}
                             </div>
                             {% endif %}
-                            <p class="content word-break p-2">{% if post.is_bot %}{{ post.content|nl2br }}{% else %}{{ post.content|linkify|raw }}{% endif %}</p>
+                            <p class="content word-break p-2">{{ post.content|linkify|raw }}</p>
                         </div>
                     </div>
                 {% endif %}
