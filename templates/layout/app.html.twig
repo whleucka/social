@@ -60,6 +60,12 @@
                 </div>
             </div>
             <button 
+                id="scroll-top"
+                onClick="scrollToTop()"
+                class="btn btn-sm btn-light">
+                <i class="bi bi-caret-up-fill"></i>
+            </button>
+            <button 
                 id="post-button"
                 hx-get="/post/control"
                 hx-target="#new-post"
@@ -90,4 +96,23 @@
         {% endblock %}
         </section>
     </section>
+    <script>
+    const btn = document.getElementById("scroll-top");
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > Math.floor(screen.height * 0.8)) {
+            btn.classList.add("active");
+            btn.classList.remove("hidden");
+        } else {
+            btn.classList.remove("active");
+            btn.classList.add("hidden");
+        }
+    });
+
+    function scrollToTop() {
+        window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+        });
+    }
+    </script>
 {% endblock %}

@@ -89,9 +89,28 @@ body {
     z-index: 1000;
     opacity: 0.7;
     bottom: 70px;
-    right: 15px;
+    right: 10px;
     width: 60px;
     height: 60px;
+}
+#app #center #scroll-top {
+    display: none;
+    text-align: center;
+    font-size: 1.3rem;
+    position: fixed;
+    border-radius: 50%;
+    z-index: 1000;
+    opacity: 0.7;
+    bottom: 70px;
+    left: 10px;
+    width: 60px;
+    height: 60px;
+}
+#app #center #scroll-top.active {
+    display: block;
+}
+#app #center #scroll-top.hidden {
+    display: none;
 }
 #app #center #post-button:hover {
     opacity: 1;
