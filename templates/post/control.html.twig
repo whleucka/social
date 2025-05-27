@@ -8,7 +8,7 @@
                     type="button" 
                     hx-post="{% if post %}/post/{{ post.uuid }}/reply{% else %}/post/create{% endif %}"
                     hx-trigger="click"
-                    hx-swap="afterbegin"
+                    hx-swap="afterbegin scroll:top"
                     hx-target="#view"
                     class="btn btn-sm btn-primary ms-auto" 
                     data-bs-dismiss="modal">Post</button>

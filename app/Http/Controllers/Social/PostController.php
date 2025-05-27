@@ -89,6 +89,13 @@ class PostController extends Controller
         if ($valid) {
             $post = $this->post_provider->replyPost($this->user->id, $valid->content, $uuid);
             if ($post) {
+                if ($_SERVER['HTTP_REFERER'] === $_SERVER['HTTP_ORIGIN']."/post/$uuid") {
+                    // Reply goes in the comments
+                    $this->setHeader("HX-Retarget", "#comments");
+                    return $this->render("post/post.html.twig", [
+                        "post" => ["uuid" => $post->uuid],
+                    ]);
+                }
                 header("HX-Redirect: /post/$uuid");
                 exit;
             }
