@@ -13,10 +13,10 @@
                     src="{{ post.gravatar }}" 
                     alt="avatar" 
                     onerror = "this.src = 'https://www.gravatar.com/avatar/3415a74a3d7f4f866f546863ec1bb00e?s=120&d=mp&r=g';" />
-                <div class="d-flex flex-column flex-grow-1 px-2">
-                    <div class="top" hx-boost="true" hx-target="#view" hx-select="#view" hx-swap="outerHTML" >
-                        <span class="name"><a href="/profile/{{ post.username }}" title="View profile">{{ post.name }}</a></span>
-                        <span class="username ms-1"><a class="text-muted" href="/profile/{{ post.username }}" title="View profile">@{{ post.username }}</a></span>
+                <div class="d-flex flex-column flex-grow-1 px-2 w-100">
+                    <div class="top truncate w-100" hx-boost="true" hx-target="#view" hx-select="#view" hx-swap="outerHTML" >
+                        <span class="name truncate"><a class="truncate" href="/profile/{{ post.username }}" title="View profile">{{ post.name }}</a></span>
+                        <span class="username truncate ms-1"><a class="truncate text-muted" href="/profile/{{ post.username }}" title="View profile">@{{ post.username }}</a></span>
                         <span class="px-1">·</span>
                         <span class="ago text-muted">{{ post.ago }}</span>
                     </div>
