@@ -5,6 +5,7 @@ namespace App\Providers\Social;
 use DateTime;
 use App\Models\Post;
 use App\Models\PostLike;
+use DOMDocument;
 
 class PostService
 {
@@ -86,22 +87,49 @@ class PostService
     private function extractMedia(string $content)
     {
         $url = $this->extractLink($content);
-        $image = $url ? $this->extractOgImage($url) : null;
+        $image = $url ? $this->extractMetaImage($url) : null;
         return [
             "url" => $url,
             "image" => $image,
         ];
     }
 
-    private function extractOgImage($url): ?string
+    private function extractMetaImage($url): ?string
     {
         $html = @file_get_contents($url);
         if (!$html) return null;
 
-        if (preg_match('/<meta property=["\']og:image["\'] content=["\']([^"\']+)["\']/', $html, $matches)) {
-            return $matches[1];
+        $doc = new DOMDocument();
+
+        @$doc->loadHTML($html);
+
+        $metaTags = $doc->getElementsByTagName('meta');
+        $candidates = [
+            'og:image',
+            'og:image:secure_url',
+            'twitter:image',
+            'twitter:image:src',
+            'image', // generic fallback
+            'thumbnail',
+            'logo',
+            'apple-touch-icon',
+        ];
+
+        foreach ($metaTags as $tag) {
+            $property = $tag->getAttribute('property');
+            $name = $tag->getAttribute('name');
+            $itemprop = $tag->getAttribute('itemprop');
+            $content = $tag->getAttribute('content');
+
+            if (in_array($property, $candidates) ||
+                in_array($name, $candidates) ||
+                in_array($itemprop, $candidates)) {
+                return $content;
+            }
         }
+
         return null;
+
     }
 
     private function extractLink(string $text): ?string 
