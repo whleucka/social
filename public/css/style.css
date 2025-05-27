@@ -137,6 +137,9 @@ body {
     background-repeat: no-repeat;
     background-position: 10px center;
 }
+#app #content-modal .modal-body {
+    background-color: #f1f2f6;
+}
 #app #content-modal #avatar {
     width: 40px;
     height: 40px;

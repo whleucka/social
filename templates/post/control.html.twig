@@ -15,6 +15,7 @@
             </div>
             <div class="modal-body">
                 {% if post %}
+                <div class="post-cont bg-white w-100">
                     <div class="post d-flex quote-reply p-2">
                         <img class="avatar" src="{{ post.gravatar }}" alt="avatar" />
                         <div class="d-flex flex-column flex-grow-1 px-2 w-100">
@@ -34,8 +35,9 @@
                             <p class="content word-break p-2">{{ post.content|linkify|raw }}</p>
                         </div>
                     </div>
+                </div>
                 {% endif %}
-                <div class="d-flex">
+                <div class="d-flex {% if post %}mt-3{% endif %}">
                     <img id="avatar" class="me-3" src="{{ user.gravatar }}" alt="avatar" />
                     <textarea class="form-control" placeholder="What's up?" name="content" id="content"></textarea>
                 </div>
