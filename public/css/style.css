@@ -118,8 +118,8 @@ body {
     font-size: 1.0rem;
 }
 #app #left #avatar {
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     border: 1px solid #ccc; 
 }
@@ -178,8 +178,8 @@ body {
 #app .post .username {
 }
 #app .post .avatar {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     border: 1px solid #ccc; 
 }
@@ -236,18 +236,11 @@ body {
 }
 
 
-#app .settings #user #pic {
+#app .settings #user #avatar {
     border-radius: 50%;
     height: 80px;
     width: 80px;
     border: 1px solid #ccc;
-}
-
-#app .show-post .reply .avatar {
-    border-radius: 50%;
-    height: 24px;
-    width: 24px;
-    border: 1px solid #ccc; 
 }
 
 @media (max-width: 575.98px) {
