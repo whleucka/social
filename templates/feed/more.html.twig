@@ -1,6 +1,6 @@
 {% if posts %}
-{% for post in posts %}
-    {% include 'post/index.html.twig' %}
-{% endfor %}
-<div hx-get="/feed/more/{{ next_page }}" hx-trigger="intersect once" hx-swap="afterend"></div>
+    {% for post in posts %}
+        {% include 'post/post.html.twig' %}
+    {% endfor %}
+    <div hx-get="/feed/more/{{ next_page }}" hx-trigger="intersect once" hx-swap="afterend"></div>
 {% endif %}

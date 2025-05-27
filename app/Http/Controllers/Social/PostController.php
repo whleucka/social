@@ -13,10 +13,10 @@ class PostController extends Controller
     }
 
     #[Get("/post/{uuid}")]
-    public function show(string $uuid)
+    public function index(string $uuid)
     {
         $this->setHeader("HX-Push-Url", "/post/$uuid");
-        return $this->render("post/show.html.twig", [
+        return $this->render("post/index.html.twig", [
             "post" => $this->post_provider->getPost($this->user->id, $uuid)
         ]);
     }
@@ -68,7 +68,7 @@ class PostController extends Controller
             $post = $this->post_provider->createPost($this->user->id, $valid->content);
             if ($post) {
                 if ($_SERVER['HTTP_REFERER'] === $_SERVER['HTTP_ORIGIN'].'/') {
-                    return $this->render("post/index.html.twig", [
+                    return $this->render("post/post.html.twig", [
                         "post" => ["uuid" => $post->uuid],
                     ]);
                 }
