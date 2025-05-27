@@ -12,3 +12,10 @@ htmx.on('htmx:responseError', function (event) {
             break;
     }
 });
+
+function scrollToTop() {
+    window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+    });
+}

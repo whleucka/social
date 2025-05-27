@@ -95,6 +95,7 @@ body {
     border: 1px solid #ccc; 
 }
 #app #scroll-top {
+    display: none;
     text-align: center;
     font-size: 1.3rem;
     position: fixed;
@@ -254,6 +255,12 @@ body {
         width: 100%;
         max-width: 100%;
         margin: 0;
+    }
+    #app #scroll-top.active {
+        display: block !important;
+    }
+    #app #scroll-top.disable {
+        display: none !important;
     }
 }
 
