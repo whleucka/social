@@ -115,12 +115,22 @@ class PostService
         return filter_var($url, FILTER_VALIDATE_URL) ? $url : null;
     }
 
-    public function getPosts(): ?array
+    public function getPosts(int $user_id, int $page = 1, int $per_page = 8): ?array
     {
+        $calc_page = ($page - 1) * $per_page;
         return db()->fetchAll("SELECT uuid 
             FROM posts 
             WHERE created_at > NOW() - INTERVAL 30 DAY AND parent_id IS NULL
-            ORDER BY created_at DESC");
+            ORDER BY created_at DESC
+            LIMIT ?,?", [$calc_page, $per_page]);
+    }
+
+    public function getTotalPosts(int $user_id): int
+    {
+        return db()->execute("SELECT 1
+            FROM posts 
+            WHERE created_at > NOW() - INTERVAL 30 DAY AND parent_id IS NULL
+            ORDER BY created_at DESC")->rowCount();
     }
 
     public function getComments(string $uuid): ?array

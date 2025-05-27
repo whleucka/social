@@ -26,6 +26,15 @@ class FeedController extends Controller
         ]);
     }
 
+    #[Get("/feed/more/{page}", "feed.more", ["auth"])]
+    public function more(int $page): string
+    {
+        return $this->render("feed/more.html.twig", [
+            "posts" => $this->post_provider->getPosts($this->user->id, $page),
+            "next_page" => $page + 1,
+        ]);
+    }
+
     #[Post("/feed/search", "feed.search", ["auth"])]
     public function search()
     {
