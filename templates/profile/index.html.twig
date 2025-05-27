@@ -28,5 +28,14 @@
         </div>
         <div id="profile-feed">
         </div>
+        <button 
+            id="post-button"
+            hx-get="/post/control"
+            hx-target="#new-post"
+            hx-trigger="click"
+            data-bs-toggle="modal"
+            data-bs-target="#new-post"
+            class="btn btn-sm btn-primary d-block d-md-none">
+            <i class="bi bi-pencil-square"></i>
     </section>
 {% endblock %}
