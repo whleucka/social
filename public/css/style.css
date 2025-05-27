@@ -169,7 +169,7 @@ body {
     opacity: 0.3;
 }
 #app .post .like.active {
-    color: #CB0404;
+    color: rgb(236, 72, 153);
 }
 #app .post .name {
     font-size: 0.9rem;
