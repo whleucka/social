@@ -1,6 +1,6 @@
 # Social
 
-![image](https://github.com/user-attachments/assets/5732a23e-1863-4f0c-8192-f16c2c027cb9)
+![image](https://github.com/user-attachments/assets/b0401fe8-550f-417e-bceb-4aa5900bda13)
 WIP: a social media project
 
 
