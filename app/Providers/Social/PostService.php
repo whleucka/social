@@ -107,9 +107,15 @@ class PostService
         curl_setopt_array($ch, [
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_USERAGENT => 'Mozilla/5.0',
+            CURLOPT_SSL_VERIFYPEER => config("app.debug"),
+            CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+            CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4,
+            CURLOPT_TIMEOUT => 10,
         ]);
         $response = curl_exec($ch);
+        if (curl_errno($ch)) {
+            error_log('cURL error: ' . curl_error($ch));
+        }
         curl_close($ch);
         return $response ?: null;
     }
