@@ -79,6 +79,13 @@ class PostService
                 "parent_id" => $post->id,
                 "content" => $content,
             ];
+            $media = $this->extractMedia($content);
+            if (isset($media["image"]) && $media["image"]) {
+                $data["image"] = $media["image"];
+            }
+            if (isset($media['url']) && $media['url']) {
+                $data["url"] = $media["url"];
+            }
             return Post::create($data);
         }
         return false;
@@ -94,9 +101,22 @@ class PostService
         ];
     }
 
-    private function extractMetaImage($url): ?string
+    private function fetchUrl(string $url): ?string
     {
-        $html = @file_get_contents($url);
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_USERAGENT => 'Mozilla/5.0',
+        ]);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        return $response ?: null;
+    }
+
+    private function extractMetaImage(string $url): ?string
+    {
+        $html = $this->fetchUrl($url);
         if (!$html) return null;
 
         $doc = new DOMDocument();
