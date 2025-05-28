@@ -3,6 +3,6 @@
 {% block title %}{{ parent() }} - Home{% endblock %}
 
 {% block center_content %}
-    <section id="view" class="w-100" hx-get="/feed/load" hx-trigger="load, load-posts from:body, every 5m" hx-swap="innerHTML">
+    <section id="view" class="w-100" hx-get="/feed/load" hx-trigger="load, load-posts from:body" hx-swap="innerHTML">
     </section>
 {% endblock %}
