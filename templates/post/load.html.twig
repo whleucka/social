@@ -36,7 +36,7 @@
             <p class="content word-break p-2">{{ post.content|linkify|raw }}</p>
         </div>
     </div>
-    <div class="bottom w-100 d-flex justify-content-around">
+    <div class="bottom w-100 d-flex justify-content-around align-items-center">
         <div class="action"
             title="Reply"
             hx-get="/post/control/{{ post.uuid }}"
@@ -51,6 +51,13 @@
             hx-swap="outerHTML">
             <i class="like bi bi-heart{% if post.liked %}-fill{% endif %} {% if post.liked %}active{% endif %}"></i> <small class="like-count ps-1">{{ post.like_count }}</small>
         </div>
-        <div class="action" title="Options"><i class="bi bi-three-dots"></i></div>
+        <div class="dropdown action">
+            <button class="btn" title="Options" type="button" id="options-menu" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-three-dots"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="options-menu">
+                <li><span class="dropdown-item" onClick="copyToClipboard('{{ config('app.url') }}/post/{{ post.uuid }}')">Copy post link</span></li>
+            </ul>
+        </div>
     </div>
 </div>

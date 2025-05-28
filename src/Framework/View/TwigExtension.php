@@ -14,6 +14,7 @@ class TwigExtension extends AbstractExtension
             new TwigFunction("csrf", [$this, "csrf"]),
             new TwigFunction("uri", [$this, "uri"]),
             new TwigFunction("old", [$this, "old"]),
+            new TwigFunction("config", [$this, "config"]),
         ];
     }
 
@@ -40,7 +41,7 @@ class TwigExtension extends AbstractExtension
         return request()->request->get($name) ?? $default;
     }
 
-    function linkify(string $text): string {
+    public function linkify(string $text): string {
         // Escape first to prevent XSS
         $escaped = htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
 
@@ -56,5 +57,10 @@ class TwigExtension extends AbstractExtension
 
         // Convert newlines to <br>
         return nl2br($linked, false); // false: don't use XHTML-style <br />
+    }
+
+    public function config(string $name)
+    {
+        return config($name);
     }
 }
