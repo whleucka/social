@@ -23,13 +23,13 @@ function getHeadlines(int $page = 1)
             foreach ($top_headlines->articles as $article) {
                 $created = new DateTime($article->publishedAt);
                 $post = Post::where("url", $article->url)->get();
-                if (!$post && strlen($article->content) > 0) {
+                if (!$post) {
                     Post::create([
                         "user_id" => $bot->id,
                         "content" => twig()->render("bot/news.html.twig", [
                             "source" => $article->source->name,
                             "author" => $article->author,
-                            "body" => $article->description,
+                            "body" => $article->description ?: $article->title,
                         ]),
                         "url" => $article->url,
                         "image" => $article->urlToImage,
