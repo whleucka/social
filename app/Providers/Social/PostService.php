@@ -174,28 +174,77 @@ class PostService
         $calc_page = ($page - 1) * $per_page;
         return db()->fetchAll("SELECT uuid 
             FROM posts 
-            WHERE created_at > NOW() - INTERVAL 30 DAY AND parent_id IS NULL
+            WHERE created_at > NOW() - INTERVAL 30 DAY 
+            AND parent_id IS NULL
             ORDER BY created_at DESC
             LIMIT ?,?", [$calc_page, $per_page]);
+    }
+
+    public function getUserPostCount(int $user_id)
+    {
+        return db()->execute("SELECT 1 
+            FROM posts 
+            WHERE user_id = ?", [$user_id])->rowCount();
+    }
+
+    public function getUserPosts(int $user_id, int $page = 1, int $per_page = 10): ?array
+    {
+        $calc_page = ($page - 1) * $per_page;
+        return db()->fetchAll("SELECT uuid 
+            FROM posts 
+            WHERE created_at > NOW() - INTERVAL 30 DAY 
+            AND parent_id IS NULL
+            AND user_id = ?
+            ORDER BY created_at DESC
+            LIMIT ?,?", [$user_id, $calc_page, $per_page]);
+    }
+
+    public function getUserReplies(int $user_id, int $page = 1, int $per_page = 10)
+    {
+        $calc_page = ($page - 1) * $per_page;
+        return db()->fetchAll("SELECT uuid 
+            FROM posts 
+            WHERE created_at > NOW() - INTERVAL 30 DAY 
+            AND parent_id IS NOT NULL
+            AND user_id = ?
+            ORDER BY created_at DESC
+            LIMIT ?,?", [$user_id, $calc_page, $per_page]);
+    }
+
+    public function getUserLikes(int $user_id, int $page = 1, int $per_page = 10)
+    {
+        $calc_page = ($page - 1) * $per_page;
+        return db()->fetchAll("SELECT uuid 
+            FROM posts 
+            WHERE created_at > NOW() - INTERVAL 30 DAY 
+            AND parent_id IS NULL
+            AND EXISTS (SELECT 1 
+                FROM post_likes pl 
+                WHERE pl.post_id = posts.id AND pl.user_id = ?)
+            ORDER BY created_at DESC
+            LIMIT ?,?", [$user_id, $calc_page, $per_page]);
     }
 
     public function getTotalPosts(int $user_id): int
     {
         return db()->execute("SELECT 1
             FROM posts 
-            WHERE created_at > NOW() - INTERVAL 30 DAY AND parent_id IS NULL
+            WHERE created_at > NOW() - INTERVAL 30 DAY 
+            AND parent_id IS NULL
             ORDER BY created_at DESC")->rowCount();
     }
 
-    public function getComments(string $uuid): ?array
+    public function getComments(string $uuid, int $page = 1, int $per_page = 10): ?array
     {
         $post = Post::where("uuid", $uuid)->get();
 
         if ($post) {
+            $calc_page = ($page - 1) * $per_page;
             return db()->fetchAll("SELECT uuid 
                 FROM posts 
                 WHERE parent_id = ?
-                ORDER BY created_at DESC", [$post->id]);
+                ORDER BY created_at DESC
+                LIMIT ?,?", [$post->id, $calc_page, $per_page]);
         }
         return null;
     }

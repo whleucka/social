@@ -14,19 +14,19 @@
                 <div id="stats" class="d-flex mt-2">
                     <span><strong>0</strong> followers</span>
                     <span class="ps-1"><strong>0</strong> following</span>
-                    <span class="ps-1"><strong>0</strong> posts</span>
+                    <span class="ps-1"><strong>{{ post_count }}</strong> posts</span>
                 </div>
                 <div id="description" class="mt-4">
-                    <p><em>Profile page is currently disabled. Please come back soon!</em></p>
+                    <p><em>Profile description coming soon!</em></p>
                 </div>
             </div>
             <nav class="nav nav-pills nav-fill sticky-top">
-                <a class="nav-link disabled" href="#">Posts</a>
-                <a class="nav-link disabled" href="#">Replies</a>
-                <a class="nav-link disabled" href="#">Likes</a>
+                <btn class="btn nav-link text-dark" title="View posts" hx-get="/profile/{{ profile.username }}/posts" hx-target="#profile-feed" hx-swap="innerHTML">Posts</btn>
+                <btn class="btn nav-link text-dark" title="View replies" hx-get="/profile/{{ profile.username }}/replies" hx-target="#profile-feed" hx-swap="innerHTML">Replies</btn>
+                <btn class="btn nav-link text-dark" title="View likes" hx-get="/profile/{{ profile.username }}/likes" hx-target="#profile-feed" hx-swap="innerHTML">Likes</btn>
             </nav>
         </div>
-        <div id="profile-feed">
+        <div id="profile-feed" class="w-100" hx-get="/profile/{{ profile.username }}/posts" hx-trigger="load" hx-swap="innerHTML">
         </div>
         <button 
             id="post-button"
