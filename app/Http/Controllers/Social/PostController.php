@@ -10,9 +10,46 @@ class PostController extends Controller
 {
     public function __construct(private PostService $post_provider)
     {
+        $params = request()->getAttribute("route")["params"];
+        if ($params && isset($params[0])) {
+            $post = $this->post_provider->getPostByUUID($params[0]);
+
+            if (!$post) {
+                // This is not a real post
+                $this->pageNotFound();
+            }
+        }
     }
 
-    #[Get("/post/{uuid}")]
+    #[Get("/post/control", "post.control", ["auth"])]
+    public function control(): string
+    {
+        return $this->render("post/control.html.twig", []);
+    }
+
+    #[Post("/post/create", "post.create", ["auth"])]
+    public function create(): ?string
+    {
+        $valid = $this->validate([
+            "content" => ["required"],
+        ]);
+
+        if ($valid) {
+            $post = $this->post_provider->createPost($this->user->id, $valid->content);
+            if ($post) {
+                if ($_SERVER['HTTP_REFERER'] === $_SERVER['HTTP_ORIGIN'].'/') {
+                    return $this->render("post/post.html.twig", [
+                        "post" => ["uuid" => $post->uuid],
+                    ]);
+                }
+                header("HX-Redirect: /");
+                exit;
+            }
+        }
+        return null;
+    }
+
+    #[Get("/post/{uuid}", "post.index", ["auth"])]
     public function index(string $uuid)
     {
         $this->setHeader("HX-Push-Url", "/post/$uuid");
@@ -54,40 +91,12 @@ class PostController extends Controller
         return $this->post_provider->getPostAgo($uuid);
     }
 
-    #[Get("/post/control", "post.control", ["auth"])]
-    public function control(): string
-    {
-        return $this->render("post/control.html.twig", []);
-    }
-
-    #[Get("/post/control/{uuid}", "post.control-reply", ["auth"])]
+    #[Get("/post/{uuid}/control", "post.control-reply", ["auth"])]
     public function control_reply(string $uuid): string
     {
         return $this->render("post/control.html.twig", [
             "post" => $this->post_provider->getPost($this->user->id, $uuid),
         ]);
-    }
-
-    #[Post("/post/create", "post.create", ["auth"])]
-    public function create(): ?string
-    {
-        $valid = $this->validate([
-            "content" => ["required"],
-        ]);
-
-        if ($valid) {
-            $post = $this->post_provider->createPost($this->user->id, $valid->content);
-            if ($post) {
-                if ($_SERVER['HTTP_REFERER'] === $_SERVER['HTTP_ORIGIN'].'/') {
-                    return $this->render("post/post.html.twig", [
-                        "post" => ["uuid" => $post->uuid],
-                    ]);
-                }
-                header("HX-Redirect: /");
-                exit;
-            }
-        }
-        return null;
     }
 
     #[Post("/post/{uuid}/reply", "post.reply", ["auth"])]

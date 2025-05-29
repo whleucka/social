@@ -41,7 +41,7 @@
     <div class="bottom w-100 d-flex justify-content-around align-items-center">
         <div class="action"
             title="Reply"
-            hx-get="/post/control/{{ post.uuid }}"
+            hx-get="/post/{{ post.uuid }}/control"
             hx-target="#new-post"
             hx-trigger="click"
             data-bs-toggle="modal"

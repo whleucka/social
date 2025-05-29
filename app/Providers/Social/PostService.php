@@ -9,9 +9,14 @@ use DOMDocument;
 
 class PostService
 {
+    public function getPostByUUID(string $uuid)
+    {
+        return Post::where("uuid", $uuid)->get();
+    }
+
     public function getPost(int $user_id, string $uuid)
     {
-        $post = Post::where("uuid", $uuid)->get();
+        $post = $this->getPostByUUID($uuid);
         if ($post) {
             $user = $post->user();
             return [
@@ -44,7 +49,7 @@ class PostService
 
     public function getPostAgo(string $uuid)
     {
-        $post = Post::where("uuid", $uuid)->get();
+        $post = $this->getPostByUUID($uuid);
         if ($post) {
             return $post->ago();
         }
@@ -70,8 +75,7 @@ class PostService
 
     public function replyPost(int $user_id, string $content, string $uuid): Post|bool
     {
-        $post = Post::where("uuid", $uuid)->get();
-
+        $post = $this->getPostByUUID($uuid);
         if ($post) {
             $data = [
                 "user_id" => $user_id,
@@ -153,9 +157,7 @@ class PostService
                 return $content;
             }
         }
-
         return null;
-
     }
 
     private function extractLink(string $text): ?string 
@@ -227,8 +229,7 @@ class PostService
 
     public function getComments(string $uuid, int $page = 1, int $per_page = 10): ?array
     {
-        $post = Post::where("uuid", $uuid)->get();
-
+        $post = $this->getPostByUUID($uuid);
         if ($post) {
             $calc_page = ($page - 1) * $per_page;
             return db()->fetchAll("SELECT uuid 
@@ -251,8 +252,7 @@ class PostService
 
     public function isLiked(int $user_id, string $uuid)
     {
-        $post = Post::where("uuid", $uuid)->get();
-
+        $post = $this->getPostByUUID($uuid);
         if ($post) {
             return $post->isLiked($user_id);
         }
@@ -261,8 +261,7 @@ class PostService
 
     public function getLikeCount(string $uuid)
     {
-        $post = Post::where("uuid", $uuid)->get();
-
+        $post = $this->getPostByUUID($uuid);
         if ($post) {
             return $post->likeCount();
         }
@@ -271,8 +270,7 @@ class PostService
 
     public function likePost(int $user_id, string $uuid)
     {
-        $post = Post::where("uuid", $uuid)->get();
-
+        $post = $this->getPostByUUID($uuid);
         if ($post) {
             if ($post->isLiked($user_id)) {
                 $like = PostLike::where("user_id", $user_id)
