@@ -2,7 +2,7 @@
     {% for post in posts %}
         {% include 'post/post.html.twig' %}
     {% endfor %}
-    <div hx-get="/profile/{{ user.username }}/{{ section }}/page/2" hx-trigger="intersect once" hx-swap="afterend"></div>
+    <div hx-get="/profile/{{ profile.username }}/{{ section }}/page/2" hx-trigger="intersect once" hx-swap="afterend"></div>
     <script>
     let toggleScroll = () => {
         let btn = document.getElementById("scroll-top");

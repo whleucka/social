@@ -37,7 +37,7 @@ class ProfileController extends Controller
         if ($user) {
             return $this->render("profile/load.html.twig", [
                 "posts" => $this->post_provider->getUserPosts($user['id']),
-                "user" => $user,
+                "profile" => $user,
                 "section" => "posts",
             ]);
         }
@@ -53,7 +53,7 @@ class ProfileController extends Controller
         if ($user) {
             return $this->render("profile/more.html.twig", [
                 "posts" => $this->post_provider->getUserPosts($user['id'], $page),
-                "user" => $user,
+                "profile" => $user,
                 "section" => "posts",
                 "next_page" => $page + 1,
             ]);
@@ -70,7 +70,7 @@ class ProfileController extends Controller
         if ($user) {
             return $this->render("profile/load.html.twig", [
                 "posts" => $this->post_provider->getUserReplies($user['id']),
-                "user" => $user,
+                "profile" => $user,
                 "section" => "replies",
             ]);
         }
@@ -86,7 +86,7 @@ class ProfileController extends Controller
         if ($user) {
             return $this->render("profile/more.html.twig", [
                 "posts" => $this->post_provider->getUserReplies($user['id'], $page),
-                "user" => $user,
+                "profile" => $user,
                 "section" => "replies",
                 "next_page" => $page + 1,
             ]);
@@ -103,7 +103,7 @@ class ProfileController extends Controller
         if ($user) {
             return $this->render("profile/load.html.twig", [
                 "posts" => $this->post_provider->getUserLikes($user['id']),
-                "user" => $user,
+                "profile" => $user,
                 "section" => "likes",
             ]);
         }
@@ -119,7 +119,7 @@ class ProfileController extends Controller
         if ($user) {
             return $this->render("profile/more.html.twig", [
                 "posts" => $this->post_provider->getUserLikes($user['id'], $page),
-                "user" => $user,
+                "profile" => $user,
                 "section" => "likes",
                 "next_page" => $page + 1,
             ]);
