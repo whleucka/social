@@ -26,7 +26,7 @@ class FeedController extends Controller
         ]);
     }
 
-    #[Get("/feed/more/{page}", "feed.more", ["auth"])]
+    #[Get("/feed/page/{page}", "feed.more", ["auth"])]
     public function more(int $page): string
     {
         return $this->render("feed/more.html.twig", [

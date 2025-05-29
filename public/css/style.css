@@ -239,6 +239,10 @@ body {
 #app .profile #stats {
     font-size: 0.8rem;
 }
+#app .profile #profile-feed {
+    margin-top: 10px;    
+}
+
 
 
 #app .settings #user #avatar {
@@ -247,6 +251,8 @@ body {
     width: 80px;
     border: 1px solid #ccc;
 }
+
+
 
 @media (max-width: 575.98px) {
 }

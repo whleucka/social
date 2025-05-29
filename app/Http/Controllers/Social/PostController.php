@@ -29,11 +29,22 @@ class PostController extends Controller
         ]);
     }
 
-    #[Get("/post/{uuid}/comments", "post.comments", ["auth"])]
+    #[Get("/post/{uuid}/comments/load", "post.comments", ["auth"])]
     public function comments(string $uuid)
     {
-        return $this->render("post/comments.html.twig", [
+        return $this->render("post/load-comments.html.twig", [
             "posts" => $this->post_provider->getComments($uuid),
+            "uuid" => $uuid,
+        ]);
+    }
+
+    #[Get("/post/{uuid}/comments/page/{page}", "post.more-comments", ["auth"])]
+    public function more_comments(string $uuid, int $page)
+    {
+        return $this->render("post/more-comments.html.twig", [
+            "posts" => $this->post_provider->getComments($uuid, $page),
+            "uuid" => $uuid,
+            "next_page" => $page + 1,
         ]);
     }
 

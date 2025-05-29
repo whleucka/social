@@ -1,0 +1,6 @@
+{% if posts %}
+    {% for post in posts %}
+        {% include 'post/post.html.twig' %}
+    {% endfor %}
+    <div hx-get="/post/{{ uuid }}/comments/page/{{ next_page }}" hx-trigger="intersect once" hx-swap="afterend"></div>
+{% endif %}

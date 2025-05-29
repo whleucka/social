@@ -68,7 +68,7 @@
             </div>
         </div>
         <hr class="my-4">
-        <div id="comments" class="w-100" hx-get="/post/{{ post.uuid }}/comments" hx-trigger="load, load-comments from:body" hx-swap="innerHTML">
+        <div id="comments" class="w-100" hx-get="/post/{{ post.uuid }}/comments/load" hx-trigger="load, load-comments from:body" hx-swap="innerHTML">
         </div>
         <button 
             id="post-button"

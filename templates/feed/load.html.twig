@@ -1,36 +1,35 @@
-{% for post in posts %}
-    {% include 'post/post.html.twig' %}
-{% endfor %}
-{% if not posts and not term %}
+{% if posts %}
+    {% for post in posts %}
+        {% include 'post/post.html.twig' %}
+    {% endfor %}
+    <div hx-get="/feed/page/2" hx-trigger="intersect once" hx-swap="afterend"></div>
+    <button 
+        id="post-button"
+        hx-get="/post/control"
+        hx-target="#new-post"
+        hx-trigger="click"
+        data-bs-toggle="modal"
+        data-bs-target="#new-post"
+        class="btn btn-sm btn-primary d-block d-md-none">
+        <i class="bi bi-pencil-square"></i>
+    </button>
+    <script>
+    let toggleScroll = () => {
+        let btn = document.getElementById("scroll-top");
+        if (window.scrollY > 100) {
+        btn.classList.add("active");
+        btn.classList.remove("disable");
+        } else {
+        btn.classList.remove("active");
+        btn.classList.add("disable");
+        }
+    }
+    toggleScroll();
+
+    window.addEventListener("scroll", toggleScroll);
+    </script>
+{% elseif not posts and not term %}
     <p class="text-muted p-2"><em>There are no posts yet</em></p>
 {% elseif not posts and term %}
     <p class="text-muted p-2"><em>There are no posts that matched '{{ term }}'</em></p>
 {% endif %}
-{% if posts %}
-<div hx-get="/feed/more/2" hx-trigger="intersect once" hx-swap="afterend"></div>
-<button 
-    id="post-button"
-    hx-get="/post/control"
-    hx-target="#new-post"
-    hx-trigger="click"
-    data-bs-toggle="modal"
-    data-bs-target="#new-post"
-    class="btn btn-sm btn-primary d-block d-md-none">
-    <i class="bi bi-pencil-square"></i>
-</button>
-{% endif %}
-<script>
-  let toggleScroll = () => {
-    let btn = document.getElementById("scroll-top");
-    if (window.scrollY > 100) {
-      btn.classList.add("active");
-      btn.classList.remove("disable");
-    } else {
-      btn.classList.remove("active");
-      btn.classList.add("disable");
-    }
-  }
-  toggleScroll();
-
-  window.addEventListener("scroll", toggleScroll);
-</script>
