@@ -225,15 +225,6 @@ class PostService
             LIMIT ?,?", [$user_id, $calc_page, $per_page]);
     }
 
-    public function getTotalPosts(int $user_id): int
-    {
-        return db()->execute("SELECT 1
-            FROM posts 
-            WHERE created_at > NOW() - INTERVAL 30 DAY 
-            AND parent_id IS NULL
-            ORDER BY created_at DESC")->rowCount();
-    }
-
     public function getComments(string $uuid, int $page = 1, int $per_page = 10): ?array
     {
         $post = Post::where("uuid", $uuid)->get();
