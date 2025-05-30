@@ -10,7 +10,7 @@
             <img id="pic" src="{{ profile.gravatar }}" alt="profile-pic" />
             <div class="pt-3 px-3" id="info">
                 {% if has_edit %}
-                <button class="btn btn-primary btn-sm float-end"
+                <button id="edit-profile" class="btn btn-primary btn-sm float-end"
                     hx-get="/profile/{{ profile.username }}/edit"
                     hx-target="#new-post"
                     hx-trigger="click"

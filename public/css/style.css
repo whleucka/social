@@ -259,6 +259,10 @@ body {
     font-weight: bold;
     background-color: unset;
 }
+#app .profile #edit-profile {
+    position: relative;
+    top: -38px;
+}
 
 #app .settings #user #avatar {
     border-radius: 50%;
