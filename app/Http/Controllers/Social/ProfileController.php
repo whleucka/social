@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Social;
 use App\Providers\Social\PostService;
 use App\Providers\Social\ProfileService;
 use Echo\Framework\Http\Controller;
-use Echo\Framework\Routing\Route\Get;
+use Echo\Framework\Routing\Route\{ Get, Post };
 
 class ProfileController extends Controller
 {
@@ -16,14 +16,17 @@ class ProfileController extends Controller
         private PostService $post_provider
     ) {
         // username required for all routes
+        $this->setProfile();
+    }
+
+    private function setProfile()
+    {
         $params = request()->getAttribute("route")["params"];
         if ($params && isset($params[0])) {
             $this->profile = $this->profile_provider->getUserByUsername($params[0]);
-
-            if (!$this->profile) {
-                // This is not a real profile
-                $this->pageNotFound();
-            }
+        }
+        if (!$this->profile) {
+            $this->pageNotFound();
         }
     }
 
@@ -33,8 +36,42 @@ class ProfileController extends Controller
         $this->setHeader("HX-Push-Url", "/profile/$username");
         return $this->render("profile/index.html.twig", [
             "profile" => $this->profile,
-            "post_count" => $this->post_provider->getUserPostCount($this->profile['id'])
+            "post_count" => $this->post_provider->getUserPostCount($this->profile['id']),
+            "has_edit" => $this->profile['id'] === $this->user->id,
         ]);
+    }
+
+    #[Get("/profile/{username}/edit", "profile.edit", ["auth"])]
+    public function edit(string $username)
+    {
+        if ($this->profile['id'] === $this->user->id) {
+            return $this->render("profile/edit.html.twig", [
+                "profile" => [
+                    "username" => $username,
+                    "first_name" => $this->user->first_name,
+                    "surname" => $this->user->surname,
+                    "description" => $this->user->description,
+                ],
+            ]);
+        }
+    }
+
+    #[Post("/profile/{username}/save", "profile.save", ["auth"])]
+    public function save(string $username): string
+    {
+        if ($this->profile['id'] === $this->user->id) {
+            $valid = $this->validate([
+                "first_name" => ["required", "max_length:20"],
+                "surname" => ["required", "max_length:20"],
+                "description" => ["max_length:255"],
+            ]);
+
+            if ($valid) {
+                $this->profile_provider->save($username, $valid->first_name, $valid->surname, $valid->description);
+                $this->setProfile();
+            }
+        }
+        return $this->index($username);
     }
 
     #[Get("/profile/{username}/posts/load", "profile.posts", ["auth"])]

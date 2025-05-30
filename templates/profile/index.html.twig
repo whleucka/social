@@ -9,6 +9,14 @@
             </div>
             <img id="pic" src="{{ profile.gravatar }}" alt="profile-pic" />
             <div class="pt-3 px-3" id="info">
+                {% if has_edit %}
+                <button class="btn btn-primary btn-sm float-end"
+                    hx-get="/profile/{{ profile.username }}/edit"
+                    hx-target="#new-post"
+                    hx-trigger="click"
+                    data-bs-toggle="modal"
+                    data-bs-target="#new-post">Edit</button>
+                {% endif %}
                 <h4 id="name" class="m-0">{{ profile.name }}</h4>
                 <span id="username" class="text-muted"><small>@{{ profile.username }}</small></span>
                 <div id="stats" class="d-flex mt-2">
@@ -16,9 +24,11 @@
                     <span class="ps-1"><strong>0</strong> following</span>
                     <span class="ps-1"><strong>{{ post_count }}</strong> posts</span>
                 </div>
+                {% if profile.description %}
                 <div id="description" class="mt-4">
-                    <p><em>Profile description coming soon!</em></p>
+                    <p>{{ profile.description }}</p>
                 </div>
+                {% endif %}
             </div>
             <nav id="feed-nav" class="nav nav-pills nav-fill sticky-top">
                 <btn hx-on::after-request="toggleProfileNav(event)" class="btn bg-light nav-link text-dark posts active" title="View posts" hx-get="/profile/{{ profile.username }}/posts/load" hx-target="#profile-feed" hx-swap="innerHTML"><i class="bi bi-pencil-square me-2"></i> Posts</btn>
