@@ -13,21 +13,7 @@
         class="btn btn-sm btn-primary d-block d-md-none">
         <i class="bi bi-pencil-square"></i>
     </button>
-    <script>
-    let toggleScroll = () => {
-        let btn = document.getElementById("scroll-top");
-        if (window.scrollY > 100) {
-        btn.classList.add("active");
-        btn.classList.remove("disable");
-        } else {
-        btn.classList.remove("active");
-        btn.classList.add("disable");
-        }
-    }
-    toggleScroll();
-
-    window.addEventListener("scroll", toggleScroll);
-    </script>
+    <script>toggleScroll();</script>
 {% elseif not posts and not term %}
     <p class="text-muted p-2"><em>There are no posts yet</em></p>
 {% elseif not posts and term %}

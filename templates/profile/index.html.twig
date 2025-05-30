@@ -20,10 +20,10 @@
                     <p><em>Profile description coming soon!</em></p>
                 </div>
             </div>
-            <nav class="nav nav-pills nav-fill sticky-top">
-                <btn class="btn nav-link text-dark" title="View posts" hx-get="/profile/{{ profile.username }}/posts/load" hx-target="#profile-feed" hx-swap="innerHTML"><i class="bi bi-pencil-square me-2"></i> Posts</btn>
-                <btn class="btn nav-link text-dark" title="View replies" hx-get="/profile/{{ profile.username }}/replies/load" hx-target="#profile-feed" hx-swap="innerHTML"><i class="bi bi-chat-left me-2"></i> Replies</btn>
-                <btn class="btn nav-link text-dark" title="View likes" hx-get="/profile/{{ profile.username }}/likes/load" hx-target="#profile-feed" hx-swap="innerHTML"><i class="bi bi-heart me-2"></i> Likes</btn>
+            <nav id="feed-nav" class="nav nav-pills nav-fill sticky-top">
+                <btn hx-on::after-request="toggleProfileNav(event)" class="btn bg-light nav-link text-dark posts active" title="View posts" hx-get="/profile/{{ profile.username }}/posts/load" hx-target="#profile-feed" hx-swap="innerHTML"><i class="bi bi-pencil-square me-2"></i> Posts</btn>
+                <btn hx-on::after-request="toggleProfileNav(event)" class="btn bg-light nav-link replies text-dark" title="View replies" hx-get="/profile/{{ profile.username }}/replies/load" hx-target="#profile-feed" hx-swap="innerHTML"><i class="bi bi-chat-left me-2"></i> Replies</btn>
+                <btn hx-on::after-request="toggleProfileNav(event)" class="btn bg-light nav-link likes text-dark" title="View likes" hx-get="/profile/{{ profile.username }}/likes/load" hx-target="#profile-feed" hx-swap="innerHTML"><i class="bi bi-heart me-2"></i> Likes</btn>
             </nav>
         </div>
         <div id="profile-feed" class="w-100" hx-get="/profile/{{ profile.username }}/posts/load" hx-trigger="load" hx-swap="innerHTML">

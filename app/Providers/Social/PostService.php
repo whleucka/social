@@ -171,7 +171,7 @@ class PostService
         return filter_var($url, FILTER_VALIDATE_URL) ? $url : null;
     }
 
-    public function getPosts(int $user_id, int $page = 1, int $per_page = 10): ?array
+    public function getPosts(int $user_id, int $page = 1, int $per_page = 8): ?array
     {
         $calc_page = ($page - 1) * $per_page;
         return db()->fetchAll("SELECT uuid 
@@ -189,7 +189,7 @@ class PostService
             WHERE user_id = ?", [$user_id])->rowCount();
     }
 
-    public function getUserPosts(int $user_id, int $page = 1, int $per_page = 10): ?array
+    public function getUserPosts(int $user_id, int $page = 1, int $per_page = 8): ?array
     {
         $calc_page = ($page - 1) * $per_page;
         return db()->fetchAll("SELECT uuid 
@@ -201,7 +201,7 @@ class PostService
             LIMIT ?,?", [$user_id, $calc_page, $per_page]);
     }
 
-    public function getUserReplies(int $user_id, int $page = 1, int $per_page = 10)
+    public function getUserReplies(int $user_id, int $page = 1, int $per_page = 8)
     {
         $calc_page = ($page - 1) * $per_page;
         return db()->fetchAll("SELECT uuid 
@@ -213,7 +213,7 @@ class PostService
             LIMIT ?,?", [$user_id, $calc_page, $per_page]);
     }
 
-    public function getUserLikes(int $user_id, int $page = 1, int $per_page = 10)
+    public function getUserLikes(int $user_id, int $page = 1, int $per_page = 8)
     {
         $calc_page = ($page - 1) * $per_page;
         return db()->fetchAll("SELECT posts.uuid 
@@ -225,7 +225,7 @@ class PostService
             LIMIT ?,?", [$user_id, $calc_page, $per_page]);
     }
 
-    public function getComments(string $uuid, int $page = 1, int $per_page = 10): ?array
+    public function getComments(string $uuid, int $page = 1, int $per_page = 8): ?array
     {
         $post = $this->getPostByUUID($uuid);
         if ($post) {
