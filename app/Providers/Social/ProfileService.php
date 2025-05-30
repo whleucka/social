@@ -15,8 +15,22 @@ class ProfileService
                 "gravatar" => $user->gravatarUrl(),
                 "name" => $user->first_name . ' ' . $user->surname,
                 "username" => $user->username,
+                "first_name" => $user->first_name,
+                "surname" => $user->surname,
+                "description" => $user->description,
             ];
         }
         return null;
+    }
+
+    public function save(string $username, string $first_name, string $surname, ?string $description)
+    {
+        $user = User::where("username", $username)->get();
+        if ($user) {
+            $user->first_name = $first_name;
+            $user->surname = $surname;
+            $user->description = $description;
+            $user->save();
+        }
     }
 }
