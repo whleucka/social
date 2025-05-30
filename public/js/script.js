@@ -13,6 +13,16 @@ htmx.on('htmx:responseError', function (event) {
     }
 });
 
+function toggleProfileNav(e) {
+    const btns = document.querySelectorAll("#feed-nav .btn");
+
+    btns.forEach((btn) => {
+        btn.classList.remove("active");
+    });
+
+    e.currentTarget.classList.add("active");
+}
+
 function scrollToTop() {
     window.scrollTo({
     top: 0,

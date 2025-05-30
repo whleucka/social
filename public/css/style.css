@@ -242,8 +242,15 @@ body {
 #app .profile #profile-feed {
     margin-top: 10px;    
 }
-
-
+#app .profile #feed-nav .btn {
+    opacity: 0.6;
+}
+#app .profile #feed-nav .btn.active {
+    opacity: 1;
+    color: white;
+    font-weight: bold;
+    background-color: unset;
+}
 
 #app .settings #user #avatar {
     border-radius: 50%;
