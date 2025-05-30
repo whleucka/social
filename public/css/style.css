@@ -68,6 +68,14 @@ body {
 #bottom-nav {
     border-top: 1px solid #ccc;
 }
+
+#bottom-nav .nav-link {
+    opacity: 0.5;
+}
+#bottom-nav .nav-link.active {
+    opacity: 1;
+    font-weight: bold;
+}
 .navbar-brand {
     cursor: pointer;
     font-family: "Monomaniac One", sans-serif;

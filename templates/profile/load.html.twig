@@ -3,21 +3,7 @@
         {% include 'post/post.html.twig' %}
     {% endfor %}
     <div hx-get="/profile/{{ profile.username }}/{{ section }}/page/2" hx-trigger="intersect once" hx-swap="afterend"></div>
-    <script>
-    let toggleScroll = () => {
-        let btn = document.getElementById("scroll-top");
-        if (window.scrollY > 100) {
-        btn.classList.add("active");
-        btn.classList.remove("disable");
-        } else {
-        btn.classList.remove("active");
-        btn.classList.add("disable");
-        }
-    }
-    toggleScroll();
-
-    window.addEventListener("scroll", toggleScroll);
-    </script>
+    <script>toggleScroll();</script>
 {% else %}
     <p class="text-muted p-2"><em>There are no {{ section }} yet</em></p>
 {% endif %}

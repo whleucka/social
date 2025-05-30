@@ -1,0 +1,25 @@
+<nav class="d-flex justify-content-end pt-2">
+    <div>
+        <img id="avatar" src="{{ user.gravatar }}" alt="logo" />
+        <ul hx-boost="true" hx-target="#view" hx-select="#view" hx-swap="outerHTML" class="navbar-nav mt-3">
+            <li class="nav-item">
+                <a class="nav-link" href="/"><i class="bi bi-house me-2"></i> Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/profile/{{ user.username }}"><i class="bi bi-person-circle me-2"></i> Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/settings"><i class="bi bi-gear me-2"></i> Settings</a>
+            </li>
+        </ul>
+        <button 
+            hx-get="/post/control"
+            hx-target="#new-post"
+            hx-trigger="click"
+            data-bs-toggle="modal"
+            data-bs-target="#new-post"
+            class="btn btn-sm btn-primary mt-3">
+            <i class="bi bi-pencil-square me-2"></i> New Post
+        </button>
+    </div>
+</nav>

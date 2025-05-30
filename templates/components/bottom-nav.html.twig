@@ -1,0 +1,26 @@
+<nav id="bottom-nav" class="navbar fixed-bottom navbar-light bg-light d-md-none">
+    <div class="navbar-nav w-100" hx-boost="true" hx-target="#view" hx-select="#view" hx-swap="outerHTML">
+        <div class="d-flex justify-content-around w-100">
+            <a class="nav-link home" hx-on::after-request="toggleNav(event)" href="/"><i class="bi bi-house me-2"></i> Home</a>
+            <a class="nav-link profile" hx-on::after-request="toggleNav(event)" href="/profile/{{ user.username }}"><i class="bi bi-person-circle me-2"></i> Profile</a>
+            <a class="nav-link settings" hx-on::after-request="toggleNav(event)" href="/settings"><i class="bi bi-gear me-2"></i> Settings</a>
+        </div>
+    </div>
+</nav>
+<script>
+    const url = window.location.href;
+    var target;
+
+    if (url.match(/profile/)) {
+        console.log('profile');
+        target = document.querySelector('#bottom-nav .nav-link.profile');
+    } else if (url.match(/settings/)) {
+        target = document.querySelector('#bottom-nav .nav-link.settings');
+    } else {
+        target = document.querySelector('#bottom-nav .nav-link.home');
+    }
+
+    if (target) {
+        target.classList.add("active");
+    }
+</script>

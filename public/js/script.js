@@ -13,6 +13,16 @@ htmx.on('htmx:responseError', function (event) {
     }
 });
 
+function toggleNav(e) {
+    const btns = document.querySelectorAll("#bottom-nav .nav-link");
+
+    btns.forEach((btn) => {
+        btn.classList.remove("active");
+    });
+
+    e.currentTarget.classList.add("active");
+}
+
 function toggleProfileNav(e) {
     const btns = document.querySelectorAll("#feed-nav .btn");
 
@@ -29,6 +39,20 @@ function scrollToTop() {
     behavior: 'smooth'
     });
 }
+
+function toggleScroll () {
+    let btn = document.getElementById("scroll-top");
+    if (btn) {
+        if (window.scrollY > 100) {
+            btn.classList.add("active");
+            btn.classList.remove("disable");
+        } else {
+            btn.classList.remove("active");
+            btn.classList.add("disable");
+        }
+    }
+}
+window.addEventListener("scroll", toggleScroll);
 
 function copyToClipboard(text) {
   if (navigator.clipboard) {
