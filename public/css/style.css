@@ -250,6 +250,10 @@ body {
 #app .profile #profile-feed {
     margin-top: 10px;
 }
+#app .profile #feed-nav {
+    position: relative;
+    top: -10px;
+}
 #app .profile #feed-nav .btn {
     opacity: 0.7;
 }
