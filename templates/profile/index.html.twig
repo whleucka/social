@@ -25,12 +25,12 @@
                     <span class="ps-1"><strong>{{ post_count }}</strong> posts</span>
                 </div>
                 {% if profile.description %}
-                <div id="description" class="mt-4">
-                    <p>{{ profile.description }}</p>
+                <div id="description" class="mt-2">
+                    <p class="m-0">{{ profile.description }}</p>
                 </div>
                 {% endif %}
             </div>
-            <nav id="feed-nav" class="nav nav-pills nav-fill sticky-top">
+            <nav id="feed-nav" class="nav nav-pills nav-fill">
                 <btn hx-on::after-request="toggleProfileNav(event)" class="btn bg-light nav-link text-dark posts active" title="View posts" hx-get="/profile/{{ profile.username }}/posts/load" hx-target="#profile-feed" hx-swap="innerHTML"><i class="bi bi-pencil-square me-2"></i> Posts</btn>
                 <btn hx-on::after-request="toggleProfileNav(event)" class="btn bg-light nav-link replies text-dark" title="View replies" hx-get="/profile/{{ profile.username }}/replies/load" hx-target="#profile-feed" hx-swap="innerHTML"><i class="bi bi-chat-left me-2"></i> Replies</btn>
                 <btn hx-on::after-request="toggleProfileNav(event)" class="btn bg-light nav-link likes text-dark" title="View likes" hx-get="/profile/{{ profile.username }}/likes/load" hx-target="#profile-feed" hx-swap="innerHTML"><i class="bi bi-heart me-2"></i> Likes</btn>
