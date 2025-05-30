@@ -35,7 +35,7 @@
                 {% if post.url %}</a>{% endif %}
             </div>
             {% elseif post.url %}
-                <p class="p-2"><a href="{{ post.url }}" target="_blank" title="View link">Link</a></p>
+                <p class="m-0 p-2"><a href="{{ post.url }}" target="_blank" title="View link">Link</a></p>
             {% endif %}
             <p class="content word-break p-2">{{ post.content|linkify|raw }}</p>
         </div>
