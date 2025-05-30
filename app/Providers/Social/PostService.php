@@ -216,14 +216,12 @@ class PostService
     public function getUserLikes(int $user_id, int $page = 1, int $per_page = 10)
     {
         $calc_page = ($page - 1) * $per_page;
-        return db()->fetchAll("SELECT uuid 
+        return db()->fetchAll("SELECT posts.uuid 
             FROM posts 
-            WHERE created_at > NOW() - INTERVAL 30 DAY 
-            AND parent_id IS NULL
-            AND EXISTS (SELECT 1 
-                FROM post_likes pl 
-                WHERE pl.post_id = posts.id AND pl.user_id = ?)
-            ORDER BY created_at DESC
+            INNER JOIN post_likes on post_id = posts.id AND post_likes.user_id = ?
+            WHERE posts.created_at > NOW() - INTERVAL 30 DAY 
+            AND posts.parent_id IS NULL
+            ORDER BY post_likes.id DESC
             LIMIT ?,?", [$user_id, $calc_page, $per_page]);
     }
 
