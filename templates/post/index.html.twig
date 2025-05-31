@@ -37,7 +37,7 @@
                             <img loading="lazy" class="image" src="{{ post.image }}" alt="article" />
                             {% if post.url %}</a>{% endif %}
                         </div>
-                        {% elseif post.url %}
+                        {% elseif post.is_bot and post.url %}
                             <p class="m-0 p-2"><a href="{{ post.url }}" target="_blank" title="View link">Link</a></p>
                         {% endif %}
                         <p class="content word-break p-2">{{ post.content|linkify|raw }}</p>
