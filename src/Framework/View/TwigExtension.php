@@ -31,9 +31,9 @@ class TwigExtension extends AbstractExtension
         return twig()->render("components/csrf.html.twig", ["token" => $token]);
     }
 
-    public function uri(string $name)
+    public function uri(string $name, ...$params)
     {
-        return uri($name);
+        return uri($name, ...$params);
     }
 
     public function old(string $name, mixed $default = null)

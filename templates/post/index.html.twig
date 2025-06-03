@@ -1,5 +1,23 @@
 {% extends "layout/app.html.twig" %}
 
+{% block head %}
+    {{ parent() }}
+    {% if post.image %}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="og:image" content="{{ post.image }}" />
+        <meta name="twitter:image" content="{{ post.image }}" />
+    {% else %}
+        <meta name="twitter:card" content="summary" />
+    {% endif %}
+    <meta property="og:url" content="{{ app.url }}{{ uri("post.index", post.uuid) }}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="{{ app.name }}" />
+    <meta property="og:title" content="@{{ post.username }} post on {{ app.name }}!" />
+    <meta name="twitter:title" content="@{{ post.username }} post on {{ app.name }}!" />
+    <meta property="og:description" content="Check out what @{{ post.username }} posted" />
+    <meta name="twitter:description" content="Check out what @{{ post.username }} posted" />
+{% endblock %}
+
 {% block title %}{{ parent() }} - Post{% endblock %}
 
 {% block center_content %}

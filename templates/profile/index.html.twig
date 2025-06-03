@@ -1,5 +1,22 @@
 {% extends "layout/app.html.twig" %}
 
+{% block head %}
+    {{ parent() }}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="og:image" content="{{ profile.gravatar }}" />
+    <meta name="twitter:image" content="{{ profile.gravatar }}" />
+    <meta property="og:title" content="@{{ profile.username }} profile on {{ app.name }}" />
+    <meta name="twitter:title" content="@{{ profile.username }} profile on {{ app.name }}" />
+    <meta property="og:description" content="Check out @{{ profile.username }}'s profile!" />
+    <meta name="twitter:description" content="Check out @{{ profile.username }}'s profile!" />
+    <meta property="og:url" content="{{ app.url }}{{ uri("profile.index", profile.username) }}" />
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content="{{ app.name }}" />
+    <meta property="profile:first_name" content="{{ profile.first_name }}" />
+    <meta property="profile:last_name" content="{{ profile.surname }}" />
+    <meta property="profile:username" content="@{{ profile.username }}" />
+{% endblock %}
+
 {% block title %}{{ parent() }} - {{ profile.name }} (@{{ profile.username}}){% endblock %}
 
 {% block center_content %}
