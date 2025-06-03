@@ -65,10 +65,10 @@
                     <div class="action"
                         title="Reply"
                         hx-get="/post/{{ post.uuid }}/control"
-                        hx-target="#new-post"
+                        hx-target="#modal"
                         hx-trigger="click"
                         data-bs-toggle="modal"
-                        data-bs-target="#new-post"><i class="bi bi-reply"></i></div>
+                        data-bs-target="#modal"><i class="bi bi-reply"></i></div>
                     <div class="action d-flex align-items-center" 
                         title="Like"
                         hx-get="/post/{{ post.uuid }}/like" 
@@ -93,10 +93,10 @@
         <button 
             id="post-button"
             hx-get="/post/{{ post.uuid }}/control"
-            hx-target="#new-post"
+            hx-target="#modal"
             hx-trigger="click"
             data-bs-toggle="modal"
-            data-bs-target="#new-post"
+            data-bs-target="#modal"
             class="btn btn-sm btn-primary d-block d-md-none">
             <i class="bi bi-pencil-square"></i>
             </section>

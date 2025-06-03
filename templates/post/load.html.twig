@@ -44,10 +44,10 @@
         <div class="action"
             title="Reply"
             hx-get="/post/{{ post.uuid }}/control"
-            hx-target="#new-post"
+            hx-target="#modal"
             hx-trigger="click"
             data-bs-toggle="modal"
-            data-bs-target="#new-post"><i class="bi bi-chat-left"></i> <small class="comment-count ps-1">{{ post.comment_count }}</small></div>
+            data-bs-target="#modal"><i class="bi bi-chat-left"></i> <small class="comment-count ps-1">{{ post.comment_count }}</small></div>
         <div class="action d-flex align-items-center" 
             title="Like"
             hx-get="/post/{{ post.uuid }}/like" 

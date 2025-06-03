@@ -1,0 +1,12 @@
+<div id="search-modal" class="modal-dialog modal-dialog-centered">
+    {{ csrf()|raw }}
+    <div class="modal-content">
+        <div class="modal-header">
+            <button id="cancel-search" type="button" class="btn btn-sm" data-bs-dismiss="modal">Cancel</button>
+        </div>
+        <div class="modal-body">
+            <p class="p-1">Search to discover posts, people, and trending tags.</p>
+            {% include 'search/control.html.twig' %}
+        </div>
+    </div>
+</div>

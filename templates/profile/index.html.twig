@@ -29,10 +29,10 @@
                 {% if has_edit %}
                 <button id="edit-profile" class="btn btn-primary btn-sm float-end"
                     hx-get="/profile/{{ profile.username }}/edit"
-                    hx-target="#new-post"
+                    hx-target="#modal"
                     hx-trigger="click"
                     data-bs-toggle="modal"
-                    data-bs-target="#new-post">Edit</button>
+                    data-bs-target="#modal">Edit</button>
                 {% endif %}
                 <h4 id="name" class="m-0">{{ profile.name }}</h4>
                 <span id="username" class="text-muted"><small>@{{ profile.username }}</small></span>
@@ -58,10 +58,11 @@
         <button 
             id="post-button"
             hx-get="/post/control"
-            hx-target="#new-post"
+            hx-target="#modal"
             hx-trigger="click"
+            hx-swap="innerHTML"
             data-bs-toggle="modal"
-            data-bs-target="#new-post"
+            data-bs-target="#modal"
             class="btn btn-sm btn-primary d-block d-md-none">
             <i class="bi bi-pencil-square"></i>
     </section>

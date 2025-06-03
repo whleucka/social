@@ -12,12 +12,10 @@ class SearchController extends Controller
     {
     }
 
-    #[Get("/search", "search.index")]
+    #[Get("/search/control", "search.control")]
     public function index()
     {
-        $this->setHeader("HX-Push-Url", "/search");
-
-        return $this->render("search/index.html.twig", []);
+        return $this->render("search/modal.html.twig", []);
     }
 
     #[Post("/search", "search.query")]

@@ -16,10 +16,10 @@
         </ul>
         {% if user %}
         <button hx-get="/post/control"
-            hx-target="#new-post"
+            hx-target="#modal"
             hx-trigger="click"
             data-bs-toggle="modal"
-            data-bs-target="#new-post"
+            data-bs-target="#modal"
             class="btn btn-sm btn-primary mt-3">
             <i class="bi bi-pencil-square me-2"></i> New Post
         </button>

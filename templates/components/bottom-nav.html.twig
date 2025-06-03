@@ -2,6 +2,13 @@
     <div class="navbar-nav w-100" hx-boost="true" hx-target="#view" hx-select="#view" hx-swap="outerHTML">
         <div class="d-flex justify-content-around w-100">
             <a class="nav-link home" hx-on::after-request="toggleNav(event)" href="/"><i class="bi bi-house me-2"></i> Home</a>
+            <a class="nav-link search pointer" 
+                hx-get="/search/control"
+                hx-select="#search-modal"
+                hx-target="#modal"
+                hx-swap="innerHTML"
+                data-bs-toggle="modal"
+                data-bs-target="#modal"><i class="bi bi-search me-2"></i> Search</a>
             {% if user %}
                 <a class="nav-link profile" hx-on::after-request="toggleNav(event)" href="/profile/{{ user.username }}"><i class="bi bi-person-circle me-2"></i> Profile</a>
                 <a class="nav-link settings" hx-on::after-request="toggleNav(event)" href="/settings"><i class="bi bi-gear me-2"></i> Settings</a>
@@ -17,15 +24,13 @@
 </nav>
 <script>
     const url = window.location.href;
-    var target;
+    var target = document.querySelector('#bottom-nav .nav-link.home');
 
     if (url.match(/profile\/{{ user.username }}/)) {
         console.log('profile');
         target = document.querySelector('#bottom-nav .nav-link.profile');
     } else if (url.match(/settings/)) {
         target = document.querySelector('#bottom-nav .nav-link.settings');
-    } else {
-        target = document.querySelector('#bottom-nav .nav-link.home');
     }
 
     if (target) {
