@@ -12,13 +12,13 @@ class FeedController extends Controller
     {
     }
 
-    #[Get("/", "feed.index", ["auth"])]
+    #[Get("/", "feed.index")]
     public function index(): string
     {
         return $this->render("feed/index.html.twig");
     }
 
-    #[Get("/feed/load", "feed.load", ["auth"])]
+    #[Get("/feed/load", "feed.load")]
     public function load(): string
     {
         return $this->render("feed/load.html.twig", [

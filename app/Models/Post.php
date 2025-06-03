@@ -34,10 +34,12 @@ class Post extends Model
         return $this->shortTimeDiff(Carbon::parse($this->created_at));
     }
 
-    public function isLiked(int $user_id)
+    public function isLiked(?int $user_id)
     {
-        return PostLike::where("user_id", $user_id)
-            ->andWhere("post_id", $this->id)->get();
+        return $user_id 
+            ? PostLike::where("user_id", $user_id)
+                ->andWhere("post_id", $this->id)->get()
+            : false;
     }
 
     public function likeCount(): int

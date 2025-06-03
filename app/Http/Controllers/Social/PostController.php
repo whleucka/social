@@ -49,7 +49,7 @@ class PostController extends Controller
         return null;
     }
 
-    #[Get("/post/{uuid}", "post.index", ["auth"])]
+    #[Get("/post/{uuid}", "post.index")]
     public function index(string $uuid)
     {
         $this->setHeader("HX-Push-Url", "/post/$uuid");
@@ -58,7 +58,7 @@ class PostController extends Controller
         ]);
     }
 
-    #[Get("/post/{uuid}/load", "post.load", ["auth"])]
+    #[Get("/post/{uuid}/load", "post.load")]
     public function load(string $uuid): string
     {
         return $this->render("post/load.html.twig", [
@@ -66,7 +66,7 @@ class PostController extends Controller
         ]);
     }
 
-    #[Get("/post/{uuid}/comments/load", "post.comments", ["auth"])]
+    #[Get("/post/{uuid}/comments/load", "post.comments")]
     public function comments(string $uuid)
     {
         return $this->render("post/load-comments.html.twig", [

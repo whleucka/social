@@ -30,7 +30,7 @@ class ProfileController extends Controller
         }
     }
 
-    #[Get("/profile/{username}", "profile.index", ["auth"])]
+    #[Get("/profile/{username}", "profile.index")]
     public function index(string $username): string
     {
         $this->setHeader("HX-Push-Url", "/profile/$username");
@@ -74,7 +74,7 @@ class ProfileController extends Controller
         return $this->index($username);
     }
 
-    #[Get("/profile/{username}/posts/load", "profile.posts", ["auth"])]
+    #[Get("/profile/{username}/posts/load", "profile.posts")]
     public function posts(string $username)
     {
         return $this->render("profile/load.html.twig", [
@@ -84,7 +84,7 @@ class ProfileController extends Controller
         ]);
     }
 
-    #[Get("/profile/{username}/posts/page/{page}", "feed.more-posts", ["auth"])]
+    #[Get("/profile/{username}/posts/page/{page}", "feed.more-posts")]
     public function more_posts(string $username, int $page)
     {
         return $this->render("profile/more.html.twig", [
@@ -95,7 +95,7 @@ class ProfileController extends Controller
         ]);
     }
 
-    #[Get("/profile/{username}/replies/load", "profile.replies", ["auth"])]
+    #[Get("/profile/{username}/replies/load", "profile.replies")]
     public function replies(string $username)
     {
         return $this->render("profile/load.html.twig", [
@@ -105,7 +105,7 @@ class ProfileController extends Controller
         ]);
     }
 
-    #[Get("/profile/{username}/replies/page/{page}", "feed.more-replies", ["auth"])]
+    #[Get("/profile/{username}/replies/page/{page}", "feed.more-replies")]
     public function more_replies(string $username, int $page)
     {
         return $this->render("profile/more.html.twig", [
@@ -116,7 +116,7 @@ class ProfileController extends Controller
         ]);
     }
 
-    #[Get("/profile/{username}/likes/load", "profile.likes", ["auth"])]
+    #[Get("/profile/{username}/likes/load", "profile.likes")]
     public function likes(string $username)
     {
         return $this->render("profile/load.html.twig", [
@@ -126,7 +126,7 @@ class ProfileController extends Controller
         ]);
     }
 
-    #[Get("/profile/{username}/likes/page/{page}", "feed.more-likes", ["auth"])]
+    #[Get("/profile/{username}/likes/page/{page}", "feed.more-likes")]
     public function more_likes(string $username, int $page)
     {
         return $this->render("profile/more.html.twig", [

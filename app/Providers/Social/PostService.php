@@ -14,7 +14,7 @@ class PostService
         return Post::where("uuid", $uuid)->get();
     }
 
-    public function getPost(int $user_id, string $uuid)
+    public function getPost(?int $user_id, string $uuid)
     {
         $post = $this->getPostByUUID($uuid);
         if ($post) {
@@ -171,7 +171,7 @@ class PostService
         return filter_var($url, FILTER_VALIDATE_URL) ? $url : null;
     }
 
-    public function getPosts(int $user_id, int $page = 1, int $per_page = 8): ?array
+    public function getPosts(?int $user_id, int $page = 1, int $per_page = 8): ?array
     {
         $calc_page = ($page - 1) * $per_page;
         return db()->fetchAll("SELECT uuid 
@@ -248,7 +248,7 @@ class PostService
             ORDER BY posts.created_at DESC", array_fill(0, 4, "%$term%"));
     }
 
-    public function isLiked(int $user_id, string $uuid)
+    public function isLiked(?int $user_id, string $uuid)
     {
         $post = $this->getPostByUUID($uuid);
         if ($post) {
