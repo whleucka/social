@@ -1,0 +1,4 @@
+<form method="POST" hx-post="/search" hx-target="#view" hx-swap="innerHTML">
+    {{ csrf()|raw }}
+    <input id="search" class="form-control" type="search" name="term" value="" placeholder="Search" />
+</form>

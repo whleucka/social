@@ -34,22 +34,4 @@ class FeedController extends Controller
             "next_page" => $page + 1,
         ]);
     }
-
-    #[Post("/feed/search", "feed.search", ["auth"])]
-    public function search()
-    {
-        $valid = $this->validate([
-            "term" => ["required"],
-        ]);
-
-        if ($valid) {
-            $this->setHeader("HX-Push-Url", "/");
-            return $this->render("feed/load.html.twig", [
-                "posts" => $this->post_provider->searchPosts($valid->term),
-                "term" => $valid->term,
-            ]);
-        }
-
-        return $this->load();
-    }
 }
