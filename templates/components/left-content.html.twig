@@ -1,6 +1,6 @@
 <nav class="d-flex justify-content-end pt-2">
     <div>
-        <img id="avatar" src="{{ user.gravatar }}" alt="logo" />
+        <img id="avatar" src="{{ user.gravatar }}" alt="logo" onerror="this.src = '/img/profile.jpg'" />
         <ul hx-boost="true" hx-target="#view" hx-select="#view" hx-swap="outerHTML" class="navbar-nav mt-3">
             <li class="nav-item">
                 <a class="nav-link" href="/"><i class="bi bi-house me-2"></i> Home</a>
