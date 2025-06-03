@@ -1,22 +1,23 @@
 <nav id="bottom-nav" class="navbar fixed-bottom navbar-light bg-light d-md-none">
     <div class="navbar-nav w-100" hx-boost="true" hx-target="#view" hx-select="#view" hx-swap="outerHTML">
         <div class="d-flex justify-content-around w-100">
-            <a class="nav-link home" hx-on::after-request="toggleNav(event)" href="/"><i class="bi bi-house me-2"></i> Home</a>
-            <a class="nav-link search pointer" 
+            <a title="Home" class="nav-link home" hx-on::after-request="toggleNav(event)" href="/"><i class="bi bi-house me-2"></i></a>
+            <a title="Search" class="nav-link search pointer" 
                 hx-get="/search/control"
                 hx-select="#search-modal"
                 hx-target="#modal"
                 hx-swap="innerHTML"
                 data-bs-toggle="modal"
-                data-bs-target="#modal"><i class="bi bi-search me-2"></i> Search</a>
+                data-bs-target="#modal"><i class="bi bi-search me-2"></i></a>
             {% if user %}
-                <a class="nav-link profile" hx-on::after-request="toggleNav(event)" href="/profile/{{ user.username }}"><i class="bi bi-person-circle me-2"></i> Profile</a>
-                <a class="nav-link settings" hx-on::after-request="toggleNav(event)" href="/settings"><i class="bi bi-gear me-2"></i> Settings</a>
+                <a title="Profile" class="nav-link profile" hx-on::after-request="toggleNav(event)" href="/profile/{{ user.username }}"><i class="bi bi-person-circle me-2"></i></a>
+                <a title="Settings" class="nav-link settings" hx-on::after-request="toggleNav(event)" href="/settings"><i class="bi bi-gear me-2"></i></a>
             {% else %}
-                <a hx-boost="false"
+                <a title="Sign Out"
+                    hx-boost="false"
                     href="/sign-in"
                     class="nav-link">
-                    <i class="bi bi-box-arrow-in-right me-2"></i> Sign In
+                    <i class="bi bi-box-arrow-in-right me-2"></i>
                 </a>
             {% endif %}
         </div>
