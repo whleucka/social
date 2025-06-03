@@ -19,7 +19,7 @@ class RegisterController extends Controller
         return $this->render("auth/register/index.html.twig");
     }
 
-    #[Post("/register", "auth.register.post", ["max_requests" => 20])]
+    #[Post("/register", "auth.register.post", ["max_requests" => 40])]
     public function post(): string
     {
         $this->setValidationMessage("first_name.max_length", "First name can only contain letters, numbers, and underscore characters");
