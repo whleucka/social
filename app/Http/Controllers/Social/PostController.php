@@ -54,7 +54,7 @@ class PostController extends Controller
     {
         $this->setHeader("HX-Push-Url", "/post/$uuid");
         return $this->render("post/index.html.twig", [
-            "post" => $this->post_provider->getPost($this->user->id, $uuid)
+            "post" => $this->post_provider->getPost($this->user?->id, $uuid)
         ]);
     }
 
@@ -62,7 +62,7 @@ class PostController extends Controller
     public function load(string $uuid): string
     {
         return $this->render("post/load.html.twig", [
-            "post" => $this->post_provider->getPost($this->user->id, $uuid)
+            "post" => $this->post_provider->getPost($this->user?->id, $uuid)
         ]);
     }
 

@@ -22,7 +22,7 @@ class FeedController extends Controller
     public function load(): string
     {
         return $this->render("feed/load.html.twig", [
-            "posts" => $this->post_provider->getPosts($this->user->id),
+            "posts" => $this->post_provider->getPosts($this->user?->id),
         ]);
     }
 
@@ -30,7 +30,7 @@ class FeedController extends Controller
     public function more(int $page): string
     {
         return $this->render("feed/more.html.twig", [
-            "posts" => $this->post_provider->getPosts($this->user->id, $page),
+            "posts" => $this->post_provider->getPosts($this->user?->id, $page),
             "next_page" => $page + 1,
         ]);
     }

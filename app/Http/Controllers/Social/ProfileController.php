@@ -37,7 +37,7 @@ class ProfileController extends Controller
         return $this->render("profile/index.html.twig", [
             "profile" => $this->profile,
             "post_count" => $this->post_provider->getUserPostCount($this->profile['id']),
-            "has_edit" => $this->profile['id'] === $this->user->id,
+            "has_edit" => $this->profile['id'] === $this->user?->id,
         ]);
     }
 
