@@ -239,13 +239,15 @@ class PostService
         return null;
     }
 
-    public function searchPosts(string $term)
+    public function searchPosts(string $term, int $page = 1, int $per_page = 8)
     {
+        $calc_page = ($page - 1) * $per_page;
         return db()->fetchAll("SELECT posts.uuid 
             FROM posts 
             INNER JOIN users ON users.id = user_id
-            WHERE (first_name LIKE ? OR surname LIKE ? OR username LIKE ? OR content LIKE ?)
-            ORDER BY posts.created_at DESC", array_fill(0, 4, "%$term%"));
+            WHERE (first_name LIKE ? OR surname LIKE ? OR CONCAT(first_name, ' ', surname) LIKE ? OR username LIKE ? OR content LIKE ?)
+            ORDER BY posts.created_at DESC, posts.id DESC
+            LIMIT ?,?", [...array_fill(0, 5, "%$term%"), $calc_page, $per_page]);
     }
 
     public function isLiked(?int $user_id, string $uuid)

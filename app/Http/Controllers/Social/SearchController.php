@@ -13,27 +13,40 @@ class SearchController extends Controller
     }
 
     #[Get("/search/control", "search.control")]
-    public function index()
+    public function index(): string
     {
         return $this->render("search/modal.html.twig", []);
     }
 
     #[Post("/search", "search.query")]
-    public function query()
+    public function query(): string
     {
         $valid = $this->validate([
             "term" => ["required"],
         ]);
 
         if ($valid) {
-            return $this->render("feed/load.html.twig", [
+            session()->set("search_term", $valid->term);
+            return $this->render("search/load.html.twig", [
                 "posts" => $this->post_provider->searchPosts($valid->term),
                 "term" => $valid->term,
             ]);
         }
+        session()->delete("search_term");
+        header("HX-Redirect: /");
+        exit;
+    }
 
-        return $this->render("feed/load.html.twig", [
-            "posts" => $this->post_provider->getPosts($this->user?->id),
-        ]);
+    #[Get("/search/page/{page}", "search.more")]
+    public function more(int $page)
+    {
+        $term = session()->get("search_term");
+        if ($term) {
+            return $this->render("search/more.html.twig", [
+                "term" => $term,
+                "posts" => $this->post_provider->searchPosts($term, $page),
+                "next_page" => $page + 1,
+            ]);
+        }
     }
 }

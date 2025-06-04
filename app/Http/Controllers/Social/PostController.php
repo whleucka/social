@@ -75,7 +75,7 @@ class PostController extends Controller
         ]);
     }
 
-    #[Get("/post/{uuid}/comments/page/{page}", "post.more-comments", ["auth"])]
+    #[Get("/post/{uuid}/comments/page/{page}", "post.more-comments")]
     public function more_comments(string $uuid, int $page)
     {
         return $this->render("post/more-comments.html.twig", [

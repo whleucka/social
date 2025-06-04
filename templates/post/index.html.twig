@@ -23,7 +23,7 @@
 {% block center_content %}
     <section id="view" class="w-100 show-post">
         <div>
-            <button class="btn text-dark" hx-get="{% if post.parent_uuid %}/post/{{ post.parent_uuid }}{% else %}/{% endif %}" hx-select="#view" hx-target="#view" hx-swap="outerHTML" hx-push-url="true"><i class="bi bi-arrow-left-circle me-2"></i> Post</button>
+            <button class="btn text-dark" hx-get="{% if post.parent_uuid %}/post/{{ post.parent_uuid }}{% else %}/{% endif %}" hx-select="#view" hx-target="#view" hx-swap="outerHTML" hx-push-url="true"><i class="bi bi-arrow-left-circle me-2"></i> Back</button>
         </div>
         <div class="mt-2 p-2 post-cont bg-light w-100">
             <div class="post d-flex flex-column">

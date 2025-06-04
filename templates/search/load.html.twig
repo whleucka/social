@@ -1,8 +1,13 @@
+{% if term %}
+    <div class="mb-1">
+        <button class="btn text-dark" hx-get="/" hx-select="#view" hx-target="#view" hx-swap="outerHTML" hx-push-url="true"><i class="bi bi-arrow-left-circle me-2"></i> Feed</button>
+    </div>
+{% endif %}
 {% if posts %}
     {% for post in posts %}
         {% include 'post/post.html.twig' %}
     {% endfor %}
-    <div hx-get="/feed/page/2" hx-trigger="intersect once" hx-swap="afterend"></div>
+    <div hx-get="/search/page/2" hx-trigger="intersect once" hx-swap="afterend"></div>
     <button 
         id="post-button"
         hx-get="/post/control"
@@ -14,6 +19,6 @@
         <i class="bi bi-pencil-square"></i>
     </button>
     <script>toggleScroll();</script>
-{% elseif not posts %}
-    <p class="text-muted p-2"><em>There are no posts yet</em></p>
+{% elseif not posts and term %}
+    <p class="text-muted p-2"><em>There are no posts that matched '{{ term }}'</em></p>
 {% endif %}
