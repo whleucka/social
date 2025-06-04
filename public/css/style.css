@@ -67,6 +67,7 @@ body {
 }
 #bottom-nav {
     border-top: 1px solid #ccc;
+    font-size: 1.3rem;
 }
 
 #bottom-nav .nav-link {

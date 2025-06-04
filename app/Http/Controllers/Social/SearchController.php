@@ -32,6 +32,8 @@ class SearchController extends Controller
             ]);
         }
 
-        return $this->index();
+        return $this->render("feed/load.html.twig", [
+            "posts" => $this->post_provider->getPosts($this->user?->id),
+        ]);
     }
 }
