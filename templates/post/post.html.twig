@@ -1,3 +1,28 @@
 <div id="{{ post.uuid }}" class="p-2 post-cont bg-light w-100" hx-get="/post/{{ post.uuid }}/load" hx-trigger="load">
-    <p class="w-100 d-flex justify-content-center align-items-center loader">&nbsp;</p>
+    <div class="post d-flex flex-column">
+        <div class="pointer d-flex" title="Loading">
+            <span class="loader" style="width: 46px; height: 40px; border-radius: 50%;">&nbsp;</span>
+            <div class="d-flex flex-column flex-grow-1 px-2 w-100 h-100">
+                <div class="top d-flex">
+                    <p class="loader w-100"></p>
+                </div>
+                <div class="flex-grow-1">
+                    <p class="loader w-100" style="height: 26px;"></p>
+                </div>
+            </div>
+        </div>
+        <div class="bottom w-100 d-flex justify-content-around align-items-center">
+            <div class="action"
+                title="Reply"><i class="bi bi-chat-left"></i></div>
+            <div class="action d-flex align-items-center" 
+                title="Like">
+                <i class="like bi bi-heart"></i>
+            </div>
+            <div class="dropdown action">
+                <button class="btn" title="Options" type="button" id="options-menu">
+                    <i class="bi bi-three-dots"></i>
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
