@@ -229,6 +229,10 @@ body {
     height: 150px;
     background-color: #ddd;
 }
+#app .profile #name {
+    font-size: 1.8rem;
+    font-weight: 900;
+}
 #app .profile #pic {
     position: relative;
     left: 10px;
@@ -240,7 +244,8 @@ body {
 }
 #app .profile #info {
     position: relative;
-    top: -40px;
+    top: -50px;
+    line-height: 20px;
 }
 #app .profile #description {
     font-size: 0.9rem;
@@ -267,6 +272,7 @@ body {
 #app .profile #edit-profile {
     position: relative;
     top: -38px;
+    right: -8px;
 }
 
 #app .settings #user #avatar {

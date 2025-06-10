@@ -16,15 +16,15 @@ class ProfileController extends Controller
         private PostService $post_provider
     ) {
         // username required for all routes
-        $this->setProfile();
-    }
-
-    private function setProfile()
-    {
         $params = request()->getAttribute("route")["params"];
         if ($params && isset($params[0])) {
-            $this->profile = $this->profile_provider->getUserByUsername($params[0]);
+            $this->setProfile($params[0]);
         }
+    }
+
+    private function setProfile(string $username)
+    {
+        $this->profile = $this->profile_provider->getUserByUsername($username);
         if (!$this->profile) {
             $this->pageNotFound();
         }
@@ -63,12 +63,18 @@ class ProfileController extends Controller
             $valid = $this->validate([
                 "first_name" => ["required", "max_length:20"],
                 "surname" => ["required", "max_length:20"],
+                "username" => ["required", "max_length:20", "regex:^[a-zA-Z0-9]+$"],
                 "description" => ["max_length:255"],
             ]);
+            // Note: username should be unique:users but it will not save anyway..
 
             if ($valid) {
-                $this->profile_provider->save($username, $valid->first_name, $valid->surname, $valid->description);
-                $this->setProfile();
+                $this->profile_provider->save($username, $valid->first_name, $valid->surname, $valid->username, $valid->description);
+                $this->setProfile($valid->username);
+                if ($username != $valid->username) {
+                    header("HX-Redirect: " . uri("profile.index", $valid->username));
+                    exit;
+                }
             }
         }
         return $this->index($username);

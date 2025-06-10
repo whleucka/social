@@ -171,15 +171,29 @@ class PostService
         return filter_var($url, FILTER_VALIDATE_URL) ? $url : null;
     }
 
+    /**
+     * getPosts algorithm
+     * Likes = 3 points 
+     * Replies = 5 points 
+     * Recency decay (older = lower)
+     */
     public function getPosts(?int $user_id, int $page = 1, int $per_page = 8): ?array
     {
+        $points = [
+            "likes" => 3,
+            "replies" => 5,
+        ];
         $calc_page = ($page - 1) * $per_page;
-        return db()->fetchAll("SELECT uuid 
+        return db()->fetchAll("SELECT uuid, (
+             (SELECT COUNT(*) FROM post_likes WHERE post_id = posts.id) * ? + 
+             (SELECT COUNT(*) FROM posts p WHERE p.parent_id = posts.id) * ? + 
+             (86400 - UNIX_TIMESTAMP(NOW()) + UNIX_TIMESTAMP(created_at)) / 3600
+            ) AS score
             FROM posts 
             WHERE created_at > NOW() - INTERVAL 30 DAY 
             AND parent_id IS NULL
-            ORDER BY created_at DESC
-            LIMIT ?,?", [$calc_page, $per_page]);
+            ORDER BY score DESC
+            LIMIT ?,?", [$points['likes'], $points['replies'], $calc_page, $per_page]);
     }
 
     public function getUserPostCount(int $user_id)

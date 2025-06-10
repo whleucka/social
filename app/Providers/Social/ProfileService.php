@@ -23,12 +23,13 @@ class ProfileService
         return null;
     }
 
-    public function save(string $username, string $first_name, string $surname, ?string $description)
+    public function save(string $_username, string $first_name, string $surname, string $username, ?string $description)
     {
-        $user = User::where("username", $username)->get();
+        $user = User::where("username", $_username)->get();
         if ($user) {
             $user->first_name = $first_name;
             $user->surname = $surname;
+            $user->username = $username;
             $user->description = $description;
             $user->save();
         }

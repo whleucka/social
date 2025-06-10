@@ -17,16 +17,26 @@
             <div class="modal-body">
                 <div id="profile-edit" class="container px-3">
                     <div class="row">
-                        <label for="first-name" class="form-label p-0">First name</label>
-                        <input type="input" class="form-control" id="first-name" name="first_name" value="{{ profile.first_name }}" placeholder="" required>
+                        <div class="col-6">
+                            <label for="first-name" class="form-label p-0">First name</label>
+                            <input type="input" class="form-control" id="first-name" name="first_name" value="{{ profile.first_name }}" placeholder="" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="surname" class="form-label p-0">Surname</label>
+                            <input type="input" class="form-control" id="surname" name="surname" placeholder="" value="{{ profile.surname }}" required>
+                        </div>
                     </div>
-                    <div class="row mt-1">
-                        <label for="surname" class="form-label p-0">Surname</label>
-                        <input type="input" class="form-control" id="surname" name="surname" placeholder="" value="{{ profile.surname }}" required>
+                    <div class="row mt-2">
+                        <div class="col">
+                            <label for="username" class="form-label p-0">Username</label>
+                            <input type="input" class="form-control" id="username" name="username" placeholder="" value="{{ profile.username }}" required>
+                        </div>
                     </div>
-                    <div class="row mt-1">
-                        <label for="description" class="form-label p-0">Description</label>
-                        <textarea class="form-control" id="description" name="description" style="height: 125px;">{{ profile.description }}</textarea>
+                    <div class="row mt-2 mb-2">
+                        <div class="col">
+                            <label for="description" class="form-label p-0">Description</label>
+                            <textarea class="form-control" id="description" name="description" style="height: 200px;">{{ profile.description }}</textarea>
+                        </div>
                     </div>
                 </div>
             </div>
