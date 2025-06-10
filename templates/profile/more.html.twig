@@ -2,5 +2,5 @@
     {% for post in posts %}
         {% include 'post/post.html.twig' %}
     {% endfor %}
-    <div hx-get="/profile/{{ user.username }}/{{ section}}/{{ next_page }}" hx-trigger="intersect once" hx-swap="afterend"></div>
+    <div hx-get="/profile/{{ user.username }}/{{ section }}/page/{{ next_page }}" hx-trigger="intersect once" hx-swap="afterend"></div>
 {% endif %}
