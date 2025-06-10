@@ -1,45 +1,5 @@
 <div class="post d-flex flex-column">
-    <div class="pointer d-flex"
-        title="View post"
-        hx-get="/post/{{ post.uuid }}"
-        hx-target="#view"
-        hx-select="#view"
-        hx-sync="this:abort"
-        hx-swap="outerHTML">
-        <img class="avatar pointer" 
-            title="View profile"
-            loading="lazy"
-            hx-get="/profile/{{ post.username }}" 
-            hx-target="#view" 
-            hx-select="#view" 
-            hx-swap="outerHTML" 
-            hx-push-url="true"
-            src="{{ post.gravatar }}" 
-            alt="avatar" 
-            onerror = "this.src = '/img/profile.jpg';" />
-        <div class="d-flex flex-column flex-grow-1 px-2 w-100">
-            <div class="top d-flex" hx-boost="true">
-                <div class="d-flex flex-column">
-                    <div class="d-flex align-items-center">
-                        <span class="name"><a href="/profile/{{ post.username }}" title="View profile">{{ post.name }}</a></span>
-                        <span class="px-1">·</span>
-                        <span class="ago text-muted">{{ post.ago }}</span>
-                    </div>
-                    <span class="username"><a class="text-muted" href="/profile/{{ post.username }}" title="View profile">@{{ post.username }}</a></span>
-                </div>
-            </div>
-            {% if post.image %}
-            <div class="mt-3">
-                {% if post.url %}<a href="{{ post.url }}" target="_blank" title="View link">{% endif %}
-                <img loading="lazy" class="image" src="{{ post.image }}" alt="article" />
-                {% if post.url %}</a>{% endif %}
-            </div>
-            {% elseif post.is_bot and post.url %}
-                <p class="m-0 p-2"><a href="{{ post.url }}" target="_blank" title="View link">Link</a></p>
-            {% endif %}
-            <p class="content word-break p-2">{{ post.content|linkify|raw }}</p>
-        </div>
-    </div>
+    {% include "post/common.html.twig" %}
     <div class="bottom w-100 d-flex justify-content-around align-items-center">
         <div class="action"
             title="Reply"

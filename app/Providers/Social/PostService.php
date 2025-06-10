@@ -26,6 +26,7 @@ class PostService
                 "content" => html_entity_decode($post->content),
                 "gravatar" => $user->gravatarUrl(),
                 "name" => $user->first_name . ' ' . $user->surname,
+                "created_at" => $post->created_at,
                 "username" => $user->username,
                 "ago" => $post->ago(),
                 "ping" => $this->shouldPing($post->created_at),
