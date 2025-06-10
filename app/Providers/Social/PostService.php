@@ -191,7 +191,7 @@ class PostService
              (86400 - UNIX_TIMESTAMP(NOW()) + UNIX_TIMESTAMP(created_at)) / 3600
             ) AS score
             FROM posts 
-            WHERE AND parent_id IS NULL
+            WHERE parent_id IS NULL
             ORDER BY score DESC
             LIMIT ?,?", [$points['likes'], $points['replies'], $calc_page, $per_page]);
     }
