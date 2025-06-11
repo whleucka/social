@@ -1,4 +1,6 @@
-<form method="POST" hx-post="/search" hx-target="#view" hx-swap="innerHTML" onSubmit="document.getElementById('cancel-search').click()">
-    {{ csrf()|raw }}
-    <input id="search" class="form-control" type="search" name="term" value="" placeholder="Search" />
-</form>
+<input id="search" 
+    class="form-control" 
+    hx-get="/search" 
+    hx-target="#view" 
+    hx-swap="innerHTML" 
+    hx-on::after-request="this.value = '';" type="search" name="term" value="" placeholder="Search" />
