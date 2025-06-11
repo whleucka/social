@@ -18,7 +18,7 @@ class SearchController extends Controller
         return $this->render("search/modal.html.twig", []);
     }
 
-    #[Post("/search", "search.query")]
+    #[Get("/search", "search.query")]
     public function query(): string
     {
         $valid = $this->validate([
