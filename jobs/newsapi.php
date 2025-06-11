@@ -29,7 +29,8 @@ function getHeadlines(int $page = 1)
                         "content" => twig()->render("bot/news.html.twig", [
                             "source" => $article->source->name,
                             "author" => $article->author,
-                            "body" => $article->description ?: $article->title,
+                            "title" =>  $article->title,
+                            "body" => $article->description,
                         ]),
                         "url" => $article->url,
                         "image" => $article->urlToImage,
