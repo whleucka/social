@@ -13,6 +13,13 @@ use Echo\Framework\Session\Session;
 use Echo\Interface\Http\Request as HttpRequest;
 use Echo\Interface\Routing\Router as RoutingRouter;
 
+function recursiveFiles(string $directory)
+{
+
+    return new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
+}
+
+
 /**
  * Web application
  */
