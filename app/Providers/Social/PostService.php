@@ -208,8 +208,7 @@ class PostService
         $calc_page = ($page - 1) * $per_page;
         return db()->fetchAll("SELECT uuid 
             FROM posts 
-            WHERE created_at > NOW() - INTERVAL 30 DAY 
-            AND parent_id IS NULL
+            WHERE parent_id IS NULL
             AND user_id = ?
             ORDER BY created_at DESC
             LIMIT ?,?", [$user_id, $calc_page, $per_page]);
@@ -220,8 +219,7 @@ class PostService
         $calc_page = ($page - 1) * $per_page;
         return db()->fetchAll("SELECT uuid 
             FROM posts 
-            WHERE created_at > NOW() - INTERVAL 30 DAY 
-            AND parent_id IS NOT NULL
+            WHERE parent_id IS NOT NULL
             AND user_id = ?
             ORDER BY created_at DESC
             LIMIT ?,?", [$user_id, $calc_page, $per_page]);
@@ -233,8 +231,7 @@ class PostService
         return db()->fetchAll("SELECT posts.uuid 
             FROM posts 
             INNER JOIN post_likes on post_id = posts.id AND post_likes.user_id = ?
-            WHERE posts.created_at > NOW() - INTERVAL 30 DAY 
-            AND posts.parent_id IS NULL
+            WHERE posts.parent_id IS NULL
             ORDER BY post_likes.id DESC
             LIMIT ?,?", [$user_id, $calc_page, $per_page]);
     }
