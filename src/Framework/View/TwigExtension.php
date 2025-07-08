@@ -47,12 +47,12 @@ class TwigExtension extends AbstractExtension
 
         // Convert URLs to <a> links
         $linked = preg_replace_callback(
-            '/(https?:\/\/[^\s<]+)/i',
+            '#(?<!href=")(?<!">)(https?://[^\s<]+)#i',
             function ($matches) {
                 $url = $matches[1];
                 return "<a href=\"$url\" target=\"_blank\" rel=\"noopener noreferrer\">$url</a>";
             },
-            $escaped
+            $text
         );
 
         // Convert newlines to <br>

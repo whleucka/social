@@ -163,6 +163,21 @@ body {
     height: 120px;
     resize: none;
 }
+#app #editor .ql-editor {
+    font-family: "Ubuntu", sans-serif;
+    font-size: 16px;
+}
+
+#app #editor {
+    max-width: 410px;
+    border-radius: 8px;
+}
+#app #editor #quill-content {
+    min-height: 100px;
+    border-left: 1px solid #ccc; 
+    border-right: 1px solid #ccc; 
+    border-bottom: 1px solid #ccc; 
+}
 
 #app .post-cont {
     min-height: 117px;
@@ -202,7 +217,7 @@ body {
 }
 #app .post .ago {
 }
-#app .post .image {
+#app .post img {
     width: 100%;
     border-radius: 6px;
     border: 1px solid #ccc;

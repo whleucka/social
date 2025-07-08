@@ -15,7 +15,7 @@ return new class implements Migration
             $table->unsignedBigInteger("parent_id")->nullable();
             $table->unsignedBigInteger("ip")->nullable();
             $table->uuid("uuid")->default("(UUID())");
-            $table->text("content");
+            $table->mediumText("content");
             $table->text("url")->nullable();
             $table->text("image")->nullable();
             $table->unsignedTinyInteger("deleted")->default(0);

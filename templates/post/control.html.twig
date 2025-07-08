@@ -21,19 +21,52 @@
                         </div>
                     </div>
                 {% endif %}
-                <div class="d-flex {% if post %}mt-3{% endif %}">
+                <div class="d-flex h-100 {% if post %}mt-3{% endif %}">
                     <img id="avatar" class="me-3" src="{{ user.gravatar }}" alt="avatar" />
-                    <textarea class="form-control" placeholder="What's up?" name="content" id="content"></textarea>
+		    <div id="editor" class="bg-white h-100">
+			<div id='quill-content'></div>
+			<input type="hidden" id='editor-content' name="content" value="" />
+			<script>
+			    var quill_content = new Quill('#quill-content', {
+			      modules: {
+			          toolbar: [
+				    [{ header: [1, 2, 3, 4, 5, false] }],
+				    ['bold', 'italic', 'underline', 'strike'],
+				    [{'color': [], 'background': [] }],
+				    [{ list: 'ordered' }, { list: 'bullet' }],
+				    ['link', 'image', 'video'],
+				    ['clean']
+			          ],
+			      },
+			      placeholder: "",
+			      theme: 'snow'
+			    });
+
+			    // Function to update hidden textarea
+			    var update_content = () => {
+			    	document.querySelector('#editor-content').value = quill_content.root.innerHTML;
+			    }
+			    // Update on every text change
+			    quill_content.on('text-change', update_content);
+			    setTimeout(() => {
+			      quill_content.focus();
+			      document.querySelectorAll("#quill-content input").forEach((el) => {
+			      	el.hidden = true;
+			      });
+			    });
+			    update_content();
+			</script>
+		    </div>
                 </div>
             </div>
-            <div class="modal-footer">
+            <!--<div class="modal-footer">
                 <div class="w-100 d-flex justify-content-start">
                     <i class="bi bi-image-fill me-3"></i>
                     <i class="bi bi-film me-3"></i>
                     <i class="bi bi-filetype-gif me-3"></i>
                     <i class="bi bi-emoji-smile"></i>
                 </div>
-            </div>
+            </div>-->
         </div>
     </form>
 </div>
