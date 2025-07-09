@@ -21,7 +21,7 @@
                         </div>
                     </div>
                 {% endif %}
-                <div class="d-flex h-100 {% if post %}mt-3{% endif %}">
+                <div class="d-flex h-100 {% if post %}mt-3{% endif %} pb-3">
                     <img id="avatar" class="me-3" src="{{ user.gravatar }}" alt="avatar" />
 		    <div id="editor" class="bg-white h-100">
 			<div id='quill-content'></div>
@@ -40,7 +40,8 @@
 			            ],
 			        },
 			        placeholder: "",
-			        theme: 'snow'
+			        theme: 'snow',
+				bounds: '#quill-content'
 			      });
 
 			      // Function to update hidden textarea
@@ -53,7 +54,7 @@
 
 			      setTimeout(() => {
 			        document.querySelectorAll("#quill-content input").forEach((el) => {
-			        	el.hidden = true;
+			        	//el.hidden = true;
 			        });
 			      });
 			  }
@@ -62,14 +63,6 @@
 		    </div>
                 </div>
             </div>
-            <!--<div class="modal-footer">
-                <div class="w-100 d-flex justify-content-start">
-                    <i class="bi bi-image-fill me-3"></i>
-                    <i class="bi bi-film me-3"></i>
-                    <i class="bi bi-filetype-gif me-3"></i>
-                    <i class="bi bi-emoji-smile"></i>
-                </div>
-            </div>-->
         </div>
     </form>
 </div>

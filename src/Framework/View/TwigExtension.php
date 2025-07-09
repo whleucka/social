@@ -42,6 +42,8 @@ class TwigExtension extends AbstractExtension
     }
 
     public function linkify(string $text): string {
+        $text = preg_replace('/<p>\s*(<br\s*\/?>)\s*<\/p>/i', '<br>', $text);
+
         // Escape first to prevent XSS
         $escaped = htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
 
@@ -50,7 +52,7 @@ class TwigExtension extends AbstractExtension
             '#(?<!href=")(?<!">)(https?://[^\s<]+)#i',
             function ($matches) {
                 $url = $matches[1];
-                return "<a href=\"$url\" target=\"_blank\" rel=\"noopener noreferrer\">$url</a>";
+                return "<span class='link'><a href=\"$url\" target=\"_blank\" rel=\"noopener noreferrer\">$url</a><span>";
             },
             $text
         );
