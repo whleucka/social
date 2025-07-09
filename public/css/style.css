@@ -184,6 +184,7 @@ body {
     border: 1px solid #ccc; 
     margin-bottom: 10px;
     border-radius: 6px;
+    overflow: hidden;
 }
 #app .post .top {
     font-size: 0.7rem;
@@ -214,6 +215,7 @@ body {
 #app .post .content {
     font-size: 0.9rem;
     margin: 0;
+    padding: 4px;
 }
 #app .post .content .title {
   display: inline-block;
@@ -230,13 +232,6 @@ body {
 #app .post .top a {
     text-decoration: none;
     color: #222;
-}
-#app .post .link {
-    display: inline-block;
-    width: 90%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 #app .post .link a {
     color: #222;
